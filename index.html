@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="CascaViva: embalagem anti-UV com grafeno vegetal que faz o alimento durar mais e o empresário perder menos.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
+<title>CascaViva · Embalagem Anti-UV</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Public+Sans:wght@400..800&display=swap">
+</head>
+<body>
+<style>
+/* Layout: uma página de rolagem em faixas; o simulador e o diário de testes são as duas áreas de uso */
+:root{
+  --bg:#F2F5EF; --surface:#FFFFFF; --soft:#E3ECDD; --ink:#18291F; --muted:#56665B;
+  --leaf:#1E4A33; --leaf-2:#2E7D50; --peel:#E5A928; --peel-soft:#FBEBC7; --loss:#B8432D; --loss-soft:#F7DED7;
+  --line:#CFDACB; --on-leaf:#F2F5EF;
+  --display:'Fraunces', Georgia, 'Times New Roman', serif; --body:'Public Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1A14; --surface:#16241C; --soft:#1D3024; --ink:#E7EEE6; --muted:#A3B3A7;
+  --leaf:#0B2418; --leaf-2:#5CC08A; --peel:#F0BC4A; --peel-soft:#3A2E12; --loss:#E8775E; --loss-soft:#3A1C16;
+  --line:#2B4134; --on-leaf:#E7EEE6; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F1A14; --surface:#16241C; --soft:#1D3024; --ink:#E7EEE6; --muted:#A3B3A7;
+  --leaf:#0B2418; --leaf-2:#5CC08A; --peel:#F0BC4A; --peel-soft:#3A2E12; --loss:#E8775E; --loss-soft:#3A1C16;
+  --line:#2B4134; --on-leaf:#E7EEE6; color-scheme:dark }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.field,form.add>*{min-width:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+section{padding-block:72px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,4.2vw,48px);font-weight:700;color:var(--ink)}
+p{margin:0}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf-2)}
+.lead{font-size:19px;color:var(--muted);max-width:64ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+.src{font-size:13px;color:var(--muted)}
+a{color:var(--leaf-2)}
+:focus-visible{outline:3px solid var(--peel);outline-offset:2px}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:800;cursor:pointer;background:var(--peel);color:#1B1405}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.danger{background:var(--loss);color:#FFF}
+.btn:disabled{opacity:.55;cursor:default}
+
+/* nav */
+.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--bg)}
+.top .wrap{display:flex;align-items:center;gap:20px;padding-block:10px;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:22px;color:var(--leaf-2);text-decoration:none}
+.brand img{height:34px;width:auto;border-radius:6px;background:#FFF;padding:2px 6px}
+.top nav{display:flex;gap:18px;flex-wrap:wrap}
+.top nav a{color:var(--muted);font-weight:700;font-size:15px;text-decoration:none}
+.top nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{background:var(--leaf);color:var(--on-leaf);padding-block:64px 72px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:800;color:var(--on-leaf)}
+.hero h1 em{font-style:italic;color:var(--peel)}
+.hero .lead{color:color-mix(in srgb,var(--on-leaf) 80%,transparent)}
+.logo-chip{background:#FFF;border-radius:16px;padding:10px 16px;display:inline-block;align-self:flex-start}
+.logo-chip img{height:56px;width:auto;display:block}
+.hero-figure{position:relative;min-height:420px}
+.hero-figure .a{position:absolute;right:0;top:0;width:78%;height:360px;object-fit:cover;border-radius:28px}
+.hero-figure .b{position:absolute;left:0;bottom:0;width:46%;height:190px;object-fit:cover;border-radius:22px;border:8px solid var(--leaf)}
+.hero-figure .tag{position:absolute;left:6%;top:24px;background:var(--peel);color:#1B1405;font-weight:800;border-radius:999px;padding:8px 16px;font-size:15px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero .btn.ghost{color:var(--on-leaf);border-color:color-mix(in srgb,var(--on-leaf) 40%,transparent)}
+
+/* story */
+.path{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:28px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;min-width:0}
+.step svg{width:100%;max-width:150px;height:auto}
+.step b{font-size:18px}
+.step span{font-size:15px;color:var(--muted)}
+.step.end{background:var(--loss-soft);border:2px solid var(--loss)}
+.step.end b{color:var(--loss)}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+.fact{background:var(--surface);border-radius:20px;padding:22px 24px;display:flex;gap:18px;align-items:center;border:1px solid var(--line)}
+.fact .n{font-family:var(--display);font-size:46px;font-weight:800;color:var(--loss);white-space:nowrap}
+
+/* simulator */
+.sim{background:var(--soft)}
+.sim-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;margin-top:28px}
+.panel{background:var(--surface);border-radius:24px;padding:26px;border:1px solid var(--line);min-width:0}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:800;font-size:15px}
+.field .hint{font-size:13px;color:var(--muted)}
+.field input[type=number]{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;font-size:20px;font-weight:700;width:100%;font-variant-numeric:tabular-nums}
+.range-row{display:flex;align-items:center;gap:12px}
+.range-row input{flex:1;accent-color:var(--leaf-2)}
+.range-row output{font-weight:800;min-width:62px;text-align:right;font-variant-numeric:tabular-nums}
+.result{display:flex;flex-direction:column;gap:16px}
+.big{font-family:var(--display);font-weight:800;font-size:clamp(38px,5vw,56px);color:var(--loss);line-height:1;font-variant-numeric:tabular-nums}
+.rows{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-variant-numeric:tabular-nums}
+.rows dt{color:var(--muted)} .rows dd{margin:0;font-weight:800;text-align:right}
+.bar{height:22px;border-radius:11px;background:var(--loss-soft);overflow:hidden;display:flex}
+.bar i{display:block;height:100%;background:var(--loss)}
+.bar i.save{background:var(--leaf-2)}
+.save-box{background:var(--peel-soft);border-radius:18px;padding:18px 20px}
+.save-box .big{color:var(--leaf-2);font-size:clamp(30px,4vw,44px)}
+.note{font-size:13px;color:var(--muted)}
+
+/* solution */
+.sol{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;margin-top:24px}
+.sol-figs{display:flex;gap:14px;align-items:center}
+.sol-figs figure{margin:0;flex:1;display:flex;flex-direction:column;gap:6px}
+.sol-figs img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:20px;background:#FFF}
+.sol-figs figcaption{font-size:14px;font-weight:800;text-align:center}
+.arrow{color:var(--peel);font-size:30px;font-weight:800}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.kpi .n{font-family:var(--display);font-size:40px;font-weight:800;color:var(--leaf-2);line-height:1.05}
+.kpi p{font-size:15px;color:var(--muted)}
+.kpi.wide{grid-column:1/-1;background:var(--peel-soft);border-color:transparent}
+.kpi.wide .n{color:var(--ink)}
+
+/* diário */
+.diary-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{border:2px solid var(--line);background:transparent;border-radius:999px;padding:6px 16px;font-weight:700;cursor:pointer;font-size:15px}
+.chip[aria-pressed="true"]{background:var(--leaf-2);border-color:var(--leaf-2);color:var(--bg)}
+.feed{display:flex;flex-direction:column;gap:18px;margin-top:22px}
+.entry{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:grid;grid-template-columns:110px 1fr;gap:22px}
+.entry .when{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700;font-size:15px}
+.entry .when b{display:block;font-family:var(--display);font-size:30px;color:var(--ink);line-height:1}
+.entry h3{font-size:24px;font-weight:700}
+.badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--leaf-2)}
+.badge.teste{background:var(--peel-soft);color:var(--ink)}
+.badge.doc{background:var(--loss-soft);color:var(--loss)}
+.entry .body{display:flex;flex-direction:column;gap:10px;min-width:0}
+.entry .txt{white-space:pre-wrap;color:var(--ink)}
+.media{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.media img,.media video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:var(--soft);display:block}
+.media a.docl{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;background:var(--soft);font-weight:700;font-size:14px;text-decoration:none;color:var(--ink);word-break:break-word}
+.entry .tools{display:flex;gap:8px;flex-wrap:wrap}
+.empty{background:var(--surface);border:2px dashed var(--line);border-radius:22px;padding:34px;text-align:center;color:var(--muted)}
+.empty b{display:block;font-family:var(--display);font-size:24px;color:var(--ink);margin-bottom:6px}
+form.add{background:var(--surface);border:2px solid var(--leaf-2);border-radius:22px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+form.add .full{grid-column:1/-1}
+form.add input[type=text],form.add input[type=date],form.add select,form.add textarea{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;width:100%}
+form.add textarea{min-height:110px;resize:vertical}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:16px;text-align:center;color:var(--muted)}
+.status{font-size:14px;color:var(--muted)}
+.status.err{color:var(--loss);font-weight:700}
+
+/* contato */
+.contact{background:var(--leaf);color:var(--on-leaf)}
+.contact .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.contact h2{color:var(--on-leaf)}
+.mail{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:color-mix(in srgb,var(--on-leaf) 10%,transparent);border-radius:16px;padding:14px 18px}
+.mail code{font-family:var(--body);font-size:20px;font-weight:800;user-select:all;word-break:break-all}
+.team{display:flex;flex-direction:column;gap:8px;font-size:16px}
+.team b{color:var(--peel)}
+footer{padding-block:24px;font-size:13px;color:var(--muted)}
+
+@media (max-width:860px){
+  .hero .wrap,.sim-grid,.sol,.contact .wrap{grid-template-columns:1fr}
+  .hero-figure{min-height:340px}
+  .path{grid-template-columns:repeat(2,1fr)}
+  .path .step.end{grid-column:1/-1}
+  .facts{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:10px}
+  form.add{grid-template-columns:1fr}
+  .top nav{display:none}
+}
+@media (prefers-reduced-motion:no-preference){ .bar i{transition:width .35s ease} }
+</style>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#inicio"><img src="fotos/logo.jpg" alt="">CascaViva</a>
+  <nav aria-label="Seções"><a href="#historia">A história</a><a href="#simulador">Simulador</a><a href="#solucao">Solução</a><a href="#diario">Diário de testes</a><a href="#contato">Contato</a></nav>
+</div></header>
+
+<section class="hero" id="inicio"><div class="wrap">
+  <div class="stack" style="gap:22px">
+    <div class="logo-chip"><img src="fotos/logo.jpg" alt="CascaViva · Embalagem anti-UV"></div>
+    <h1>A embalagem que faz o alimento <em>durar mais</em> e o empresário perder menos.</h1>
+    <p class="lead">Um aditivo de grafeno vegetal, feito do eucalipto, que transforma o plástico comum de PEBDL numa barreira contra a radiação UV. Pesquisa nascida no IFBA, com pedido de patente.</p>
+    <div class="cta"><a class="btn" href="#simulador">Calcule a sua perda</a><a class="btn ghost" href="#diario">Ver o diário de testes</a></div>
+  </div>
+  <div class="hero-figure">
+    <img class="a" src="fotos/prototipo.jpg" alt="Protótipo do filme com bananas, laranja e maçã">
+    <img class="b" src="fotos/grafeno.jpg" alt="Grafeno vegetal em pó">
+    <span class="tag">Protótipo real</span>
+  </div>
+</div></section>
+
+<section id="historia"><div class="wrap">
+  <p class="eyebrow">A história</p>
+  <h2>Toda semana, a fruta chega madura demais</h2>
+  <p class="lead" style="margin-top:12px">O dono de uma rede de mercados recebe caixas de frutas que saíram boas do campo. No caminho até a gôndola, elas amadurecem rápido demais, estragam em poucos dias e viram prejuízo.</p>
+  <div class="path" role="list">
+    <div class="step" role="listitem"><svg viewBox="0 0 180 130" aria-hidden="true"><rect y="96" width="180" height="34" rx="8" fill="#C9A36A"/><path d="M40 96V54M90 96V44M140 96V60" stroke="#1E4A33" stroke-width="8"/><circle cx="40" cy="48" r="22" fill="#2E7D50"/><circle cx="90" cy="38" r="26" fill="#2E7D50"/><circle cx="140" cy="54" r="20" fill="#2E7D50"/><circle cx="34" cy="50" r="5" fill="#B8432D"/><circle cx="96" cy="36" r="5" fill="#B8432D"/><circle cx="84" cy="46" r="5" fill="#E5A928"/><circle cx="146" cy="56" r="5" fill="#E5A928"/></svg><b>Campo</b><span>Colhida no ponto certo.</span></div>
+    <div class="step" role="listitem"><svg viewBox="0 0 180 130" aria-hidden="true"><circle cx="150" cy="28" r="16" fill="#E5A928"/><path d="M150 2v6M150 48v6M124 28h6M170 28h6" stroke="#E5A928" stroke-width="4" stroke-linecap="round"/><rect x="10" y="58" width="100" height="48" rx="6" fill="#1E4A33"/><path d="M110 70h34l20 20v16h-54z" fill="#2E7D50"/><rect x="120" y="76" width="22" height="14" rx="3" fill="#F2F5EF"/><circle cx="40" cy="110" r="12" fill="#18291F"/><circle cx="138" cy="110" r="12" fill="#18291F"/></svg><b>Transporte</b><span>Horas de estrada, sol e calor.</span></div>
+    <div class="step" role="listitem"><svg viewBox="0 0 180 130" aria-hidden="true"><path d="M14 56L90 16l76 40v68H14z" fill="#1E4A33"/><rect x="40" y="74" width="100" height="50" fill="#F2F5EF"/><rect x="50" y="98" width="24" height="24" fill="#E5A928"/><rect x="78" y="98" width="24" height="24" fill="#E5A928"/><rect x="106" y="98" width="24" height="24" fill="#E5A928"/><rect x="64" y="74" width="24" height="24" fill="#E5A928"/><rect x="92" y="74" width="24" height="24" fill="#E5A928"/></svg><b>Distribuição</b><span>Mais tempo à espera, exposta à luz.</span></div>
+    <div class="step" role="listitem"><svg viewBox="0 0 180 130" aria-hidden="true"><path d="M40 6h100l-10 18H50z" fill="#E5A928"/><rect x="14" y="66" width="152" height="10" fill="#1E4A33"/><rect x="14" y="112" width="152" height="10" fill="#1E4A33"/><circle cx="40" cy="54" r="12" fill="#B8432D"/><circle cx="68" cy="54" r="12" fill="#E5A928"/><circle cx="96" cy="54" r="12" fill="#B8432D"/><circle cx="124" cy="54" r="12" fill="#E5A928"/><circle cx="40" cy="100" r="12" fill="#8A5A2B"/><circle cx="68" cy="100" r="12" fill="#E5A928"/><circle cx="96" cy="100" r="12" fill="#8A5A2B"/><circle cx="124" cy="100" r="12" fill="#B8432D"/><circle cx="150" cy="100" r="12" fill="#8A5A2B"/></svg><b>Gôndola</b><span>Chega madura demais e fica sob luz o dia todo.</span></div>
+    <div class="step end" role="listitem"><svg viewBox="0 0 180 130" aria-hidden="true"><path d="M44 40h92l-10 86H54z" fill="#9AA39D"/><rect x="36" y="28" width="108" height="14" rx="6" fill="#6B776F"/><circle cx="76" cy="26" r="12" fill="#8A5A2B"/><circle cx="102" cy="22" r="12" fill="#6E4A22"/><path d="M70 64v46M90 64v46M110 64v46" stroke="#6B776F" stroke-width="5"/><circle cx="154" cy="92" r="20" fill="#B8432D"/><path d="M146 92h16" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/></svg><b>Prejuízo</b><span>Estraga em poucos dias e vai para o lixo.</span></div>
+  </div>
+  <div class="facts">
+    <div class="fact"><p class="n">1/3</p><div><p><b>da comida do planeta se perde ou é desperdiçada</b>, cerca de 1,3 bilhão de toneladas por ano.</p><p class="src">FAO e PNUMA</p></div></div>
+    <div class="fact"><p class="n">R$ 61,3 bi</p><div><p><b>de prejuízo por ano no Brasil</b> com o desperdício de alimentos.</p><p class="src">Senado Federal, com base no Índice de Desperdício de Alimentos da ONU</p></div></div>
+  </div>
+</div></section>
+
+<section class="sim" id="simulador"><div class="wrap">
+  <p class="eyebrow">Simulador</p>
+  <h2>Quanto a sua loja perde com hortifrúti?</h2>
+  <p class="lead" style="margin-top:12px">Coloque os números da sua operação. A conta é feita aqui na página e nada do que você digita é enviado ou guardado.</p>
+  <div class="sim-grid">
+    <form class="panel stack" id="simForm" style="gap:20px" novalidate>
+      <div class="field"><label for="compra">Quanto você compra de hortifrúti por semana (R$)</label><input type="number" id="compra" min="0" step="100" value="20000" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo da sua loja.</span></div>
+      <div class="field"><label for="perda">Quanto dessa compra se perde (%)</label><input type="number" id="perda" min="0" max="100" step="0.01" value="4.73" inputmode="decimal"><span class="hint">Começa em 4,73%, a quebra média de FLV no varejo em 2024 (ABRAS, via Circuito FLV). Use a da sua loja, se souber.</span></div>
+      <div class="field"><label for="reducao">E se a perda caísse…</label><div class="range-row"><input type="range" id="reducao" min="0" max="60" step="5" value="20"><output id="reducaoOut" for="reducao">20%</output></div><span class="hint">Simulação para você testar cenários. Não é um resultado de teste da CascaViva.</span></div>
+    </form>
+    <div class="panel result" aria-live="polite">
+      <p class="eyebrow" style="color:var(--loss)">Sua perda hoje</p>
+      <p class="big" id="perdaAno">R$ 0</p><p style="margin-top:-8px;color:var(--muted)">por ano</p>
+      <dl class="rows"><dt>Por semana</dt><dd id="perdaSem">R$ 0</dd><dt>Por mês</dt><dd id="perdaMes">R$ 0</dd></dl>
+      <div class="bar" aria-hidden="true"><i id="barLoss" style="width:100%"></i></div>
+      <div class="save-box stack" style="gap:6px">
+        <p style="font-weight:800">Se a perda caísse <span id="redTxt">20%</span>, você deixaria de perder</p>
+        <p class="big" id="ganhoAno">R$ 0</p><p class="note">por ano · <span id="ganhoMes">R$ 0</span> por mês</p>
+      </div>
+      <p class="note">Mês = 4,33 semanas; ano = 52 semanas.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="solucao"><div class="wrap">
+  <p class="eyebrow">A solução</p>
+  <h2>Grafeno vegetal dentro do plástico que você já usa</h2>
+  <div class="sol">
+    <div class="sol-figs">
+      <figure><img src="fotos/grafeno.jpg" alt="Grafeno vegetal em pó"><figcaption>Grafeno vegetal, do eucalipto</figcaption></figure>
+      <span class="arrow" aria-hidden="true">→</span>
+      <figure><img src="fotos/prototipo.jpg" alt="Filme de PEBDL com o aditivo, com frutas dentro"><figcaption>Filme de PEBDL anti-UV</figcaption></figure>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><p class="n">~90%</p><p>da radiação UV bloqueada pelo filme, com 5% de aditivo</p></div>
+      <div class="kpi"><p class="n">+40%</p><p>de eficiência mecânica em relação ao plástico convencional</p></div>
+      <div class="kpi"><p class="n">5%</p><p>de aditivo na mistura, sem mudar as máquinas da indústria</p></div>
+      <div class="kpi"><p class="n" style="font-size:24px">BR 10 2025 026328 9</p><p>pedido de patente, titular IFBA</p></div>
+      <div class="kpi wide"><p class="n" style="font-size:30px">+ 1 a 2 centavos por saco</p><p style="color:var(--ink)">É o que o aditivo soma ao custo de uma embalagem de PEBDL de 30 × 40 cm. O grafeno vegetal custa cerca de 15% menos que o TiO₂, o aditivo anti-UV de referência.</p></div>
+    </div>
+  </div>
+  <p class="src" style="margin-top:16px">Dados técnicos: detalhamento do projeto e resumo CONNEPI 2026 · Custo: nota técnica de viabilidade da equipe (Módulo 9 da Trilha de Aceleração para Startups do Agro) e Prof. Francislei Santos (01/11/2026)</p>
+</div></section>
+
+<section class="sim" id="diario"><div class="wrap">
+  <div class="diary-head">
+    <div class="stack" style="gap:10px"><p class="eyebrow">Diário de testes</p><h2>Atualizações, fotos e documentos</h2><p class="lead">O que a equipe está testando e produzindo, com data. Primeiro da fila: frutas na embalagem comum e na CascaViva, lado a lado, fotografadas dia após dia.</p></div>
+  </div>
+  <div class="chips" role="group" aria-label="Filtrar">
+    <button class="chip" type="button" data-f="todos" aria-pressed="true">Tudo</button>
+    <button class="chip" type="button" data-f="teste" aria-pressed="false">Testes</button>
+    <button class="chip" type="button" data-f="atualizacao" aria-pressed="false">Atualizações</button>
+    <button class="chip" type="button" data-f="documento" aria-pressed="false">Documentos</button>
+  </div>
+  <div class="feed" id="feed">
+    <div class="empty" id="emptyMsg"><b>O teste com as frutas vem aí</b>As fotos, os vídeos e os documentos de cada etapa vão aparecer aqui, do mais recente para o mais antigo.</div>
+  </div>
+</div></section>
+
+<section class="contact" id="contato"><div class="wrap">
+  <div class="stack" style="gap:18px">
+    <p class="eyebrow" style="color:var(--peel)">Contato</p>
+    <h2>Quer testar a CascaViva na sua operação?</h2>
+    <p style="color:color-mix(in srgb,var(--on-leaf) 80%,transparent);max-width:58ch">Indústrias de embalagens, transformadoras de PEBDL e redes de mercado: fale com a equipe.</p>
+    <div class="mail"><a href="mailto:cascaviva.projeto@gmail.com" style="color:inherit;text-decoration:none"><code id="mailTxt">cascaviva.projeto@gmail.com</code></a><button class="btn" type="button" id="copyMail">Copiar e-mail</button><span id="copyOk" class="note" style="color:var(--peel)" role="status"></span></div>
+  </div>
+  <div class="team">
+    <p><b>Karolayne Angel</b> · líder, Engenharia Química (IFBA)</p>
+    <p><b>Silvano Neto</b> · cofundador</p>
+    <p><b>Prof. Francislei Santos</b> · orientador e inventor (IFBA)</p>
+  </div>
+</div></section>
+<footer><div class="wrap">CascaViva · tecnologia desenvolvida no IFBA · pedido de patente BR 10 2025 026328 9</div></footer>
+
+<script>
+(function(){
+  const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+  const $ = id => document.getElementById(id);
+  function calc(){
+    const c = Math.max(0, parseFloat($('compra').value)||0);
+    const p = Math.min(100, Math.max(0, parseFloat($('perda').value)||0))/100;
+    const r = parseInt($('reducao').value,10)/100;
+    const sem = c*p, mes = sem*4.33, ano = sem*52;
+    $('perdaSem').textContent = brl(sem); $('perdaMes').textContent = brl(mes); $('perdaAno').textContent = brl(ano);
+    $('reducaoOut').textContent = Math.round(r*100)+'%'; $('redTxt').textContent = Math.round(r*100)+'%';
+    $('ganhoAno').textContent = brl(ano*r); $('ganhoMes').textContent = brl(mes*r);
+    $('barLoss').style.width = (100*(1-r))+'%';
+  }
+  ['compra','perda','reducao'].forEach(id => $(id).addEventListener('input', calc));
+  $('simForm').addEventListener('submit', e => e.preventDefault());
+  calc();
+
+  $('copyMail').addEventListener('click', () => {
+    const t = $('mailTxt').textContent;
+    const ok = () => { $('copyOk').textContent = 'Copiado'; setTimeout(()=>$('copyOk').textContent='',2000); };
+    try { navigator.clipboard.writeText(t).then(ok, sel); } catch(e){ sel(); }
+    function sel(){ const r=document.createRange(); r.selectNodeContents($('mailTxt')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); $('copyOk').textContent='Selecionado: use Ctrl+C'; }
+  });
+
+  // ---------- Diário de testes (lista estática) ----------
+  const TIPOS = {teste:['Teste','teste'], atualizacao:['Atualização',''], documento:['Documento','doc']};
+  const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  let entries = [], filtro = 'todos', canEdit = false, confirmId = null;
+
+  function safeUrl(u){ return (typeof u === 'string' && (/^fotos\/[\w.\- ]+$/.test(u) || /^https:\/\//.test(u) || /^data:(image|video|application\/pdf)[^;]*;base64,/.test(u))) ? u : null; }
+  function el(tag, attrs, kids){ const e=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==='text') e.textContent=attrs[k]; else e.setAttribute(k,attrs[k]); } (kids||[]).forEach(k=>k&&e.appendChild(k)); return e; }
+
+  function render(){
+    const feed = $('feed'); feed.replaceChildren();
+    const list = entries.filter(x => filtro==='todos' || x.tipo===filtro);
+    if(!list.length){
+      const em = el('div',{class:'empty'}); const b = el('b',{text: entries.length ? 'Nada nesta categoria ainda' : 'O teste com as frutas vem aí'});
+      em.append(b, document.createTextNode(entries.length ? 'Escolha outra categoria acima.' : 'As fotos, os vídeos e os documentos de cada etapa vão aparecer aqui, do mais recente para o mais antigo.'));
+      feed.appendChild(em); return;
+    }
+    for(const x of list){
+      const [lbl, cls] = TIPOS[x.tipo] || ['Atualização',''];
+      const d = /^\d{4}-\d{2}-\d{2}$/.test(x.data||'') ? x.data.split('-') : null;
+      const when = el('div',{class:'when'});
+      if(d){ when.append(el('b',{text:String(+d[2])}), document.createTextNode(MESES[+d[1]-1]+' '+d[0])); }
+      const body = el('div',{class:'body'});
+      body.append(el('span',{class:'badge '+cls, text:lbl}), el('h3',{text:String(x.titulo||'Sem título')}));
+      if(x.texto) body.append(el('p',{class:'txt', text:String(x.texto)}));
+      const files = Array.isArray(x.anexos) ? x.anexos : [];
+      if(files.length){
+        const m = el('div',{class:'media'});
+        for(const f of files){
+          const u = safeUrl(f && f.url); if(!u) continue;
+          const ct = String(f.contentType||''); const nome = String(f.nome||'arquivo');
+          if(ct.startsWith('image/')){ const a=el('a',{href:u,target:'_blank',rel:'noopener'}); a.append(el('img',{src:u,alt:nome,loading:'lazy'})); m.append(a); }
+          else if(ct.startsWith('video/')){ const v=el('video',{src:u,controls:'',preload:'metadata'}); v.setAttribute('aria-label',nome); m.append(v); }
+          else { const a=el('a',{class:'docl',href:u,target:'_blank',rel:'noopener'}); a.textContent='📄 '+nome; m.append(a); }
+        }
+        body.append(m);
+      }
+      if(canEdit){
+        const t = el('div',{class:'tools'});
+        if(confirmId===x.id){
+          const yes=el('button',{class:'btn danger',type:'button',text:'Apagar de vez'}); yes.onclick=()=>remove(x);
+          const no=el('button',{class:'btn ghost',type:'button',text:'Manter'}); no.onclick=()=>{confirmId=null;render();};
+          t.append(el('span',{class:'status',text:'Apagar esta atualização e os arquivos dela?'}), yes, no);
+        } else { const b=el('button',{class:'btn ghost',type:'button',text:'Apagar'}); b.onclick=()=>{confirmId=x.id;render();}; t.append(b); }
+        body.append(t);
+      }
+      feed.append(el('article',{class:'entry'},[when, body]));
+    }
+  }
+
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    filtro = c.dataset.f; document.querySelectorAll('.chip').forEach(o => o.setAttribute('aria-pressed', String(o===c))); render();
+  }));
+
+  (async function boot(){
+    let lista = window.ATUALIZACOES;
+    if(!Array.isArray(lista)){
+      try{ const r = await fetch('atualizacoes.json', {cache:'no-cache'}); lista = r.ok ? await r.json() : []; }catch(e){ lista = []; }
+    }
+    entries = (Array.isArray(lista) ? lista : []).map((x,k)=>Object.assign({id:'a'+k}, x))
+      .sort((a,b)=> String(b.data).localeCompare(String(a.data)));
+    render();
+  })();
+})();
+</script>
+
+</body>
+</html>
