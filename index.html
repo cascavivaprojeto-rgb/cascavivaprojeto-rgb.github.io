@@ -160,6 +160,45 @@ form.add textarea{min-height:110px;resize:vertical}
 .team b{color:var(--peel)}
 footer{padding-block:24px;font-size:13px;color:var(--muted)}
 
+/* cards de dor */
+.dores-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:26px}
+.dor{display:flex;flex-direction:column;gap:12px;background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:22px;text-decoration:none;color:var(--ink);transition:transform .15s ease,border-color .15s ease;min-width:0}
+.dor:hover{border-color:var(--leaf-2);transform:translateY(-2px)}
+.dor .ic{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:var(--soft)}
+.dor .ic svg{width:34px;height:34px}
+.dor .seg{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dor q{quotes:none;font-family:var(--display);font-size:21px;font-weight:700;line-height:1.2}
+.dor .go{margin-top:auto;align-self:flex-start;background:var(--peel);color:#1B1405;font-weight:800;border-radius:999px;padding:8px 16px;font-size:14px;letter-spacing:.04em}
+.dor.prod{background:var(--leaf);border-color:var(--leaf);color:var(--on-leaf)}
+.dor.prod .seg{color:var(--peel)} .dor.prod .ic{background:color-mix(in srgb,var(--on-leaf) 14%,transparent)}
+/* página do perfil */
+.back{display:inline-flex;gap:6px;align-items:center;font-weight:800;text-decoration:none;color:var(--leaf-2)}
+.perfil-head{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;margin-top:18px}
+.perfil-head .ic{width:88px;height:88px;border-radius:24px;background:var(--soft);display:flex;align-items:center;justify-content:center}
+.perfil-head .ic svg{width:54px;height:54px}
+.perfil-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.box h3{font-size:22px}
+.box.dorbox{background:var(--loss-soft);border-color:transparent}
+.box.dorbox h3{color:var(--loss)}
+.box ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.dado{display:flex;gap:14px;align-items:baseline}
+.dado b{font-family:var(--display);font-size:34px;color:var(--loss);white-space:nowrap}
+/* produtos */
+.prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:22px}
+.prodc{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.prodc h3{font-size:22px}
+.price{font-family:var(--display);font-size:28px;font-weight:800;color:var(--leaf-2);line-height:1.1}
+.price.consulta{color:var(--muted);font-size:22px}
+.price small{display:block;font-family:var(--body);font-size:14px;font-weight:600;color:var(--muted)}
+.st{align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--leaf-2)}
+.st.estudo{background:var(--peel-soft);color:var(--ink)}
+.faixas{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:520px}
+.faixas th,.faixas td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+.faixas th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.faixas td b{color:var(--leaf-2)}
+.scroll-x{overflow-x:auto}
+@media (max-width:860px){ .perfil-grid{grid-template-columns:1fr} .perfil-head{grid-template-columns:1fr} }
 @media (max-width:860px){
   .hero .wrap,.sim-grid,.sol,.contact .wrap{grid-template-columns:1fr}
   .hero-figure{min-height:340px}
@@ -175,15 +214,15 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 
 <header class="top"><div class="wrap">
   <a class="brand" href="#inicio"><img src="fotos/logo.jpg" alt="">CascaViva</a>
-  <nav aria-label="Seções"><a href="#historia">A história</a><a href="#simulador">Simulador</a><a href="#solucao">Solução</a><a href="#diario">Diário de testes</a><a href="#contato">Contato</a></nav>
+  <nav aria-label="Seções"><a href="#inicio">Início</a><a href="#dores">Qual é a sua dor?</a><a href="#produtos">Produtos e preços</a><a href="#simulador">Simulador</a><a href="#diario">Diário de testes</a><a href="#contato">Contato</a></nav>
 </div></header>
 
-<section class="hero" id="inicio"><div class="wrap">
+<section class="hero" id="inicio" data-view="inicio"><div class="wrap">
   <div class="stack" style="gap:22px">
     <div class="logo-chip"><img src="fotos/logo.jpg" alt="CascaViva · Embalagem anti-UV"></div>
-    <h1>A embalagem que faz o alimento <em>durar mais</em> e o empresário perder menos.</h1>
-    <p class="lead">Um aditivo de grafeno vegetal, feito do eucalipto, que transforma o plástico comum de PEBDL numa barreira contra a radiação UV. Pesquisa nascida no IFBA, com pedido de patente.</p>
-    <div class="cta"><a class="btn" href="#simulador">Calcule a sua perda</a><a class="btn ghost" href="#diario">Ver o diário de testes</a></div>
+    <h1>Proteção anti-UV <em>de origem vegetal</em> para o que a luz estraga.</h1>
+    <p class="lead">Um aditivo de grafeno vegetal, feito do eucalipto, que dá ao plástico uma barreira contra a radiação UV. Pensado para embalagens de hortifrúti, óleos e cosméticos, para resinas e revestimentos, e também vendido puro. Pesquisa nascida no IFBA, com pedido de patente.</p>
+    <div class="cta"><a class="btn" href="#dores">Qual é a sua dor? Clique aqui</a><a class="btn ghost" href="#produtos">Produtos e preços</a></div>
   </div>
   <div class="hero-figure">
     <img class="a" src="fotos/prototipo.jpg" alt="Protótipo do filme com bananas, laranja e maçã">
@@ -192,7 +231,36 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   </div>
 </div></section>
 
-<section id="historia"><div class="wrap">
+
+<section id="dores" data-view="inicio"><div class="wrap">
+  <p class="eyebrow">Para quem é</p>
+  <h2>Qual é a sua dor? Encontre o seu caso</h2>
+  <p class="lead" style="margin-top:12px">Escolha o card que mais parece com você. Cada um abre uma página com a dor, a solução e o produto certo, com preço.</p>
+  <div class="dores-grid" id="doresGrid"></div>
+</div></section>
+
+<section id="perfil" data-view="perfil" hidden><div class="wrap" id="perfilBox"></div></section>
+
+<section id="produtos" data-view="produtos" hidden><div class="wrap">
+  <a class="back" href="#inicio">← Início</a>
+  <p class="eyebrow" style="margin-top:18px">Nossos produtos</p>
+  <h2>Produtos e preços</h2>
+  <p class="lead" style="margin-top:12px">Tudo o que a CascaViva oferece, com o preço onde ele já está definido. Os demais são calculados para cada cliente.</p>
+  <div class="prods" id="prodsGrid"></div>
+  <div class="box" style="margin-top:22px">
+    <h3>Embalagem anti-UV para hortifrúti: preço por volume</h3>
+    <p style="color:var(--muted)">Quanto mais volume, menor o preço por embalagem. O preço cobre a embalagem, o aditivo, os custos de operação e o lucro.</p>
+    <div class="scroll-x"><table class="faixas"><thead><tr><th>Faixa</th><th>Volume de compra</th><th>Preço por embalagem</th></tr></thead><tbody>
+      <tr><td>1</td><td>Menor volume</td><td><b>R$ 0,35 a R$ 0,75</b></td></tr>
+      <tr><td>2</td><td>↓</td><td><b>R$ 0,30 a R$ 0,67</b></td></tr>
+      <tr><td>3</td><td>↓</td><td><b>R$ 0,28 a R$ 0,63</b></td></tr>
+      <tr><td>4</td><td>Maior volume</td><td><b>R$ 0,25 a R$ 0,59</b></td></tr>
+    </tbody></table></div>
+    <p class="note">Valores de referência para um saco de PEBDL de 30 × 40 cm. O preço final depende de cada cliente, inclusive da logística.</p>
+  </div>
+</div></section>
+
+<section id="historia" data-view="inicio"><div class="wrap">
   <p class="eyebrow">A história</p>
   <h2>Toda semana, a fruta chega madura demais</h2>
   <p class="lead" style="margin-top:12px">O dono de uma rede de mercados recebe caixas de frutas que saíram boas do campo. No caminho até a gôndola, elas amadurecem rápido demais, estragam em poucos dias e viram prejuízo.</p>
@@ -209,7 +277,8 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   </div>
 </div></section>
 
-<section class="sim" id="simulador"><div class="wrap">
+<section class="sim" id="simulador" data-view="simulador" hidden><div class="wrap">
+  <a class="back" href="#inicio" style="margin-bottom:14px">← Início</a>
   <p class="eyebrow">Simulador</p>
   <h2>Quanto a sua loja perde com hortifrúti?</h2>
   <p class="lead" style="margin-top:12px">Coloque os números da sua operação. A conta é feita aqui na página e nada do que você digita é enviado ou guardado.</p>
@@ -233,7 +302,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   </div>
 </div></section>
 
-<section id="solucao"><div class="wrap">
+<section id="solucao" data-view="inicio"><div class="wrap">
   <p class="eyebrow">A solução</p>
   <h2>Grafeno vegetal dentro do plástico que você já usa</h2>
   <div class="sol">
@@ -253,7 +322,8 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   <p class="src" style="margin-top:16px">Dados técnicos: detalhamento do projeto e resumo CONNEPI 2026 · Custo: nota técnica de viabilidade da equipe (Módulo 9 da Trilha de Aceleração para Startups do Agro) e Prof. Francislei Santos (01/11/2026)</p>
 </div></section>
 
-<section class="sim" id="diario"><div class="wrap">
+<section class="sim" id="diario" data-view="diario" hidden><div class="wrap">
+  <a class="back" href="#inicio" style="margin-bottom:14px">← Início</a>
   <div class="diary-head">
     <div class="stack" style="gap:10px"><p class="eyebrow">Diário de testes</p><h2>Atualizações, fotos e documentos</h2><p class="lead">O que a equipe está testando e produzindo, com data. Primeiro da fila: frutas na embalagem comum e na CascaViva, lado a lado, fotografadas dia após dia.</p></div>
   </div>
@@ -307,6 +377,98 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     try { navigator.clipboard.writeText(t).then(ok, sel); } catch(e){ sel(); }
     function sel(){ const r=document.createRange(); r.selectNodeContents($('mailTxt')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); $('copyOk').textContent='Selecionado: use Ctrl+C'; }
   });
+
+
+  // ---------- Perfis, produtos e navegação ----------
+  const IC = {
+    campo:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40h36" stroke="#8A6A3A" stroke-width="4" stroke-linecap="round"/><path d="M14 40V24M24 40V18M34 40V26" stroke="#1E4A33" stroke-width="3"/><circle cx="14" cy="20" r="7" fill="#2E7D50"/><circle cx="24" cy="14" r="8" fill="#2E7D50"/><circle cx="34" cy="22" r="6" fill="#2E7D50"/><circle cx="22" cy="13" r="2" fill="#B8432D"/></svg>',
+    caixa:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 18l16-8 16 8v20l-16 8-16-8z" fill="#E5A928"/><path d="M8 18l16 8 16-8M24 26v20" stroke="#1E4A33" stroke-width="2.5" fill="none"/></svg>',
+    caminhao:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="16" width="24" height="16" rx="2" fill="#1E4A33"/><path d="M28 20h9l6 7v5H28z" fill="#2E7D50"/><circle cx="12" cy="35" r="4" fill="#18291F"/><circle cx="36" cy="35" r="4" fill="#18291F"/><circle cx="40" cy="9" r="4" fill="#E5A928"/></svg>',
+    mercado:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 8h6l5 22h22l4-15H14" fill="none" stroke="#1E4A33" stroke-width="3" stroke-linejoin="round"/><circle cx="20" cy="38" r="3.5" fill="#1E4A33"/><circle cx="36" cy="38" r="3.5" fill="#1E4A33"/><circle cx="24" cy="21" r="3.5" fill="#B8432D"/><circle cx="32" cy="21" r="3.5" fill="#E5A928"/></svg>',
+    oleo:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 6h10v6l5 6v22a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2V18l5-6z" fill="#E5A928"/><rect x="17" y="24" width="14" height="10" rx="2" fill="#F2F5EF"/><path d="M24 26c-3 4-3 6 0 6s3-2 0-6z" fill="#E5A928"/></svg>',
+    cosmetico:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="13" y="16" width="22" height="26" rx="5" fill="#2E7D50"/><rect x="19" y="6" width="10" height="10" rx="2" fill="#1E4A33"/><circle cx="24" cy="29" r="5" fill="#F2F5EF"/></svg>',
+    fabrica:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 42V22l10 6v-6l10 6v-6l10 6V8h8v34z" fill="#1E4A33"/><rect x="10" y="32" width="5" height="5" fill="#E5A928"/><rect x="20" y="32" width="5" height="5" fill="#E5A928"/><rect x="30" y="32" width="5" height="5" fill="#E5A928"/></svg>',
+    resina:'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="15" cy="30" r="6" fill="#2E7D50"/><circle cx="27" cy="34" r="6" fill="#1E4A33"/><circle cx="33" cy="22" r="6" fill="#2E7D50"/><circle cx="20" cy="18" r="6" fill="#E5A928"/><path d="M6 42h36" stroke="#8A6A3A" stroke-width="3" stroke-linecap="round"/></svg>',
+    po:'<svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="36" rx="18" ry="5" fill="#CFDACB"/><path d="M10 35c4-12 9-18 14-18s10 6 14 18z" fill="#18291F"/></svg>',
+    folha:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 38C10 20 22 10 40 8c0 20-12 30-30 30z" fill="#2E7D50"/><path d="M10 38l18-18" stroke="#F2F5EF" stroke-width="3" stroke-linecap="round"/></svg>',
+    lista:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="6" width="32" height="36" rx="5" fill="#F2F5EF"/><path d="M15 16h18M15 24h18M15 32h12" stroke="#1E4A33" stroke-width="3" stroke-linecap="round"/></svg>'
+  };
+  const PRODUTOS = [
+    {id:'hortifruti', nome:'Embalagem anti-UV para hortifrúti', desc:'Saco de PEBDL com grafeno vegetal para frutas, legumes e verduras.', preco:'R$ 0,25 a R$ 0,75', un:'por embalagem, conforme o volume', st:'Protótipo'},
+    {id:'oleos', nome:'Embalagem anti-UV para óleos', desc:'Filme flexível com barreira UV para óleo comestível.', preco:null, st:'Em teste'},
+    {id:'cosmeticos', nome:'Embalagem anti-UV para cosméticos', desc:'Barreira UV para óleos corporais e produtos que rançam com a luz.', preco:null, st:'Em estudo'},
+    {id:'resina', nome:'Resina de PEBDL com grafeno vegetal', desc:'O composto pronto para a transformadora fazer o filme anti-UV.', preco:null, st:'Protótipo'},
+    {id:'revestimentos', nome:'Revestimentos com grafeno vegetal', desc:'Aplicação do aditivo em revestimentos com proteção UV.', preco:null, st:'Em estudo'},
+    {id:'aditivo', nome:'Aditivo de grafeno vegetal puro', desc:'O pó de grafeno vegetal, do eucalipto, sem polímero, para a sua própria formulação.', preco:'R$ 29,75 a R$ 42,16', un:'por kg · estimativa, cerca de 15% abaixo do TiO₂', st:null},
+    {id:'licenca', nome:'Licença e transferência de tecnologia', desc:'Dossiê de transferência, lote piloto e treinamento para produzir na sua fábrica.', preco:null, st:null}
+  ];
+  const PERFIS = [
+    {id:'produtor', seg:'Hortifrúti · produção', ic:'campo', q:'Você é produtor e vê a fruta perder valor antes de vender?',
+     dor:['Parte da colheita se perde antes de chegar ao comprador: no campo, no manuseio e no transporte.'], dado:['~30%','das frutas se perdem no Brasil, segundo a Embrapa (dados de 1993).'],
+     sol:['Embalagem com barreira anti-UV, que protege a fruta da luz no caminho até o comprador.','O aditivo entra na mistura do plástico: a embalagem tem o mesmo formato da comum.'], prods:['hortifruti'], sim:true},
+    {id:'embalador', seg:'Hortifrúti · packing house', ic:'caixa', q:'Você lava, seleciona e embala hortifrúti e quer que ele chegue melhor?',
+     dor:['As embalagens convencionais duram pouco, não protegem da luz e viram lixo.'], dado:['50%','das perdas pós-colheita acontecem no manuseio e no transporte (Embrapa, 2016).'],
+     sol:['Troca da embalagem comum por uma com cerca de 90% de barreira UV.','Mais resistente: eficiência mecânica 40% superior à do plástico convencional.'], prods:['hortifruti','resina'], sim:true},
+    {id:'logistica', seg:'Logística e distribuição', ic:'caminhao', q:'Sua dor é perder produtos durante a logística?',
+     dor:['Horas de estrada, sol, calor e espera nas centrais: a carga chega madura demais e estraga em poucos dias.'], dado:['30%','das perdas pós-colheita acontecem nas centrais de abastecimento (Embrapa, 2016).'],
+     sol:['Embalagem que bloqueia a radiação UV durante o transporte e a espera.','Mais resistência mecânica para aguentar o manuseio.'], prods:['hortifruti'], sim:true},
+    {id:'mercado', seg:'Supermercados e redes', ic:'mercado', q:'Você é dono de mercado e vê fruta estragar na gôndola?',
+     dor:['A fruta chega madura demais, fica sob luz o dia todo e estraga antes de vender.'], dado:['4,73%','de quebra nas vendas de frutas, legumes e verduras em 2024; o hortifrúti responde por 30% das perdas do varejo (ABRAS).'],
+     sol:['Embalagem anti-UV para o hortifrúti que vocês mesmos embalam.','Um custo extra de centavos por embalagem para reduzir a quebra.'], prods:['hortifruti'], sim:true},
+    {id:'oleos', seg:'Indústria de óleos', ic:'oleo', q:'Seu óleo perde qualidade com a luz na prateleira?',
+     dor:['A luz acelera a oxidação e o ranço dos óleos em embalagem transparente.'], dado:['9 meses','de vida útil estimada para óleos de sementes em PET transparente sob LED, contra validade impressa de 20 meses ou mais (Martín-Torres et al., 2022).'],
+     sol:['Filme flexível com barreira UV para embalagens de óleo comestível.','Segmento em teste pela equipe.'], prods:['oleos','aditivo']},
+    {id:'cosmeticos', seg:'Indústria de cosméticos', ic:'cosmetico', q:'Seus óleos corporais e cremes rançam com a luz?',
+     dor:['Óleos corporais e produtos com óleos vegetais rancificam com a luz e perdem qualidade.'], dado:null,
+     sol:['Embalagem com barreira UV de origem vegetal para proteger a fórmula.','Aplicação em estudo: fale com a equipe para um projeto-piloto.'], prods:['cosmeticos','aditivo']},
+    {id:'transformadora', seg:'Indústria de embalagens', ic:'fabrica', q:'Você fabrica embalagens plásticas e quer oferecer proteção UV?',
+     dor:['O aditivo anti-UV de referência, o TiO₂, é mineral e importado, e a demanda por embalagens mais sustentáveis cresce.'], dado:['5%','de aditivo na mistura do PEBDL, sem mudar as demais etapas da produção do filme.'],
+     sol:['O grafeno vegetal entra na etapa de mistura dos pellets, antes da extrusão.','Cerca de 90% de barreira UV e 40% mais eficiência mecânica.'], prods:['aditivo','resina','licenca']},
+    {id:'resinas', seg:'Resinas e revestimentos', ic:'resina', q:'Você produz resina ou revestimento e quer proteção UV de origem vegetal?',
+     dor:['Proteger polímeros e superfícies da radiação UV costuma depender de aditivos sintéticos.'], dado:null,
+     sol:['O grafeno vegetal é uma plataforma aditiva adaptável a vários polímeros e finalidades.','Resina de PEBDL com grafeno já em protótipo; revestimentos em estudo.'], prods:['resina','revestimentos','aditivo']},
+    {id:'so-aditivo', seg:'Venda do aditivo', ic:'po', q:'Você só precisa do aditivo de grafeno vegetal?',
+     dor:['Você já tem a sua formulação e quer um aditivo anti-UV de origem vegetal.'], dado:['15%','mais barato que o TiO₂, o aditivo anti-UV de referência, segundo a estimativa da equipe.'],
+     sol:['Grafeno vegetal puro, sem polímero, feito do eucalipto.','Com 5% na mistura do PEBDL, cerca de 90% de barreira UV.'], prods:['aditivo','licenca']},
+    {id:'esg', seg:'Metas ESG', ic:'folha', q:'Sua empresa tem metas ESG para embalagens?',
+     dor:['Embalagens plásticas e aditivos sintéticos importados pesam nas metas de sustentabilidade.'], dado:null,
+     sol:['Troca do aditivo UV sintético importado por um aditivo vegetal.','Material mais biodegradável que o plástico convencional, alinhado ao Decreto 12.688/2025 de logística reversa de embalagens.'], prods:['hortifruti','oleos','cosmeticos','aditivo']}
+  ];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function prodCard(p){
+    const st = p.st ? `<span class="st ${p.st==='Protótipo'?'':'estudo'}">${esc(p.st)}</span>` : '';
+    const pr = p.preco ? `<p class="price">${esc(p.preco)}<small>${esc(p.un)}</small></p>` : `<p class="price consulta">Sob consulta<small>calculado para cada cliente</small></p>`;
+    return `<div class="prodc">${st}<h3>${esc(p.nome)}</h3><p style="color:var(--muted)">${esc(p.desc)}</p>${pr}</div>`;
+  }
+  $('doresGrid').innerHTML = PERFIS.map(p => `<a class="dor" href="#${p.id}"><span class="ic">${IC[p.ic]}</span><span class="seg">${esc(p.seg)}</span><q>${esc(p.q)}</q><span class="go">CLIQUE AQUI!</span></a>`).join('')
+    + `<a class="dor prod" href="#produtos"><span class="ic">${IC.lista}</span><span class="seg">Nossos produtos</span><q>Quer ver todos os produtos e preços?</q><span class="go">CLIQUE AQUI!</span></a>`;
+  $('prodsGrid').innerHTML = PRODUTOS.map(prodCard).join('');
+  function perfilHtml(p){
+    const ps = p.prods.map(id => PRODUTOS.find(x => x.id===id)).filter(Boolean);
+    const dado = p.dado ? `<div class="dado"><b>${esc(p.dado[0])}</b><span>${esc(p.dado[1])}</span></div>` : '';
+    const sim = p.sim ? `<a class="btn" href="#simulador">Calcule a sua perda</a>` : '';
+    return `<a class="back" href="#dores">← Todas as dores</a>
+      <div class="perfil-head"><span class="ic">${IC[p.ic]}</span><div class="stack" style="gap:8px"><p class="eyebrow">${esc(p.seg)}</p><h2>${esc(p.q)}</h2></div></div>
+      <div class="perfil-grid">
+        <div class="box dorbox"><h3>A dor</h3>${p.dor.map(d=>`<p>${esc(d)}</p>`).join('')}${dado}</div>
+        <div class="box"><h3>Como a CascaViva ajuda</h3><ul>${p.sol.map(s=>`<li>${esc(s)}</li>`).join('')}</ul></div>
+      </div>
+      <h3 style="font-size:26px;margin-top:30px">Produto para você</h3>
+      <div class="prods">${ps.map(prodCard).join('')}</div>
+      <div class="cta" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">${sim}<a class="btn ghost" href="#produtos">Ver todos os produtos</a><a class="btn ghost" href="#contato">Falar com a equipe</a></div>`;
+  }
+  const VIEWS = ['inicio','produtos','simulador','diario'];
+  function route(){
+    const h = decodeURIComponent((location.hash||'').slice(1));
+    const perfil = PERFIS.find(p => p.id===h);
+    let view = perfil ? 'perfil' : (VIEWS.includes(h) ? h : 'inicio');
+    if(perfil) $('perfilBox').innerHTML = perfilHtml(perfil);
+    document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== view; });
+    const alvo = (h==='dores' || h==='contato') ? document.getElementById(h) : null;
+    if(alvo) alvo.scrollIntoView(); else window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange', route);
+  route();
 
   // ---------- Diário de testes (lista estática) ----------
   const TIPOS = {teste:['Teste','teste'], atualizacao:['Atualização',''], documento:['Documento','doc']};
