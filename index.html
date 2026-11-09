@@ -3,7 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="CascaViva: embalagem anti-UV com grafeno vegetal que faz o alimento durar mais e o empresário perder menos.">
+<meta name="description" content="CascaViva: proteção anti-UV de origem vegetal para alimentos, óleos, cosméticos e plásticos. Simule a sua perda e veja produtos e preços.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CascaViva">
+<meta property="og:title" content="CascaViva · Proteção anti-UV de origem vegetal">
+<meta property="og:description" content="Grafeno vegetal do eucalipto que protege alimentos, óleos e cosméticos da luz. Descubra quanto você perde e veja produtos e preços.">
+<meta property="og:url" content="https://cascavivaprojeto-rgb.github.io/">
+<meta property="og:image" content="https://cascavivaprojeto-rgb.github.io/fotos/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="fotos/icone.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
 <title>CascaViva · Embalagem Anti-UV</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -329,9 +340,9 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   </ol>
   <h3 class="sec-h" id="privacidade">Como usamos seus dados</h3>
   <div class="box" style="margin-top:14px">
-    <p>Quando você responde às perguntas de boas-vindas, navega pelos cards e usa os simuladores, registramos o seu nome e a sua área, se você os informar, as páginas que abriu e os valores simulados. Isso serve só para entender o que interessa a cada visitante e melhorar o nosso atendimento.</p>
+    <p>Quando você responde às perguntas de boas-vindas, navega pelos cards e usa os simuladores, registramos o seu nome e a sua área, se você os informar, as páginas que abriu, os valores simulados e por qual link você chegou. Isso serve só para entender o que interessa a cada visitante e melhorar o nosso atendimento.</p>
     <p>Documentos como CPF ou CNPJ, CEP, telefone e e-mail só são pedidos quando você quer comprar ou falar com a equipe, e servem para responder ao seu pedido.</p>
-    <p>Não vendemos nem repassamos seus dados. Para consultar, corrigir ou apagar o que você nos informou, escreva para <b>cascaviva.projeto@gmail.com</b>.</p>
+    <p>Os registros de navegação são apagados depois de 12 meses. Não vendemos nem repassamos seus dados. Para consultar, corrigir ou apagar o que você nos informou, escreva para <b>cascaviva.projeto@gmail.com</b>.</p>
   </div>
   <h3 class="sec-h" id="contatos">Contatos</h3>
   <div class="box" style="margin-top:14px">
@@ -633,10 +644,18 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   const sessao = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
   let visitante = {nome:'', area:''};
   try { const v = JSON.parse(localStorage.getItem('cv_visitante')||'null'); if(v && typeof v==='object') visitante = {nome:String(v.nome||'').slice(0,80), area:String(v.area||'').slice(0,80)}; } catch(e){}
+  let canal = 'site direto';
+  try {
+    const q = new URLSearchParams(location.search);
+    const o = (q.get('origem') || q.get('utm_source') || '').toLowerCase().replace(/[^a-z0-9_-]/g,'').slice(0,30);
+    if(o){ canal = o; try { sessionStorage.setItem('cv_canal', o); } catch(e){} }
+    else { let s = null; try { s = sessionStorage.getItem('cv_canal'); } catch(e){} if(s) canal = s; else if(location.protocol === 'file:') canal = 'arquivo anexado'; else if(document.referrer && !document.referrer.includes(location.host)) canal = 'link de ' + (new URL(document.referrer).hostname.replace(/^www\./,'')); }
+  } catch(e){}
+  const ultimaSim = {};
   function enviar(evento, dados){
     if(!RELATORIO_URL) return false;
     try {
-      const corpo = JSON.stringify({evento, dados:dados||{}, sessao, nome:visitante.nome, area:visitante.area, quando:new Date().toISOString(), pagina:location.hash||'#inicio', origem:document.referrer||'', tela:innerWidth+'x'+innerHeight});
+      const corpo = JSON.stringify({evento, dados:dados||{}, sessao, canal, nome:visitante.nome, area:visitante.area, quando:new Date().toISOString(), pagina:location.hash||'#inicio', origem:document.referrer||'', tela:innerWidth+'x'+innerHeight});
       fetch(RELATORIO_URL, {method:'POST', mode:'no-cors', keepalive:true, headers:{'Content-Type':'text/plain;charset=utf-8'}, body:corpo}).catch(()=>{});
       return true;
     } catch(e){ return false; }
@@ -649,6 +668,19 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
       const d = {card:atual, tipo:box.dataset.sim};
       if(box.dataset.sim==='perda') d.produtos = [...box.querySelectorAll('.pr-row')].map(r => ({produto:r.querySelector('.pr-n').value.trim(), valor:r.querySelector('.pr-v').value, perda:r.querySelector('.pr-p').value}));
       else { d.toneladas = ($('sT')||{}).value; d.teor = ($('sPc')||{}).value; }
+      const tit = (PERFIS.find(p=>p.id===atual)||{}).seg || atual;
+      const txt = s => (document.getElementById(s)||{}).textContent || '';
+      let resumo = '';
+      if(box.dataset.sim==='perda'){
+        const per = box.dataset.per;
+        const itens = d.produtos.filter(x => x.valor || x.perda).map(x => `${x.produto||'produto'}: R$ ${Number(x.valor||0).toLocaleString('pt-BR')} por ${per}, ${String(x.perda||0).replace('.',',')}% de perda`);
+        resumo = `${tit} · ${itens.join('; ')} · perda total ${txt('oAno')} por ano · se a perda caísse ${txt('oRt')}: ${txt('oGanho')} por ano`;
+      } else if(box.dataset.sim==='aditivo'){
+        resumo = `${tit} · ${d.toneladas} t por mês a ${String(d.teor).replace('.',',')}% · ${txt('oKg')} de aditivo por mês · custo ${txt('oCm')} por mês`;
+      } else {
+        resumo = `${tit} · ${d.toneladas} t de embalagem por ano a ${String(d.teor).replace('.',',')}% · ${txt('oKg')} de aditivo · diferença para o TiO₂ ${txt('oEc')} por ano`;
+      }
+      ultimaSim[atual] = resumo; d.resumo = resumo;
       enviar('simulacao', d);
     }, 2500);
   }
@@ -730,6 +762,8 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     } else if(d.mensagem.length < 5) return err('Escreva a sua mensagem.');
     if(!$('cOk').checked) return err('Para enviar, marque a autorização de uso dos dados.');
     d.autorizou = true;
+    d.simulacao = Object.values(ultimaSim).join(' || ').slice(0, 1500);
+    d.canal = canal;
     const foi = enviar(formTipo, d);
     const ok = $('fOk'); ok.replaceChildren();
     const p1 = document.createElement('p'); p1.className='ok-msg';

@@ -1,51 +1,40 @@
-# Relatório do site da CascaViva: como ativar (uns 10 minutos, uma vez só)
+# Relatório do site da CascaViva
 
-O site já registra quem respondeu às perguntas de boas-vindas, os cards que cada pessoa abriu, as simulações e os formulários de contato e de compra. Falta só o "receptor": uma planilha do Google que guarda tudo e manda os e-mails.
+O site registra quem respondeu às perguntas de boas-vindas, os cards que cada pessoa abriu, as simulações, de qual canal ela veio e os formulários de contato e de compra. Tudo chega numa planilha Google da conta **cascaviva.projeto@gmail.com**.
 
-Faça os passos com a conta **cascaviva.projeto@gmail.com**.
+Se o navegador tiver mais de uma conta Google aberta, faça tudo numa janela anônima (Ctrl + Shift + N) entrando só com a conta do projeto.
 
-1. Abra o Google Planilhas e crie uma planilha em branco chamada **CascaViva · Relatório do site**.
-2. No menu da planilha: **Extensões → Apps Script**.
-3. Apague o que estiver no editor, cole todo o conteúdo do arquivo `Codigo.gs` e clique em **Salvar** (ícone de disquete).
-4. Clique em **Implantar → Nova implantação**. Na engrenagem, escolha **App da Web**.
-   - Descrição: `Relatório do site`
-   - Executar como: **Eu** (cascaviva.projeto@gmail.com)
-   - Quem pode acessar: **Qualquer pessoa**
-5. Clique em **Implantar** e autorize o acesso quando o Google pedir. Se aparecer "O Google não verificou este app", clique em **Avançado → Acessar** (o app é de vocês mesmos).
-6. Copie o endereço que termina em `/exec` e mande para o Claude. Ele coloca o endereço no site e publica.
-7. Para receber o resumo diário: no editor do Apps Script, escolha a função **ligarResumoDiario** no menu de cima e clique em **Executar**, uma vez.
+## Primeira instalação
 
-## Deixar a planilha organizada (uma vez)
+1. Crie uma planilha em branco chamada **CascaViva · Relatório do site**.
+2. **Extensões → Apps Script**. Apague o que estiver no editor, cole o `Codigo.gs` inteiro e clique em **Salvar**.
+3. (Opcional) No início do código, em `OUTROS_AVISOS`, coloque entre aspas o e-mail de quem mais deve receber os avisos, por exemplo `['karolayne@gmail.com', 'silvano@gmail.com']`. Salve.
+4. No menu de funções lá em cima, escolha **arrumarPlanilha** e clique em **Executar**. Autorize quando o Google pedir (se aparecer "app não verificado": Avançado → Acessar).
+5. Escolha a função **ligarRotinas** e clique em **Executar**. Ela liga o resumo diário das 8 h e a limpeza mensal da navegação antiga.
+6. **Implantar → Nova implantação →** engrenagem **App da Web**. Executar como **Eu**; Quem pode acessar **Qualquer pessoa**. **Implantar** e copie o endereço que termina em `/exec` para o Claude colocar no site.
 
-No editor do Apps Script, escolha a função **arrumarPlanilha** no menu de cima e clique em **Executar**. Ela cria:
+## Atualizar o código sem mudar o endereço
 
-- **Resumo:** visitas, pedidos, mensagens e o que está aguardando resposta, mais tabelas por área, por página e por produto. Atualiza sozinha.
-- **Contatos e pedidos:** cabeçalho verde, cores por tipo (pedido em laranja, mensagem em azul) e a coluna **Situação** com lista (Novo, Em contato, Proposta enviada, Fechado, Sem interesse), cada uma com uma cor. Há também uma coluna de **Observações da equipe**. CPF, CEP e telefone ficam como texto, sem perder o zero da frente.
-- **Eventos:** cada passo das visitas, colorido pelo tipo de ação.
+1. **Extensões → Apps Script**, apague tudo, cole o `Codigo.gs` novo e **Salvar**.
+2. Se a mensagem do Claude pedir, rode de novo **arrumarPlanilha** e **ligarRotinas**.
+3. **Implantar → Gerenciar implantações →** lápis (**Editar**) **→ Versão: Nova versão → Implantar**.
 
-Abas antigas com outro formato são renomeadas como "versão antiga", sem apagar nada.
-
-## Como trocar o código sem mudar o endereço
-
-Quando o Claude mandar um `Codigo.gs` novo:
-
-1. Na planilha, abra **Extensões → Apps Script**, apague o código antigo, cole o novo e clique em **Salvar**.
-2. Clique em **Implantar → Gerenciar implantações**.
-3. Clique no lápis (**Editar**) da implantação que já existe.
-4. Em **Versão**, escolha **Nova versão** e clique em **Implantar**.
-
-Assim o endereço `/exec` continua o mesmo e o site não precisa mudar. Se em vez disso você usar "Nova implantação", o endereço muda e precisa ser mandado de novo para o Claude.
-
-Abrir o endereço `/exec` no navegador mostra só uma frase de confirmação. Os dados chegam pelo site, não por essa página.
+Não use "Nova implantação" para atualizar: o endereço muda e o site deixa de enviar.
 
 ## O que vocês recebem
 
-- **A cada contato ou pedido de compra:** um e-mail na hora, com nome, e-mail, telefone, empresa e, no pedido, CPF ou CNPJ, CEP, produto e quantidade.
-- **Todo dia às 8 h:** um resumo das visitas das últimas 24 horas: quantas pessoas, de que áreas, quais cards abriram, quem simulou e quem enviou formulário.
-- **Na planilha:** a aba **Eventos** com cada passo de cada visita e a aba **Contatos e pedidos** com todos os formulários.
+- **A cada pedido ou mensagem:** um e-mail organizado com os dados, o que a pessoa simulou e por qual canal chegou, com botões **Responder no WhatsApp** (mensagem pronta) e **Responder por e-mail**.
+- **O cliente recebe na hora** uma confirmação da CascaViva, no visual da marca, com o resumo do pedido e o link do site.
+- **Todo dia às 8 h:** resumo das visitas das últimas 24 horas, por área e por canal.
+- **Na planilha:**
+  - **Resumo:** números principais e tabelas por área, canal, página, produto e ação. Atualiza sozinho.
+  - **Contatos e pedidos:** um por linha, com a coluna **Situação** (Novo, Em contato, Proposta enviada, Fechado, Sem interesse) e **Observações da equipe**.
+  - **Eventos:** cada passo das visitas, colorido pelo tipo de ação.
+  - **Para o sistema (CRM):** os mesmos contatos com os nomes de coluna do CRM do sistema CascaViva. Para importar: com essa aba aberta, **Arquivo → Fazer download → .csv**; no sistema, **CRM → Importar CSV**.
 
-## Cuidados
+## Cuidados (LGPD)
 
-- O endereço `/exec` fica visível no código do site, como em qualquer formulário na internet. Alguém mal-intencionado poderia mandar dados falsos. Se isso acontecer, faça uma nova implantação e mande o endereço novo.
-- A planilha tem dados pessoais (nome, telefone, CPF ou CNPJ). Compartilhe só com a equipe e não a deixe pública.
-- Pela LGPD, se alguém pedir para ver, corrigir ou apagar os próprios dados, apague as linhas dessa pessoa nas duas abas.
+- A planilha tem dados pessoais. Compartilhe só com a equipe.
+- Os registros de navegação (aba Eventos) com mais de 12 meses são apagados sozinhos no dia 1º de cada mês. Contatos e pedidos ficam até vocês apagarem.
+- Se alguém pedir para ver, corrigir ou apagar os próprios dados, apague as linhas dessa pessoa nas abas Contatos e pedidos, Para o sistema (CRM) e Eventos.
+- O endereço `/exec` aparece no código do site, como em qualquer formulário na internet. Se chegarem dados falsos em quantidade, faça uma implantação nova e mande o endereço novo ao Claude.
