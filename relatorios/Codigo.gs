@@ -222,6 +222,20 @@ function abaCrm_(ss) {
   return a;
 }
 
+/** Ajusta a fórmula ao idioma da planilha: em português, os argumentos são separados por ";" e as colunas de {…} por "\". */
+function formula_(ss, f) {
+  const loc = String(ss.getSpreadsheetLocale() || 'en_US');
+  if (/^(en|ja|ko|zh|th|he|hi|ms|fil)/.test(loc)) return f;
+  let out = '', aspas = false, chaves = 0;
+  for (const ch of f) {
+    if (ch === '"') aspas = !aspas;
+    if (!aspas && ch === '{') chaves++;
+    if (!aspas && ch === '}') chaves--;
+    out += (!aspas && ch === ',') ? (chaves > 0 ? '\\' : ';') : ch;
+  }
+  return out;
+}
+
 function abaResumo_(ss) {
   let a = ss.getSheetByName('Resumo');
   if (a) ss.deleteSheet(a);
@@ -232,7 +246,7 @@ function abaResumo_(ss) {
   const kpi = [['Visitas (total)', '=IFERROR(COUNTUNIQUE(Eventos!B2:B),0)'], ['Visitas nos últimos 7 dias', '=IFERROR(COUNTUNIQUE(FILTER(Eventos!B2:B,Eventos!A2:A>=NOW()-7)),0)'],
     ['Pedidos de orçamento', '=COUNTIF(\'Contatos e pedidos\'!B2:B,"Pedido de orçamento")'], ['Mensagens', '=COUNTIF(\'Contatos e pedidos\'!B2:B,"Contato")'],
     ['Aguardando resposta (Novo)', '=COUNTIF(\'Contatos e pedidos\'!C2:C,"Novo")']];
-  a.getRange(4, 1, kpi.length, 2).setValues(kpi);
+  kpi.forEach((k, i) => { a.getRange(4 + i, 1).setValue(k[0]); a.getRange(4 + i, 2).setFormula(formula_(ss, k[1])); });
   a.getRange(4, 1, kpi.length, 1).setFontWeight('bold');
   a.getRange(4, 2, kpi.length, 1).setFontSize(16).setFontWeight('bold').setFontColor(COR.verde).setHorizontalAlignment('center').setBackground(COR.verdeClaro);
   a.getRange(8, 2).setBackground(COR.vermelho).setFontColor('#7A1F1C');
@@ -240,12 +254,12 @@ function abaResumo_(ss) {
   titulo('A11', 'Visitas por área'); titulo('D11', 'Visitas por canal de divulgação');
   titulo('A26', 'Páginas mais abertas'); titulo('D26', 'Pedidos por produto');
   titulo('A44', 'O que as pessoas fizeram'); titulo('D44', 'Pedidos e mensagens por canal');
-  a.getRange('A12').setFormula('=IFERROR(QUERY(UNIQUE({Eventos!B2:B,Eventos!D2:D}),"select Col2, count(Col1) where Col1 is not null group by Col2 order by count(Col1) desc label Col2 \'Área\', count(Col1) \'Visitas\'",0),"Sem dados ainda")');
-  a.getRange('D12').setFormula('=IFERROR(QUERY(UNIQUE({Eventos!B2:B,Eventos!H2:H}),"select Col2, count(Col1) where Col1 is not null group by Col2 order by count(Col1) desc label Col2 \'Canal\', count(Col1) \'Visitas\'",0),"Sem dados ainda")');
-  a.getRange('A27').setFormula('=IFERROR(QUERY(Eventos!E2:G,"select G, count(E) where E = \'Abriu página\' group by G order by count(E) desc label G \'Página\', count(E) \'Aberturas\'",0),"Sem dados ainda")');
-  a.getRange('D27').setFormula('=IFERROR(QUERY(\'Contatos e pedidos\'!B2:J,"select J, count(B) where B = \'Pedido de orçamento\' group by J order by count(B) desc label J \'Produto\', count(B) \'Pedidos\'",0),"Sem pedidos ainda")');
-  a.getRange('A45').setFormula('=IFERROR(QUERY(Eventos!E2:E,"select E, count(E) where E is not null group by E order by count(E) desc label E \'Ação\', count(E) \'Vezes\'",0),"Sem dados ainda")');
-  a.getRange('D45').setFormula('=IFERROR(QUERY(\'Contatos e pedidos\'!B2:O,"select O, count(B) where B is not null group by O order by count(B) desc label O \'Canal\', count(B) \'Formulários\'",0),"Sem formulários ainda")');
+  a.getRange('A12').setFormula(formula_(ss, '=IFERROR(QUERY(UNIQUE({Eventos!B2:B,Eventos!D2:D}),"select Col2, count(Col1) where Col1 is not null group by Col2 order by count(Col1) desc label Col2 \'Área\', count(Col1) \'Visitas\'",0),"Sem dados ainda")'));
+  a.getRange('D12').setFormula(formula_(ss, '=IFERROR(QUERY(UNIQUE({Eventos!B2:B,Eventos!H2:H}),"select Col2, count(Col1) where Col1 is not null group by Col2 order by count(Col1) desc label Col2 \'Canal\', count(Col1) \'Visitas\'",0),"Sem dados ainda")'));
+  a.getRange('A27').setFormula(formula_(ss, '=IFERROR(QUERY(Eventos!E2:G,"select G, count(E) where E = \'Abriu página\' group by G order by count(E) desc label G \'Página\', count(E) \'Aberturas\'",0),"Sem dados ainda")'));
+  a.getRange('D27').setFormula(formula_(ss, '=IFERROR(QUERY(\'Contatos e pedidos\'!B2:J,"select J, count(B) where B = \'Pedido de orçamento\' group by J order by count(B) desc label J \'Produto\', count(B) \'Pedidos\'",0),"Sem pedidos ainda")'));
+  a.getRange('A45').setFormula(formula_(ss, '=IFERROR(QUERY(Eventos!E2:E,"select E, count(E) where E is not null group by E order by count(E) desc label E \'Ação\', count(E) \'Vezes\'",0),"Sem dados ainda")'));
+  a.getRange('D45').setFormula(formula_(ss, '=IFERROR(QUERY(\'Contatos e pedidos\'!B2:O,"select O, count(B) where B is not null group by O order by count(B) desc label O \'Canal\', count(B) \'Formulários\'",0),"Sem formulários ainda")'));
   a.setHiddenGridlines(true);
   return a;
 }
