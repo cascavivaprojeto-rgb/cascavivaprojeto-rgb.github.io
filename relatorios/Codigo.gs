@@ -18,18 +18,18 @@ function doPost(e) {
     const ev = corta(d.evento, 40);
     if (ev === 'contato' || ev === 'compra') {
       const x = d.dados || {};
-      const aba = aba_(ss, 'Contatos e pedidos', ['Data e hora', 'Tipo', 'Nome', 'E-mail', 'Telefone', 'Empresa', 'CPF ou CNPJ', 'CEP', 'Produto', 'Quantidade', 'Mensagem', 'Card de origem', 'Autorizou uso dos dados', 'Sessão']);
-      aba.appendRow([quando, ev === 'compra' ? 'Pedido de compra ou orçamento' : 'Contato', corta(x.nome, 120), corta(x.email, 120), corta(x.telefone, 30), corta(x.empresa, 120), corta(x.documento, 20), corta(x.cep, 10), corta(x.produto, 40), corta(x.quantidade, 60), corta(x.mensagem, 2000), corta(x.card, 40), x.autorizou ? 'Sim' : 'Não', corta(d.sessao, 40)]);
+      const aba = aba_(ss, 'Contatos e pedidos', ['Data e hora', 'Tipo', 'Nome', 'E-mail', 'Telefone', 'Empresa', 'CPF ou CNPJ', 'CEP', 'Produto', 'Quantidade', 'Mensagem', 'Área', 'Card de origem', 'Autorizou uso dos dados', 'Sessão']);
+      aba.appendRow([quando, ev === 'compra' ? 'Pedido de compra ou orçamento' : 'Contato', corta(x.nome, 120), corta(x.email, 120), corta(x.telefone, 30), corta(x.empresa, 120), corta(x.documento, 20), corta(x.cep, 10), corta(x.produto, 40), corta(x.quantidade, 60), corta(x.mensagem, 2000), corta(x.area, 80), corta(x.card, 40), x.autorizou ? 'Sim' : 'Não', corta(d.sessao, 40)]);
       MailApp.sendEmail(EMAIL_EQUIPE,
         (ev === 'compra' ? 'Novo pedido de orçamento' : 'Novo contato') + ' pelo site: ' + corta(x.nome, 80),
         ['Nome: ' + corta(x.nome, 120), 'E-mail: ' + corta(x.email, 120), 'Telefone: ' + corta(x.telefone, 30), 'Empresa: ' + corta(x.empresa, 120),
          x.documento ? 'CPF ou CNPJ: ' + corta(x.documento, 20) : '', x.cep ? 'CEP: ' + corta(x.cep, 10) : '', x.produto ? 'Produto: ' + corta(x.produto, 40) : '',
-         x.quantidade ? 'Quantidade: ' + corta(x.quantidade, 60) : '', 'Mensagem: ' + corta(x.mensagem, 2000), 'Veio do card: ' + (corta(x.card, 40) || 'início'),
+         x.quantidade ? 'Quantidade: ' + corta(x.quantidade, 60) : '', x.area ? 'Área: ' + corta(x.area, 80) : '', 'Mensagem: ' + corta(x.mensagem, 2000), 'Veio do card: ' + (corta(x.card, 40) || 'início'),
          '', 'Tudo fica registrado na aba "Contatos e pedidos" da planilha.'].filter(String).join('\n'));
     }
     const ab = aba_(ss, 'Eventos', ['Data e hora', 'Sessão', 'Nome', 'Área', 'Evento', 'Detalhes', 'Página', 'Veio de', 'Tela']);
     const det = (ev === 'contato' || ev === 'compra') ? 'ver aba Contatos e pedidos' : corta(JSON.stringify(d.dados || {}), 1500);
-    ab.appendRow([quando, corta(d.sessao, 40), corta(d.nome, 80), corta(d.area, 40), ev, det, corta(d.pagina, 60), corta(d.origem, 200), corta(d.tela, 20)]);
+    ab.appendRow([quando, corta(d.sessao, 40), corta(d.nome, 80), corta(d.area, 80), ev, det, corta(d.pagina, 60), corta(d.origem, 200), corta(d.tela, 20)]);
   } catch (err) {
     // ignora envios malformados
   }
