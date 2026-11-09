@@ -15,6 +15,16 @@ Faça os passos com a conta **cascaviva.projeto@gmail.com**.
 6. Copie o endereço que termina em `/exec` e mande para o Claude. Ele coloca o endereço no site e publica.
 7. Para receber o resumo diário: no editor do Apps Script, escolha a função **ligarResumoDiario** no menu de cima e clique em **Executar**, uma vez.
 
+## Deixar a planilha organizada (uma vez)
+
+No editor do Apps Script, escolha a função **arrumarPlanilha** no menu de cima e clique em **Executar**. Ela cria:
+
+- **Resumo:** visitas, pedidos, mensagens e o que está aguardando resposta, mais tabelas por área, por página e por produto. Atualiza sozinha.
+- **Contatos e pedidos:** cabeçalho verde, cores por tipo (pedido em laranja, mensagem em azul) e a coluna **Situação** com lista (Novo, Em contato, Proposta enviada, Fechado, Sem interesse), cada uma com uma cor. Há também uma coluna de **Observações da equipe**. CPF, CEP e telefone ficam como texto, sem perder o zero da frente.
+- **Eventos:** cada passo das visitas, colorido pelo tipo de ação.
+
+Abas antigas com outro formato são renomeadas como "versão antiga", sem apagar nada.
+
 ## Como trocar o código sem mudar o endereço
 
 Quando o Claude mandar um `Codigo.gs` novo:
