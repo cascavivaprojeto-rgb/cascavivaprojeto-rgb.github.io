@@ -9,7 +9,7 @@
  */
 const EMAIL_EQUIPE = 'cascaviva.projeto@gmail.com';
 // Quem mais recebe os avisos de contato e pedido. Ex.: ['karolayne@exemplo.com', 'silvano@exemplo.com']
-const OUTROS_AVISOS = [];
+const OUTROS_AVISOS = ['silvanoprofissionaldedireito@gmail.com', 'karolayne.engquimica@gmail.com'];
 const SITE = 'https://cascavivaprojeto-rgb.github.io/';
 const MESES_GUARDAR_NAVEGACAO = 12;
 const TZ = 'America/Bahia';
