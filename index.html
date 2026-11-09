@@ -186,6 +186,17 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 .dado b{font-family:var(--display);font-size:34px;color:var(--loss);white-space:nowrap}
 .sec-h{font-size:clamp(26px,3.4vw,36px);margin-top:44px}
 .sol-figs.small img{aspect-ratio:4/3}
+.sobre-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.tl{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:22px 1fr;column-gap:16px;position:relative;padding-bottom:22px}
+.tl li::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--leaf-2);margin-top:6px;grid-row:1/3}
+.tl li::after{content:"";position:absolute;left:7px;top:26px;bottom:0;width:2px;background:var(--line)}
+.tl li:last-child::after{display:none}
+.tl li.now::before{background:var(--peel)}
+.tl b{font-size:18px} .tl span{grid-column:2;color:var(--muted)}
+.simbox{background:var(--soft);border-radius:24px;padding:24px;margin-top:16px;display:grid;grid-template-columns:.95fr 1.05fr;gap:22px}
+.simbox .panel{border-radius:20px}
+@media (max-width:860px){ .simbox,.sobre-nav{grid-template-columns:1fr} }
 /* produtos */
 .prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:22px}
 .prodc{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -216,7 +227,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 
 <header class="top"><div class="wrap">
   <a class="brand" href="#inicio"><img src="fotos/logo.jpg" alt="">CascaViva</a>
-  <nav aria-label="Seções"><a href="#inicio">Início</a><a href="#dores">Qual é a sua dor?</a><a href="#produtos">Produtos e preços</a><a href="#simulador">Simulador</a><a href="#diario">Diário de testes</a><a href="#contato">Contato</a></nav>
+  <nav aria-label="Seções"><a href="#inicio">Início</a><a href="#dores">Qual é a sua dor?</a><a href="#produtos">Produtos e preços</a><a href="#sobre">Sobre nós</a><a href="#contato">Contato</a></nav>
 </div></header>
 
 <section class="hero" id="inicio" data-view="inicio"><div class="wrap">
@@ -264,35 +275,38 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 
 
 
-<section class="sim" id="simulador" data-view="simulador" hidden><div class="wrap">
-  <a class="back" href="#inicio" style="margin-bottom:14px">← Início</a>
-  <p class="eyebrow">Simulador</p>
-  <h2>Quanto a sua loja perde com hortifrúti?</h2>
-  <p class="lead" style="margin-top:12px">Coloque os números da sua operação. A conta é feita aqui na página e nada do que você digita é enviado ou guardado.</p>
-  <div class="sim-grid">
-    <form class="panel stack" id="simForm" style="gap:20px" novalidate>
-      <div class="field"><label for="compra">Quanto você compra de hortifrúti por semana (R$)</label><input type="number" id="compra" min="0" step="100" value="20000" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo da sua loja.</span></div>
-      <div class="field"><label for="perda">Quanto dessa compra se perde (%)</label><input type="number" id="perda" min="0" max="100" step="0.01" value="4.73" inputmode="decimal"><span class="hint">Começa em 4,73%, a quebra média de FLV no varejo em 2024 (ABRAS, via Circuito FLV). Use a da sua loja, se souber.</span></div>
-      <div class="field"><label for="reducao">E se a perda caísse…</label><div class="range-row"><input type="range" id="reducao" min="0" max="60" step="5" value="20"><output id="reducaoOut" for="reducao">20%</output></div><span class="hint">Simulação para você testar cenários. Não é um resultado de teste da CascaViva.</span></div>
-    </form>
-    <div class="panel result" aria-live="polite">
-      <p class="eyebrow" style="color:var(--loss)">Sua perda hoje</p>
-      <p class="big" id="perdaAno">R$ 0</p><p style="margin-top:-8px;color:var(--muted)">por ano</p>
-      <dl class="rows"><dt>Por semana</dt><dd id="perdaSem">R$ 0</dd><dt>Por mês</dt><dd id="perdaMes">R$ 0</dd></dl>
-      <div class="bar" aria-hidden="true"><i id="barLoss" style="width:100%"></i></div>
-      <div class="save-box stack" style="gap:6px">
-        <p style="font-weight:800">Se a perda caísse <span id="redTxt">20%</span>, você deixaria de perder</p>
-        <p class="big" id="ganhoAno">R$ 0</p><p class="note">por ano · <span id="ganhoMes">R$ 0</span> por mês</p>
-      </div>
-      <p class="note">Mês = 4,33 semanas; ano = 52 semanas.</p>
-    </div>
+
+
+
+
+<section id="sobre" data-view="sobre" hidden><div class="wrap">
+  <a class="back" href="#inicio">← Início</a>
+  <p class="eyebrow" style="margin-top:18px">Sobre nós</p>
+  <h2>Quem somos, o que já fizemos e onde acompanhar</h2>
+  <div class="sobre-nav">
+    <a class="dor" href="#trajetoria"><span class="seg">Nossa trajetória</span><q>Da bancada do IFBA até a CascaViva</q><span class="go">VER</span></a>
+    <a class="dor" href="#diario"><span class="seg">Diário de testes</span><q>Fotos, vídeos e documentos de cada teste</q><span class="go">ABRIR</span></a>
+    <a class="dor" href="#contatos"><span class="seg">Contatos</span><q>Fale com a equipe</q><span class="go">VER</span></a>
+  </div>
+  <h3 class="sec-h" id="trajetoria">Nossa trajetória</h3>
+  <ol class="tl">
+    <li><b>Set. a nov. de 2025</b><span>Aprovação no Edital Hotel de Projetos do IFBA 2025/2026 e pedido de patente da tecnologia (BR 10 2025 026328 9, titular IFBA).</span></li>
+    <li><b>Dez. de 2025 a mai. de 2026</b><span>Artigo científico publicado na revista ACS Omega e pivotagem do produto.</span></li>
+    <li><b>Jun. e jul. de 2026</b><span>Trâmite de transferência de tecnologia junto ao IFBA.</span></li>
+    <li><b>2026</b><span>Aprovação na Trilha de Aceleração para Startups do Agro (Sebrae/BA, Hub Semear/FAEB-SENAR e Grupo Rede+) e no Start Aê (UFBA e Sebrae/BA). Karolayne selecionada para o Efeito Furacão (IFBA, Sebrae e Be.Labs).</span></li>
+    <li><b>Out. de 2026</b><span>Trabalho submetido ao CONNEPI 2026, no Painel Meninas na Ciência.</span></li>
+    <li class="now"><b>Nov. de 2026</b><span>O projeto GraphAgro passa a se chamar CascaViva, uma marca para todas as aplicações do grafeno vegetal.</span></li>
+  </ol>
+  <h3 class="sec-h" id="contatos">Contatos</h3>
+  <div class="box" style="margin-top:14px">
+    <p style="font-weight:800">E-mail da equipe</p>
+    <p style="font-family:var(--display);font-size:24px;font-weight:800;user-select:all;word-break:break-all">cascaviva.projeto@gmail.com</p>
+    <div class="team" style="margin-top:8px"><p><b style="color:var(--leaf-2)">Karolayne Angel</b> · líder, Engenharia Química (IFBA)</p><p><b style="color:var(--leaf-2)">Silvano Neto</b> · cofundador</p><p><b style="color:var(--leaf-2)">Prof. Francislei Santos</b> · orientador e inventor (IFBA)</p></div>
   </div>
 </div></section>
 
-
-
 <section class="sim" id="diario" data-view="diario" hidden><div class="wrap">
-  <a class="back" href="#inicio" style="margin-bottom:14px">← Início</a>
+  <a class="back" href="#sobre" style="margin-bottom:14px">← Sobre nós</a>
   <div class="diary-head">
     <div class="stack" style="gap:10px"><p class="eyebrow">Diário de testes</p><h2>Atualizações, fotos e documentos</h2><p class="lead">O que a equipe está testando e produzindo, com data. Primeiro da fila: frutas na embalagem comum e na CascaViva, lado a lado, fotografadas dia após dia.</p></div>
   </div>
@@ -326,19 +340,6 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 (function(){
   const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
   const $ = id => document.getElementById(id);
-  function calc(){
-    const c = Math.max(0, parseFloat($('compra').value)||0);
-    const p = Math.min(100, Math.max(0, parseFloat($('perda').value)||0))/100;
-    const r = parseInt($('reducao').value,10)/100;
-    const sem = c*p, mes = sem*4.33, ano = sem*52;
-    $('perdaSem').textContent = brl(sem); $('perdaMes').textContent = brl(mes); $('perdaAno').textContent = brl(ano);
-    $('reducaoOut').textContent = Math.round(r*100)+'%'; $('redTxt').textContent = Math.round(r*100)+'%';
-    $('ganhoAno').textContent = brl(ano*r); $('ganhoMes').textContent = brl(mes*r);
-    $('barLoss').style.width = (100*(1-r))+'%';
-  }
-  ['compra','perda','reducao'].forEach(id => $(id).addEventListener('input', calc));
-  $('simForm').addEventListener('submit', e => e.preventDefault());
-  calc();
 
   $('copyMail').addEventListener('click', () => {
     const t = $('mailTxt').textContent;
@@ -419,6 +420,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     return `<div class="prodc">${st}<h3>${esc(p.nome)}</h3><p style="color:var(--muted)">${esc(p.desc)}</p>${pr}</div>`;
   }
   $('doresGrid').innerHTML = PERFIS.map(p => `<a class="dor" href="#${p.id}"><span class="ic">${IC[p.ic]}</span><span class="seg">${esc(p.seg)}</span><q>${esc(p.q)}</q><span class="go">CLIQUE AQUI!</span></a>`).join('')
+    + `<a class="dor prod" href="#sobre"><span class="ic">${IC.folha}</span><span class="seg">Sobre nós</span><q>Nossa trajetória, diário de testes e contatos</q><span class="go">CLIQUE AQUI!</span></a>`
     + `<a class="dor prod" href="#produtos"><span class="ic">${IC.lista}</span><span class="seg">Nossos produtos</span><q>Quer ver todos os produtos e preços?</q><span class="go">CLIQUE AQUI!</span></a>`;
   $('prodsGrid').innerHTML = PRODUTOS.map(prodCard).join('');
   const BIG = {"campo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><rect y=\"96\" width=\"180\" height=\"34\" rx=\"8\" fill=\"#C9A36A\"/><path d=\"M40 96V54M90 96V44M140 96V60\" stroke=\"#1E4A33\" stroke-width=\"8\"/><circle cx=\"40\" cy=\"48\" r=\"22\" fill=\"#2E7D50\"/><circle cx=\"90\" cy=\"38\" r=\"26\" fill=\"#2E7D50\"/><circle cx=\"140\" cy=\"54\" r=\"20\" fill=\"#2E7D50\"/><circle cx=\"34\" cy=\"50\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"96\" cy=\"36\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"84\" cy=\"46\" r=\"5\" fill=\"#E5A928\"/><circle cx=\"146\" cy=\"56\" r=\"5\" fill=\"#E5A928\"/></svg>", "estrada": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><circle cx=\"150\" cy=\"28\" r=\"16\" fill=\"#E5A928\"/><path d=\"M150 2v6M150 48v6M124 28h6M170 28h6\" stroke=\"#E5A928\" stroke-width=\"4\" stroke-linecap=\"round\"/><rect x=\"10\" y=\"58\" width=\"100\" height=\"48\" rx=\"6\" fill=\"#1E4A33\"/><path d=\"M110 70h34l20 20v16h-54z\" fill=\"#2E7D50\"/><rect x=\"120\" y=\"76\" width=\"22\" height=\"14\" rx=\"3\" fill=\"#F2F5EF\"/><circle cx=\"40\" cy=\"110\" r=\"12\" fill=\"#18291F\"/><circle cx=\"138\" cy=\"110\" r=\"12\" fill=\"#18291F\"/></svg>", "galpao": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M14 56L90 16l76 40v68H14z\" fill=\"#1E4A33\"/><rect x=\"40\" y=\"74\" width=\"100\" height=\"50\" fill=\"#F2F5EF\"/><rect x=\"50\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"78\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"106\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"64\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"92\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/></svg>", "gondola": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M40 6h100l-10 18H50z\" fill=\"#E5A928\"/><rect x=\"14\" y=\"66\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><rect x=\"14\" y=\"112\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><circle cx=\"40\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"68\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"124\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"40\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"68\" cy=\"100\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"124\" cy=\"100\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"150\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/></svg>", "lixo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M44 40h92l-10 86H54z\" fill=\"#9AA39D\"/><rect x=\"36\" y=\"28\" width=\"108\" height=\"14\" rx=\"6\" fill=\"#6B776F\"/><circle cx=\"76\" cy=\"26\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"102\" cy=\"22\" r=\"12\" fill=\"#6E4A22\"/><path d=\"M70 64v46M90 64v46M110 64v46\" stroke=\"#6B776F\" stroke-width=\"5\"/><circle cx=\"154\" cy=\"92\" r=\"20\" fill=\"#B8432D\"/><path d=\"M146 92h16\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>"};
@@ -432,10 +434,87 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   };
   const FONTE_SOL = 'Dados técnicos: detalhamento do projeto e resumo CONNEPI 2026 · Custo: nota técnica de viabilidade da equipe (Módulo 9) e Prof. Francislei Santos (01/11/2026)';
   function passoSvg(k){ return k.startsWith('BIG:') ? BIG[k.slice(4)] : IC[k]; }
+  const SIMS = {
+    produtor:{tipo:'perda', per:'semana', rot:'Valor da sua colheita por semana (R$)', v:10000, p:30, ph:'Começa em 30%, a perda de frutas no Brasil segundo a Embrapa (dados de 1993). Use a da sua produção, se souber.'},
+    embalador:{tipo:'perda', per:'semana', rot:'Valor do que você embala por semana (R$)', v:20000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
+    logistica:{tipo:'perda', per:'semana', rot:'Valor da carga de hortifrúti que você transporta por semana (R$)', v:50000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
+    mercado:{tipo:'perda', per:'semana', rot:'Quanto você compra de hortifrúti por semana (R$)', v:20000, p:4.73, ph:'Começa em 4,73%, a quebra média de FLV no varejo em 2024 (ABRAS, via Circuito FLV). Use a da sua loja, se souber.'},
+    oleos:{tipo:'perda', per:'mês', rot:'Faturamento mensal com óleos em embalagem transparente (R$)', v:100000, p:2, ph:'Valor de exemplo: produtos vencidos, devolvidos ou vendidos com desconto por perda de qualidade.'},
+    cosmeticos:{tipo:'perda', per:'mês', rot:'Faturamento mensal com produtos sensíveis à luz (R$)', v:50000, p:2, ph:'Valor de exemplo: produtos devolvidos ou descartados por ranço ou mudança de cor e cheiro.'},
+    transformadora:{tipo:'aditivo', rot:'Toneladas de filme de PEBDL por mês', v:10, pct:5},
+    resinas:{tipo:'aditivo', rot:'Toneladas de resina ou composto por mês', v:5, pct:5},
+    'so-aditivo':{tipo:'aditivo', rot:'Toneladas da sua formulação por mês', v:1, pct:5},
+    esg:{tipo:'esg', rot:'Toneladas de embalagem plástica por ano', v:50, pct:5}
+  };
+  const num = (v,d) => (v||0).toLocaleString('pt-BR',{maximumFractionDigits:d||0});
+  function simHtml(id){
+    const s = SIMS[id]; if(!s) return '';
+    const head = `<h3 class="sec-h">Simule o seu caso</h3><p class="lead" style="margin-top:8px">A conta é feita aqui na página e nada do que você digita é enviado ou guardado.</p>`;
+    if(s.tipo==='perda'){
+      return head + `<div class="simbox" data-sim="perda" data-per="${s.per}">
+        <form class="panel stack" style="gap:18px" onsubmit="return false">
+          <div class="field"><label for="sV">${esc(s.rot)}</label><input type="number" id="sV" min="0" step="100" value="${s.v}" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo seu.</span></div>
+          <div class="field"><label for="sP">Quanto disso se perde (%)</label><input type="number" id="sP" min="0" max="100" step="0.01" value="${s.p}" inputmode="decimal"><span class="hint">${esc(s.ph)}</span></div>
+          <div class="field"><label for="sR">E se a perda caísse…</label><div class="range-row"><input type="range" id="sR" min="0" max="60" step="5" value="20"><output id="sRo" for="sR">20%</output></div><span class="hint">Simulação para testar cenários. Não é resultado de teste da CascaViva.</span></div>
+        </form>
+        <div class="panel result" aria-live="polite">
+          <p class="eyebrow" style="color:var(--loss)">Sua perda hoje</p>
+          <p class="big" id="oAno">R$ 0</p><p style="margin-top:-8px;color:var(--muted)">por ano</p>
+          <dl class="rows"><dt>Por ${s.per}</dt><dd id="oPer">R$ 0</dd></dl>
+          <div class="bar" aria-hidden="true"><i id="oBar" style="width:100%"></i></div>
+          <div class="save-box stack" style="gap:6px"><p style="font-weight:800">Se a perda caísse <span id="oRt">20%</span>, você deixaria de perder</p><p class="big" id="oGanho">R$ 0</p><p class="note">por ano</p></div>
+          <p class="note">${s.per==='semana'?'Ano = 52 semanas.':'Ano = 12 meses.'}</p>
+        </div></div>`;
+    }
+    if(s.tipo==='aditivo'){
+      return head + `<div class="simbox" data-sim="aditivo">
+        <form class="panel stack" style="gap:18px" onsubmit="return false">
+          <div class="field"><label for="sT">${esc(s.rot)}</label><input type="number" id="sT" min="0" step="0.5" value="${s.v}" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo seu.</span></div>
+          <div class="field"><label for="sPc">Teor de aditivo (%)</label><input type="number" id="sPc" min="0.5" max="20" step="0.5" value="${s.pct}" inputmode="decimal"><span class="hint">5% é o teor que deu cerca de 90% de barreira UV no filme de PEBDL.</span></div>
+        </form>
+        <div class="panel result" aria-live="polite">
+          <p class="eyebrow">Aditivo de grafeno vegetal</p>
+          <p class="big" style="color:var(--leaf-2)" id="oKg">0 kg</p><p style="margin-top:-8px;color:var(--muted)">por mês</p>
+          <dl class="rows"><dt>Custo do aditivo por mês</dt><dd id="oCm">R$ 0</dd><dt>Por tonelada de material</dt><dd id="oCt">R$ 0</dd><dt>Por saco de PEBDL de 30 × 40 cm</dt><dd id="oCs">R$ 0</dd></dl>
+          <p class="note">Com o preço estimado do grafeno vegetal, de R$ 29,75 a R$ 42,16 por kg (nota técnica da equipe, Módulo 9). Saco de referência de cerca de 8,8 g.</p>
+        </div></div>`;
+    }
+    return head + `<div class="simbox" data-sim="esg">
+      <form class="panel stack" style="gap:18px" onsubmit="return false">
+        <div class="field"><label for="sT">${esc(s.rot)}</label><input type="number" id="sT" min="0" step="1" value="${s.v}" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo seu.</span></div>
+        <div class="field"><label for="sPc">Teor de aditivo (%)</label><input type="number" id="sPc" min="0.5" max="20" step="0.5" value="${s.pct}" inputmode="decimal"><span class="hint">5% é o teor que deu cerca de 90% de barreira UV no filme de PEBDL.</span></div>
+      </form>
+      <div class="panel result" aria-live="polite">
+        <p class="eyebrow">Aditivo sintético trocado por vegetal</p>
+        <p class="big" style="color:var(--leaf-2)" id="oKg">0 kg</p><p style="margin-top:-8px;color:var(--muted)">por ano</p>
+        <dl class="rows"><dt>Com TiO₂ (R$ 35 a R$ 50/kg)</dt><dd id="oTi">R$ 0</dd><dt>Com grafeno vegetal (R$ 29,75 a R$ 42,16/kg)</dt><dd id="oGr">R$ 0</dd><dt>Diferença por ano</dt><dd id="oEc">R$ 0</dd></dl>
+        <p class="note">Considera a mesma dosagem para os dois aditivos. Preços: estimativa da equipe e Casa dos Químicos (01/11/2026), na nota técnica do Módulo 9.</p>
+      </div></div>`;
+  }
+  function simCalc(){
+    const box = document.querySelector('#perfilBox .simbox'); if(!box) return;
+    const f = id => { const e = $(id); return e ? Math.max(0, parseFloat(e.value)||0) : 0; };
+    const faixa = (a,b,d) => a===b ? 'R$ '+num(a,d) : 'R$ '+num(a,d)+' a '+num(b,d);
+    if(box.dataset.sim==='perda'){
+      const v=f('sV'), p=Math.min(100,f('sP'))/100, r=parseInt($('sR').value,10)/100;
+      const per=v*p, ano=per*(box.dataset.per==='semana'?52:12);
+      $('oPer').textContent=brl(per); $('oAno').textContent=brl(ano); $('oGanho').textContent=brl(ano*r);
+      $('sRo').textContent=Math.round(r*100)+'%'; $('oRt').textContent=Math.round(r*100)+'%'; $('oBar').style.width=(100*(1-r))+'%';
+    } else if(box.dataset.sim==='aditivo'){
+      const t=f('sT'), pc=f('sPc')/100, kg=t*1000*pc;
+      $('oKg').textContent=num(kg)+' kg'; $('oCm').textContent=faixa(kg*29.75,kg*42.16);
+      $('oCt').textContent=faixa(1000*pc*29.75,1000*pc*42.16); $('oCs').textContent=faixa(8.8*pc/1000*29.75,8.8*pc/1000*42.16,3);
+    } else {
+      const t=f('sT'), pc=f('sPc')/100, kg=t*1000*pc;
+      $('oKg').textContent=num(kg)+' kg'; $('oTi').textContent=faixa(kg*35,kg*50); $('oGr').textContent=faixa(kg*29.75,kg*42.16);
+      $('oEc').textContent=faixa(kg*(35-29.75),kg*(50-42.16));
+    }
+  }
+  document.addEventListener('input', e => { if(e.target.closest && e.target.closest('#perfilBox .simbox')) simCalc(); });
   function perfilHtml(p){
     const x = EXTRA[p.id];
     const ps = p.prods.map(id => PRODUTOS.find(y => y.id===id)).filter(Boolean);
-    const sim = p.sim ? `<a class="btn" href="#simulador">Calcule a sua perda</a>` : '';
+    const sim = '';
     const passos = x.p.map(s => `<div class="step${s[3]?' end':''}" role="listitem">${passoSvg(s[0])}<b>${esc(s[1])}</b><span>${esc(s[2])}</span></div>`).join('');
     const fatos = x.f.length ? `<div class="facts">${x.f.map(f=>`<div class="fact"><p class="n">${esc(f[0])}</p><div><p><b>${esc(f[1])}</b></p><p class="src">${esc(f[2])}</p></div></div>`).join('')}</div>` : '';
     const kpis = x.k.map(k => `<div class="kpi"><p class="n"${k==='patente'?' style="font-size:22px"':''}>${esc(KPIS[k][0])}</p><p>${esc(KPIS[k][1])}</p></div>`).join('');
@@ -452,22 +531,25 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
         <div class="stack"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">${p.sol.map(s=>`<li>${esc(s)}</li>`).join('')}</ul><div class="kpis">${kpis}</div></div>
       </div>
       <p class="src" style="margin-top:12px">${esc(FONTE_SOL)}</p>
+      ${simHtml(p.id)}
       <h3 class="sec-h">Produto para você</h3>
       <div class="prods">${ps.map(prodCard).join('')}</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">${sim}<a class="btn ghost" href="#produtos">Ver todos os produtos</a><a class="btn ghost" href="#contato">Falar com a equipe</a></div>`;
   }
-  const VIEWS = ['inicio','produtos','simulador','diario'];
+  const VIEWS = ['inicio','produtos','sobre','diario'];
   const CT0 = [$('ctTitulo').textContent, $('ctTexto').textContent];
   let atual = null;
   function route(h){
     if(typeof h !== 'string') h = decodeURIComponent((location.hash||'').slice(1));
     const perfil = PERFIS.find(p => p.id===h);
     const view = perfil ? 'perfil' : (VIEWS.includes(h) ? h : 'inicio');
-    if(perfil){ $('perfilBox').innerHTML = perfilHtml(perfil); $('ctTitulo').textContent = EXTRA[perfil.id].ct[0]; $('ctTexto').textContent = EXTRA[perfil.id].ct[1]; atual = perfil.id; }
+    if(perfil){ $('perfilBox').innerHTML = perfilHtml(perfil); simCalc(); $('ctTitulo').textContent = EXTRA[perfil.id].ct[0]; $('ctTexto').textContent = EXTRA[perfil.id].ct[1]; atual = perfil.id; }
     else if(h !== 'contato'){ $('ctTitulo').textContent = CT0[0]; $('ctTexto').textContent = CT0[1]; atual = null; }
     if(h === 'contato' && atual){ /* mantém a página do perfil e desce até o contato */ }
     else document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== view; });
-    const alvo = (h==='dores' || h==='contato') ? document.getElementById(h) : null;
+    const ancora = {trajetoria:'sobre', contatos:'sobre'}[h];
+    if(ancora){ document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== 'sobre'; }); }
+    const alvo = (h==='dores' || h==='contato' || ancora) ? document.getElementById(h) : null;
     if(alvo) alvo.scrollIntoView(); else window.scrollTo(0,0);
   }
   // navegação pelos links internos: funciona mesmo onde a troca de # não chega à página
