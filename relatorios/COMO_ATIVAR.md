@@ -15,6 +15,19 @@ Faça os passos com a conta **cascaviva.projeto@gmail.com**.
 6. Copie o endereço que termina em `/exec` e mande para o Claude. Ele coloca o endereço no site e publica.
 7. Para receber o resumo diário: no editor do Apps Script, escolha a função **ligarResumoDiario** no menu de cima e clique em **Executar**, uma vez.
 
+## Como trocar o código sem mudar o endereço
+
+Quando o Claude mandar um `Codigo.gs` novo:
+
+1. Na planilha, abra **Extensões → Apps Script**, apague o código antigo, cole o novo e clique em **Salvar**.
+2. Clique em **Implantar → Gerenciar implantações**.
+3. Clique no lápis (**Editar**) da implantação que já existe.
+4. Em **Versão**, escolha **Nova versão** e clique em **Implantar**.
+
+Assim o endereço `/exec` continua o mesmo e o site não precisa mudar. Se em vez disso você usar "Nova implantação", o endereço muda e precisa ser mandado de novo para o Claude.
+
+Abrir o endereço `/exec` no navegador mostra só uma frase de confirmação. Os dados chegam pelo site, não por essa página.
+
 ## O que vocês recebem
 
 - **A cada contato ou pedido de compra:** um e-mail na hora, com nome, e-mail, telefone, empresa e, no pedido, CPF ou CNPJ, CEP, produto e quantidade.
