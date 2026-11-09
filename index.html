@@ -197,6 +197,35 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 .simbox{background:var(--soft);border-radius:24px;padding:24px;margin-top:16px;display:grid;grid-template-columns:.95fr 1.05fr;gap:22px}
 .simbox .panel{border-radius:20px}
 @media (max-width:860px){ .simbox,.sobre-nav{grid-template-columns:1fr} }
+/* simulador com vários produtos */
+.pr-head,.pr-row{display:grid;grid-template-columns:1.4fr 1fr .7fr 36px;gap:8px;align-items:center}
+.pr-head{font-size:13px;font-weight:800;color:var(--muted)}
+.pr-row input{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;width:100%;min-width:0;font-variant-numeric:tabular-nums}
+.pr-del{border:0;background:transparent;color:var(--loss);font-size:22px;font-weight:800;cursor:pointer;border-radius:8px}
+.pr-list{display:flex;flex-direction:column;gap:8px}
+.add-row{align-self:flex-start;border:2px dashed var(--line);background:transparent;border-radius:999px;padding:8px 16px;font-weight:800;cursor:pointer;color:var(--leaf-2)}
+.breakdown{display:flex;flex-direction:column;gap:6px;font-variant-numeric:tabular-nums}
+.breakdown div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:4px}
+.breakdown span{color:var(--muted);overflow-wrap:anywhere}
+/* janelas */
+.modal{position:fixed;inset:0;z-index:20;background:color-mix(in srgb,#000 55%,transparent);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.modal .card{background:var(--surface);color:var(--ink);border-radius:26px;max-width:560px;width:100%;max-height:100%;overflow:auto;padding:28px;display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h2{font-size:clamp(26px,4vw,34px)}
+.modal .field input,.modal .field select,.modal .field textarea{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;width:100%}
+.modal textarea{min-height:90px;resize:vertical}
+.modal .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.linkbtn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-weight:700}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.chk input{margin-top:3px;accent-color:var(--leaf-2)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.err-msg{color:var(--loss);font-weight:700;font-size:14px}
+.ok-msg{background:var(--soft);border-radius:14px;padding:14px 16px;font-weight:700}
+.dor.rec{border-color:var(--peel);box-shadow:0 0 0 3px var(--peel-soft)}
+.rec-tag{align-self:flex-start;background:var(--peel);color:#1B1405;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.hello{font-weight:800;color:var(--peel)}
+.prodc .btn{align-self:flex-start;margin-top:auto;padding:10px 18px;font-size:15px}
+@media (max-width:560px){ .modal .row2{grid-template-columns:1fr} .pr-head{display:none} .pr-row{grid-template-columns:1fr 1fr 36px} .pr-row .pr-n{grid-column:1/-1} }
 /* produtos */
 .prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:22px}
 .prodc{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -234,6 +263,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   <div class="stack" style="gap:22px">
     <div class="logo-chip"><img src="fotos/logo.jpg" alt="CascaViva · Embalagem anti-UV"></div>
     <h1>Proteção anti-UV <em>de origem vegetal</em> para o que a luz estraga.</h1>
+    <p class="hello" id="hello"></p>
     <p class="lead">Um aditivo de grafeno vegetal, feito do eucalipto, que dá ao plástico uma barreira contra a radiação UV. Pensado para embalagens de hortifrúti, óleos e cosméticos, para resinas e revestimentos, e também vendido puro. Pesquisa nascida no IFBA, com pedido de patente.</p>
     <div class="cta"><a class="btn" href="#dores">Qual é a sua dor? Clique aqui</a><a class="btn ghost" href="#produtos">Produtos e preços</a></div>
   </div>
@@ -297,6 +327,12 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     <li><b>Out. de 2026</b><span>Trabalho submetido ao CONNEPI 2026, no Painel Meninas na Ciência.</span></li>
     <li class="now"><b>Nov. de 2026</b><span>O projeto GraphAgro passa a se chamar CascaViva, uma marca para todas as aplicações do grafeno vegetal.</span></li>
   </ol>
+  <h3 class="sec-h" id="privacidade">Como usamos seus dados</h3>
+  <div class="box" style="margin-top:14px">
+    <p>Quando você responde às perguntas de boas-vindas, navega pelos cards e usa os simuladores, registramos o seu nome e a sua área, se você os informar, as páginas que abriu e os valores simulados. Isso serve só para entender o que interessa a cada visitante e melhorar o nosso atendimento.</p>
+    <p>Documentos como CPF ou CNPJ, CEP, telefone e e-mail só são pedidos quando você quer comprar ou falar com a equipe, e servem para responder ao seu pedido.</p>
+    <p>Não vendemos nem repassamos seus dados. Para consultar, corrigir ou apagar o que você nos informou, escreva para <b>cascaviva.projeto@gmail.com</b>.</p>
+  </div>
   <h3 class="sec-h" id="contatos">Contatos</h3>
   <div class="box" style="margin-top:14px">
     <p style="font-weight:800">E-mail da equipe</p>
@@ -326,7 +362,8 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     <p class="eyebrow" style="color:var(--peel)">Contato</p>
     <h2 id="ctTitulo">Quer testar a CascaViva na sua operação?</h2>
     <p id="ctTexto" style="color:color-mix(in srgb,var(--on-leaf) 80%,transparent);max-width:58ch">Produtores, distribuidores, mercados e indústrias de alimentos, óleos, cosméticos e plásticos: fale com a equipe.</p>
-    <div class="mail"><a href="mailto:cascaviva.projeto@gmail.com" style="color:inherit;text-decoration:none"><code id="mailTxt">cascaviva.projeto@gmail.com</code></a><button class="btn" type="button" id="copyMail">Copiar e-mail</button><span id="copyOk" class="note" style="color:var(--peel)" role="status"></span></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" data-form="contato">Enviar mensagem</button><button class="btn ghost" type="button" data-form="compra" style="color:var(--on-leaf)">Quero comprar ou pedir orçamento</button></div>
+    <div class="mail"><a href="mailto:cascaviva.projeto@gmail.com" style="color:inherit;text-decoration:none"><code id="mailTxt">cascaviva.projeto@gmail.com</code></a><button class="btn ghost" type="button" id="copyMail" style="color:var(--on-leaf)">Copiar e-mail</button><span id="copyOk" class="note" style="color:var(--peel)" role="status"></span></div>
   </div>
   <div class="team">
     <p><b>Karolayne Angel</b> · líder, Engenharia Química (IFBA)</p>
@@ -334,10 +371,41 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     <p><b>Prof. Francislei Santos</b> · orientador e inventor (IFBA)</p>
   </div>
 </div></section>
-<footer><div class="wrap">CascaViva · tecnologia desenvolvida no IFBA · pedido de patente BR 10 2025 026328 9</div></footer>
+
+<div class="modal" id="mBoas" hidden role="dialog" aria-modal="true" aria-labelledby="mBoasT"><form class="card" id="fBoas" novalidate>
+  <p class="eyebrow">Bem-vindo à CascaViva</p>
+  <h2 id="mBoasT">Antes de mais nada, queremos conhecer você!</h2>
+  <p style="color:var(--muted)">Duas perguntas rápidas para mostrar primeiro o que tem mais a ver com o seu negócio.</p>
+  <div class="field"><label for="bNome">Como podemos te chamar?</label><input type="text" id="bNome" maxlength="80" autocomplete="given-name" placeholder="Seu nome"></div>
+  <div class="field"><label for="bArea">Qual é a sua área?</label><select id="bArea"><option value="">Escolha uma opção</option><option value="produtor">Produção rural</option><option value="embalador">Packing house (lavo, seleciono e embalo)</option><option value="logistica">Logística, transporte ou distribuição</option><option value="mercado">Supermercado ou varejo</option><option value="oleos">Indústria de óleos</option><option value="cosmeticos">Indústria de cosméticos</option><option value="transformadora">Fabricação de embalagens plásticas</option><option value="resinas">Resinas ou revestimentos</option><option value="so-aditivo">Quero comprar o aditivo</option><option value="esg">Sustentabilidade e metas ESG</option><option value="pesquisa">Pesquisa ou universidade</option><option value="investimento">Investimento ou fomento</option><option value="outro">Outra área</option></select></div>
+  <p class="note">Usamos o que você informar e as páginas que visitar aqui para entender o que interessa a cada pessoa e melhorar o atendimento. Não pedimos documentos nesta etapa. <a href="#privacidade">Como usamos seus dados</a></p>
+  <div class="actions"><button class="btn" type="submit">Começar</button><button class="linkbtn" type="button" id="bPular">Agora não</button></div>
+</form></div>
+
+<div class="modal" id="mForm" hidden role="dialog" aria-modal="true" aria-labelledby="mFormT"><form class="card" id="fForm" novalidate>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div class="stack" style="gap:6px"><p class="eyebrow" id="mFormE">Fale com a equipe</p><h2 id="mFormT">Envie a sua mensagem</h2></div><button class="linkbtn" type="button" data-fechar>Fechar</button></div>
+  <div id="fCampos" class="stack" style="gap:12px">
+    <div class="field"><label for="cNome">Nome completo *</label><input type="text" id="cNome" maxlength="120" autocomplete="name" required></div>
+    <div class="row2"><div class="field"><label for="cEmail">E-mail *</label><input type="email" id="cEmail" maxlength="120" autocomplete="email" required></div><div class="field"><label for="cTel">Telefone ou WhatsApp *</label><input type="tel" id="cTel" maxlength="20" autocomplete="tel" placeholder="(71) 9 0000-0000" required></div></div>
+    <div class="field"><label for="cEmp">Empresa</label><input type="text" id="cEmp" maxlength="120" autocomplete="organization"></div>
+    <div id="cCompra" class="stack" style="gap:12px" hidden>
+      <div class="row2"><div class="field"><label for="cDoc">CPF ou CNPJ *</label><input type="text" id="cDoc" maxlength="18" inputmode="numeric"></div><div class="field"><label for="cCep">CEP *</label><input type="text" id="cCep" maxlength="9" inputmode="numeric" autocomplete="postal-code"></div></div>
+      <div class="row2"><div class="field"><label for="cProd">Produto *</label><select id="cProd"></select></div><div class="field"><label for="cQtd">Quantidade estimada</label><input type="text" id="cQtd" maxlength="60" placeholder="Ex.: 10 mil embalagens/mês"></div></div>
+    </div>
+    <div class="field"><label for="cMsg" id="cMsgL">Mensagem *</label><textarea id="cMsg" maxlength="2000"></textarea></div>
+    <div class="hp" aria-hidden="true"><label for="cSite">Não preencha</label><input type="text" id="cSite" tabindex="-1" autocomplete="off"></div>
+    <label class="chk"><input type="checkbox" id="cOk"><span>Autorizo a equipe CascaViva a usar estes dados para responder ao meu contato, conforme a <a href="#privacidade">política de dados</a>.</span></label>
+    <p class="err-msg" id="cErr" role="alert"></p>
+    <div class="actions"><button class="btn" type="submit" id="cEnviar">Enviar</button></div>
+  </div>
+  <div id="fOk" class="stack" style="gap:12px" hidden></div>
+</form></div>
+<footer><div class="wrap">CascaViva · tecnologia desenvolvida no IFBA · pedido de patente BR 10 2025 026328 9 · <a href="#privacidade">Como usamos seus dados</a></div></footer>
 
 <script>
 (function(){
+  // Endereço do Google Apps Script que recebe o relatório (ver relatorios/COMO_ATIVAR.md). Vazio = nada é enviado.
+  const RELATORIO_URL = '';
   const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
   const $ = id => document.getElementById(id);
 
@@ -389,8 +457,8 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
      dor:['As embalagens convencionais duram pouco, não protegem da luz e viram lixo.'], dado:['50%','das perdas pós-colheita acontecem no manuseio e no transporte (Embrapa, 2016).'],
      sol:['Troca da embalagem comum por uma com cerca de 90% de barreira UV.','Mais resistente: eficiência mecânica 40% superior à do plástico convencional.'], prods:['hortifruti','resina'], sim:true},
     {id:'logistica', seg:'Logística e distribuição', ic:'caminhao', q:'Sua dor é perder produtos durante a logística?',
-     dor:['Horas de estrada, sol, calor e espera nas centrais: a carga chega madura demais e estraga em poucos dias.'], dado:['30%','das perdas pós-colheita acontecem nas centrais de abastecimento (Embrapa, 2016).'],
-     sol:['Embalagem que bloqueia a radiação UV durante o transporte e a espera.','Mais resistência mecânica para aguentar o manuseio.'], prods:['hortifruti'], sim:true},
+     dor:['Horas de estrada, sol, calor e espera em armazéns e centrais: produtos sensíveis à luz chegam com menos vida útil, com desconto ou para o descarte.'], dado:['30%','das perdas pós-colheita acontecem nas centrais de abastecimento (Embrapa, 2016).'],
+     sol:['Embalagem que bloqueia a radiação UV durante o transporte e a espera.','Mais resistência mecânica para aguentar o manuseio.'], prods:['hortifruti','oleos','cosmeticos'], sim:true},
     {id:'mercado', seg:'Supermercados e redes', ic:'mercado', q:'Você é dono de mercado e vê fruta estragar na gôndola?',
      dor:['A fruta chega madura demais, fica sob luz o dia todo e estraga antes de vender.'], dado:['4,73%','de quebra nas vendas de frutas, legumes e verduras em 2024; o hortifrúti responde por 30% das perdas do varejo (ABRAS).'],
      sol:['Embalagem anti-UV para o hortifrúti que vocês mesmos embalam.','Um custo extra de centavos por embalagem para reduzir a quebra.'], prods:['hortifruti'], sim:true},
@@ -417,14 +485,14 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   function prodCard(p){
     const st = p.st ? `<span class="st ${p.st==='Protótipo'?'':'estudo'}">${esc(p.st)}</span>` : '';
     const pr = p.preco ? `<p class="price">${esc(p.preco)}<small>${esc(p.un)}</small></p>` : `<p class="price consulta">Sob consulta<small>calculado para cada cliente</small></p>`;
-    return `<div class="prodc">${st}<h3>${esc(p.nome)}</h3><p style="color:var(--muted)">${esc(p.desc)}</p>${pr}</div>`;
+    return `<div class="prodc">${st}<h3>${esc(p.nome)}</h3><p style="color:var(--muted)">${esc(p.desc)}</p>${pr}<button class="btn" type="button" data-form="compra" data-prod="${p.id}">${p.preco ? 'Quero comprar' : 'Pedir orçamento'}</button></div>`;
   }
   $('doresGrid').innerHTML = PERFIS.map(p => `<a class="dor" href="#${p.id}"><span class="ic">${IC[p.ic]}</span><span class="seg">${esc(p.seg)}</span><q>${esc(p.q)}</q><span class="go">CLIQUE AQUI!</span></a>`).join('')
     + `<a class="dor prod" href="#sobre"><span class="ic">${IC.folha}</span><span class="seg">Sobre nós</span><q>Nossa trajetória, diário de testes e contatos</q><span class="go">CLIQUE AQUI!</span></a>`
     + `<a class="dor prod" href="#produtos"><span class="ic">${IC.lista}</span><span class="seg">Nossos produtos</span><q>Quer ver todos os produtos e preços?</q><span class="go">CLIQUE AQUI!</span></a>`;
   $('prodsGrid').innerHTML = PRODUTOS.map(prodCard).join('');
   const BIG = {"campo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><rect y=\"96\" width=\"180\" height=\"34\" rx=\"8\" fill=\"#C9A36A\"/><path d=\"M40 96V54M90 96V44M140 96V60\" stroke=\"#1E4A33\" stroke-width=\"8\"/><circle cx=\"40\" cy=\"48\" r=\"22\" fill=\"#2E7D50\"/><circle cx=\"90\" cy=\"38\" r=\"26\" fill=\"#2E7D50\"/><circle cx=\"140\" cy=\"54\" r=\"20\" fill=\"#2E7D50\"/><circle cx=\"34\" cy=\"50\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"96\" cy=\"36\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"84\" cy=\"46\" r=\"5\" fill=\"#E5A928\"/><circle cx=\"146\" cy=\"56\" r=\"5\" fill=\"#E5A928\"/></svg>", "estrada": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><circle cx=\"150\" cy=\"28\" r=\"16\" fill=\"#E5A928\"/><path d=\"M150 2v6M150 48v6M124 28h6M170 28h6\" stroke=\"#E5A928\" stroke-width=\"4\" stroke-linecap=\"round\"/><rect x=\"10\" y=\"58\" width=\"100\" height=\"48\" rx=\"6\" fill=\"#1E4A33\"/><path d=\"M110 70h34l20 20v16h-54z\" fill=\"#2E7D50\"/><rect x=\"120\" y=\"76\" width=\"22\" height=\"14\" rx=\"3\" fill=\"#F2F5EF\"/><circle cx=\"40\" cy=\"110\" r=\"12\" fill=\"#18291F\"/><circle cx=\"138\" cy=\"110\" r=\"12\" fill=\"#18291F\"/></svg>", "galpao": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M14 56L90 16l76 40v68H14z\" fill=\"#1E4A33\"/><rect x=\"40\" y=\"74\" width=\"100\" height=\"50\" fill=\"#F2F5EF\"/><rect x=\"50\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"78\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"106\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"64\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"92\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/></svg>", "gondola": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M40 6h100l-10 18H50z\" fill=\"#E5A928\"/><rect x=\"14\" y=\"66\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><rect x=\"14\" y=\"112\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><circle cx=\"40\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"68\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"124\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"40\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"68\" cy=\"100\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"124\" cy=\"100\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"150\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/></svg>", "lixo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M44 40h92l-10 86H54z\" fill=\"#9AA39D\"/><rect x=\"36\" y=\"28\" width=\"108\" height=\"14\" rx=\"6\" fill=\"#6B776F\"/><circle cx=\"76\" cy=\"26\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"102\" cy=\"22\" r=\"12\" fill=\"#6E4A22\"/><path d=\"M70 64v46M90 64v46M110 64v46\" stroke=\"#6B776F\" stroke-width=\"5\"/><circle cx=\"154\" cy=\"92\" r=\"20\" fill=\"#B8432D\"/><path d=\"M146 92h16\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>"};
-  const EXTRA = {"produtor": {"h": ["A fruta sai boa da roça e perde valor no caminho", "O produtor colhe no ponto certo, lava e embala. Até chegar ao comprador, parte das caixas amadurece demais e perde o valor comercial."], "p": [["BIG:campo", "Colheita", "No ponto certo."], ["caixa", "Embalagem comum", "Plástico sem proteção contra a luz."], ["sol", "Espera ao sol", "No galpão ou na beira da estrada."], ["BIG:estrada", "Transporte", "Horas de estrada até o comprador."], ["BIG:lixo", "Desconto ou descarte", "A caixa perde o valor comercial.", "end"]], "f": [["~30%", "das frutas se perdem no Brasil", "Embrapa (dados de 1993)"], ["1/3", "da comida do planeta se perde ou é desperdiçada, cerca de 1,3 bilhão de toneladas por ano", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua produção?", "Produtores e cooperativas de frutas, legumes e verduras: fale com a equipe para um teste com a sua colheita."]}, "embalador": {"h": ["A embalagem é a última proteção antes de o produto sair", "Na packing house o hortifrúti é lavado, selecionado e embalado. Se a embalagem não protege da luz, o cuidado do processo se perde na estrada."], "p": [["BIG:campo", "Recebimento", "Produto chega do campo."], ["lavar", "Lavagem e seleção", "Só o melhor segue adiante."], ["caixa", "Embalagem comum", "Não protege da luz."], ["BIG:estrada", "Expedição", "Horas de transporte e manuseio."], ["alerta", "Chega madura demais", "O cliente recebe produto passando do ponto.", "end"]], "f": [["50%", "das perdas pós-colheita acontecem no manuseio e no transporte", "Embrapa (2016)"], ["1/3", "da comida do planeta se perde ou é desperdiçada", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua packing house?", "Empresas que lavam, selecionam e embalam hortifrúti: fale com a equipe para um lote-piloto."]}, "logistica": {"h": ["A carga sai boa e chega madura demais", "Na logística o tempo corre contra o produto: estrada, sol, calor e espera nas centrais aceleram o amadurecimento."], "p": [["caixa", "Carregamento", "Produto embalado no ponto."], ["BIG:estrada", "Estrada", "Sol e calor por horas."], ["BIG:galpao", "Central de abastecimento", "Mais espera, exposto à luz."], ["caminhao", "Entrega", "Chega madura demais."], ["BIG:lixo", "Perda", "Estraga em poucos dias.", "end"]], "f": [["50%", "das perdas pós-colheita acontecem no manuseio e no transporte", "Embrapa (2016)"], ["30%", "das perdas acontecem nas centrais de abastecimento", "Embrapa (2016)"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua logística?", "Transportadoras, distribuidores e centrais de abastecimento: fale com a equipe."]}, "mercado": {"h": ["Toda semana, a fruta chega madura demais", "O dono de uma rede de mercados recebe caixas de frutas que saíram boas do campo. No caminho até a gôndola, elas amadurecem rápido demais, estragam em poucos dias e viram prejuízo."], "p": [["BIG:campo", "Campo", "Colhida no ponto certo."], ["BIG:estrada", "Transporte", "Horas de estrada, sol e calor."], ["BIG:galpao", "Distribuição", "Mais tempo à espera, exposta à luz."], ["BIG:gondola", "Gôndola", "Chega madura demais e fica sob luz o dia todo."], ["BIG:lixo", "Prejuízo", "Estraga em poucos dias e vai para o lixo.", "end"]], "f": [["4,73%", "de quebra nas vendas de frutas, legumes e verduras em 2024; o hortifrúti responde por 30% das perdas do varejo", "ABRAS, via Circuito FLV"], ["R$ 61,3 bi", "de prejuízo por ano no Brasil com o desperdício de alimentos", "Senado Federal, com base no Índice de Desperdício de Alimentos da ONU"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva no seu mercado?", "Supermercados, redes e hortifrútis: fale com a equipe para um teste na sua loja."]}, "oleos": {"h": ["O óleo sai bom da fábrica e perde qualidade na prateleira", "Em embalagem transparente, a luz da loja acelera a oxidação e o ranço. O óleo dura menos do que a validade impressa promete."], "p": [["oleo", "Envase", "Óleo fresco em embalagem transparente."], ["caminhao", "Distribuição", "Até chegar à loja."], ["sol", "Prateleira iluminada", "Luz o dia todo."], ["alerta", "Oxidação e ranço", "O óleo perde qualidade."], ["BIG:lixo", "Vida útil menor", "Antes da validade impressa.", "end"]], "f": [["9 meses", "de vida útil estimada para óleos de sementes em PET transparente sob LED, contra validade impressa de 20 meses ou mais", "Martín-Torres et al., Molecules (2022)"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar a CascaViva nas suas embalagens de óleo?", "Indústrias de óleos comestíveis e de embalagens flexíveis para óleo: fale com a equipe."]}, "cosmeticos": {"h": ["A fórmula sai boa do laboratório e ranço chega antes do fim do frasco", "Óleos corporais e produtos com óleos vegetais em embalagem transparente ficam expostos à luz na vitrine e no banheiro, e rancificam."], "p": [["cosmetico", "Formulação", "Óleos vegetais na fórmula."], ["filme", "Embalagem transparente", "Bonita, mas sem barreira UV."], ["sol", "Vitrine e uso", "Luz todos os dias."], ["alerta", "Ranço", "Cheiro e cor mudam.", "end"]], "f": [], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar a CascaViva nas suas embalagens de cosméticos?", "Indústrias de cosméticos com óleos corporais e produtos sensíveis à luz: fale com a equipe para um projeto-piloto."]}, "transformadora": {"h": ["O grafeno vegetal entra em uma etapa que você já faz", "Na produção do filme de PEBDL, os pellets são misturados com aditivos antes da extrusão. É nessa mistura que o grafeno vegetal entra, sem mudar as demais etapas."], "p": [["resina", "Pellets de PEBDL", "A resina que você já compra."], ["po", "Mistura com aditivos", "Aqui entra o grafeno vegetal, a 5%."], ["extrusora", "Extrusão", "Filme soprado, como hoje."], ["caixa", "Corte e solda", "Sacos, sachês ou bobinas."], ["filme", "Embalagem anti-UV", "Pronta para o seu cliente."]], "f": [["5%", "de aditivo na mistura do PEBDL para cerca de 90% de barreira UV", "Detalhamento do projeto e resumo CONNEPI 2026"], ["+ R$ 0,01 a 0,02", "é o que o aditivo soma ao custo de um saco de 30 × 40 cm", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "mec", "aditivo", "custo"], "ct": ["Quer oferecer embalagens anti-UV aos seus clientes?", "Transformadoras de PEBDL e fabricantes de embalagens: fale com a equipe sobre o aditivo, a resina ou a licença."]}, "resinas": {"h": ["Proteção UV de origem vegetal para outros polímeros", "O grafeno vegetal é uma plataforma aditiva: além do PEBDL, a equipe estuda aplicações em resinas e revestimentos."], "p": [["resina", "Resina base", "O polímero que você produz."], ["po", "Grafeno vegetal", "Aditivo de origem vegetal."], ["extrusora", "Composto", "Resina com o aditivo incorporado."], ["filme", "Aplicação", "Filmes e revestimentos com proteção UV."]], "f": [["~90%", "de barreira UV no filme de PEBDL com 5% de aditivo, o resultado já obtido", "Detalhamento do projeto e resumo CONNEPI 2026"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer desenvolver uma resina ou revestimento com a CascaViva?", "Fabricantes de resinas, compostos e revestimentos: fale com a equipe para um codesenvolvimento."]}, "so-aditivo": {"h": ["Do eucalipto para a sua formulação", "Se você já tem o seu processo, pode comprar só o aditivo: grafeno vegetal em pó, feito do eucalipto."], "p": [["eucalipto", "Eucalipto", "Matéria-prima vegetal."], ["po", "Grafeno vegetal", "O aditivo, em pó."], ["resina", "Sua formulação", "5% na mistura do PEBDL."], ["filme", "Produto com barreira UV", "Cerca de 90% de bloqueio no PEBDL."]], "f": [["15%", "abaixo do preço do TiO₂, o aditivo anti-UV de referência", "Estimativa do Prof. Francislei Santos (01/11/2026)"], ["R$ 29,75 a 42,16", "por kg, preço estimado do grafeno vegetal", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "aditivo", "custo"], "ct": ["Quer comprar o aditivo de grafeno vegetal?", "Indústrias que querem um aditivo anti-UV de origem vegetal: fale com a equipe sobre volume e prazo."]}, "esg": {"h": ["Uma troca de aditivo que conta para a meta", "Trocar um aditivo UV sintético importado por um vegetal, numa embalagem mais biodegradável que a convencional, ajuda a cumprir metas de sustentabilidade e a nova regra de logística reversa."], "p": [["alerta", "Aditivo sintético importado", "O padrão de hoje."], ["eucalipto", "Troca por aditivo vegetal", "Grafeno vegetal, do eucalipto."], ["filme", "Embalagem mais biodegradável", "Que o plástico convencional."], ["reciclar", "Logística reversa", "Decreto 12.688/2025."], ["alvo", "Meta ESG", "Um passo mensurável."]], "f": [["R$ 5 mil a R$ 50 mi", "é a faixa de multa por poluição prevista em lei", "Decreto 6.514/2008, art. 61"]], "k": ["uv", "patente", "aditivo"], "ct": ["Quer incluir a CascaViva na sua meta ESG?", "Empresas com metas de sustentabilidade para embalagens: fale com a equipe."]}};
+  const EXTRA = {"produtor": {"h": ["A fruta sai boa da roça e perde valor no caminho", "O produtor colhe no ponto certo, lava e embala. Até chegar ao comprador, parte das caixas amadurece demais e perde o valor comercial."], "p": [["BIG:campo", "Colheita", "No ponto certo."], ["caixa", "Embalagem comum", "Plástico sem proteção contra a luz."], ["sol", "Espera ao sol", "No galpão ou na beira da estrada."], ["BIG:estrada", "Transporte", "Horas de estrada até o comprador."], ["BIG:lixo", "Desconto ou descarte", "A caixa perde o valor comercial.", "end"]], "f": [["~30%", "das frutas se perdem no Brasil", "Embrapa (dados de 1993)"], ["1/3", "da comida do planeta se perde ou é desperdiçada, cerca de 1,3 bilhão de toneladas por ano", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua produção?", "Produtores e cooperativas de frutas, legumes e verduras: fale com a equipe para um teste com a sua colheita."]}, "embalador": {"h": ["A embalagem é a última proteção antes de o produto sair", "Na packing house o hortifrúti é lavado, selecionado e embalado. Se a embalagem não protege da luz, o cuidado do processo se perde na estrada."], "p": [["BIG:campo", "Recebimento", "Produto chega do campo."], ["lavar", "Lavagem e seleção", "Só o melhor segue adiante."], ["caixa", "Embalagem comum", "Não protege da luz."], ["BIG:estrada", "Expedição", "Horas de transporte e manuseio."], ["alerta", "Chega madura demais", "O cliente recebe produto passando do ponto.", "end"]], "f": [["50%", "das perdas pós-colheita acontecem no manuseio e no transporte", "Embrapa (2016)"], ["1/3", "da comida do planeta se perde ou é desperdiçada", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua packing house?", "Empresas que lavam, selecionam e embalam hortifrúti: fale com a equipe para um lote-piloto."]}, "logistica": {"h": ["A carga sai boa e chega pior", "Na logística o tempo corre contra o produto: estrada, sol, calor e espera em armazéns e centrais aceleram a perda de qualidade de alimentos, óleos, cosméticos e outros produtos sensíveis à luz."], "p": [["caixa", "Carregamento", "Produto embalado em bom estado."], ["BIG:estrada", "Estrada", "Sol e calor por horas."], ["BIG:galpao", "Armazém ou central", "Mais espera, exposto à luz."], ["caminhao", "Entrega", "Chega com menos vida útil."], ["BIG:lixo", "Perda", "Desconto, devolução ou descarte.", "end"]], "f": [["50%", "das perdas pós-colheita de frutas e hortaliças acontecem no manuseio e no transporte", "Embrapa (2016)"], ["30%", "dessas perdas acontecem nas centrais de abastecimento", "Embrapa (2016)"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua logística?", "Transportadoras, distribuidores, operadores logísticos e centrais de abastecimento: fale com a equipe."]}, "mercado": {"h": ["Toda semana, a fruta chega madura demais", "O dono de uma rede de mercados recebe caixas de frutas que saíram boas do campo. No caminho até a gôndola, elas amadurecem rápido demais, estragam em poucos dias e viram prejuízo."], "p": [["BIG:campo", "Campo", "Colhida no ponto certo."], ["BIG:estrada", "Transporte", "Horas de estrada, sol e calor."], ["BIG:galpao", "Distribuição", "Mais tempo à espera, exposta à luz."], ["BIG:gondola", "Gôndola", "Chega madura demais e fica sob luz o dia todo."], ["BIG:lixo", "Prejuízo", "Estraga em poucos dias e vai para o lixo.", "end"]], "f": [["4,73%", "de quebra nas vendas de frutas, legumes e verduras em 2024; o hortifrúti responde por 30% das perdas do varejo", "ABRAS, via Circuito FLV"], ["R$ 61,3 bi", "de prejuízo por ano no Brasil com o desperdício de alimentos", "Senado Federal, com base no Índice de Desperdício de Alimentos da ONU"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva no seu mercado?", "Supermercados, redes e hortifrútis: fale com a equipe para um teste na sua loja."]}, "oleos": {"h": ["O óleo sai bom da fábrica e perde qualidade na prateleira", "Em embalagem transparente, a luz da loja acelera a oxidação e o ranço. O óleo dura menos do que a validade impressa promete."], "p": [["oleo", "Envase", "Óleo fresco em embalagem transparente."], ["caminhao", "Distribuição", "Até chegar à loja."], ["sol", "Prateleira iluminada", "Luz o dia todo."], ["alerta", "Oxidação e ranço", "O óleo perde qualidade."], ["BIG:lixo", "Vida útil menor", "Antes da validade impressa.", "end"]], "f": [["9 meses", "de vida útil estimada para óleos de sementes em PET transparente sob LED, contra validade impressa de 20 meses ou mais", "Martín-Torres et al., Molecules (2022)"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar a CascaViva nas suas embalagens de óleo?", "Indústrias de óleos comestíveis e de embalagens flexíveis para óleo: fale com a equipe."]}, "cosmeticos": {"h": ["A fórmula sai boa do laboratório e ranço chega antes do fim do frasco", "Óleos corporais e produtos com óleos vegetais em embalagem transparente ficam expostos à luz na vitrine e no banheiro, e rancificam."], "p": [["cosmetico", "Formulação", "Óleos vegetais na fórmula."], ["filme", "Embalagem transparente", "Bonita, mas sem barreira UV."], ["sol", "Vitrine e uso", "Luz todos os dias."], ["alerta", "Ranço", "Cheiro e cor mudam.", "end"]], "f": [], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar a CascaViva nas suas embalagens de cosméticos?", "Indústrias de cosméticos com óleos corporais e produtos sensíveis à luz: fale com a equipe para um projeto-piloto."]}, "transformadora": {"h": ["O grafeno vegetal entra em uma etapa que você já faz", "Na produção do filme de PEBDL, os pellets são misturados com aditivos antes da extrusão. É nessa mistura que o grafeno vegetal entra, sem mudar as demais etapas."], "p": [["resina", "Pellets de PEBDL", "A resina que você já compra."], ["po", "Mistura com aditivos", "Aqui entra o grafeno vegetal, a 5%."], ["extrusora", "Extrusão", "Filme soprado, como hoje."], ["caixa", "Corte e solda", "Sacos, sachês ou bobinas."], ["filme", "Embalagem anti-UV", "Pronta para o seu cliente."]], "f": [["5%", "de aditivo na mistura do PEBDL para cerca de 90% de barreira UV", "Detalhamento do projeto e resumo CONNEPI 2026"], ["+ R$ 0,01 a 0,02", "é o que o aditivo soma ao custo de um saco de 30 × 40 cm", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "mec", "aditivo", "custo"], "ct": ["Quer oferecer embalagens anti-UV aos seus clientes?", "Transformadoras de PEBDL e fabricantes de embalagens: fale com a equipe sobre o aditivo, a resina ou a licença."]}, "resinas": {"h": ["Proteção UV de origem vegetal para outros polímeros", "O grafeno vegetal é uma plataforma aditiva: além do PEBDL, a equipe estuda aplicações em resinas e revestimentos."], "p": [["resina", "Resina base", "O polímero que você produz."], ["po", "Grafeno vegetal", "Aditivo de origem vegetal."], ["extrusora", "Composto", "Resina com o aditivo incorporado."], ["filme", "Aplicação", "Filmes e revestimentos com proteção UV."]], "f": [["~90%", "de barreira UV no filme de PEBDL com 5% de aditivo, o resultado já obtido", "Detalhamento do projeto e resumo CONNEPI 2026"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer desenvolver uma resina ou revestimento com a CascaViva?", "Fabricantes de resinas, compostos e revestimentos: fale com a equipe para um codesenvolvimento."]}, "so-aditivo": {"h": ["Do eucalipto para a sua formulação", "Se você já tem o seu processo, pode comprar só o aditivo: grafeno vegetal em pó, feito do eucalipto."], "p": [["eucalipto", "Eucalipto", "Matéria-prima vegetal."], ["po", "Grafeno vegetal", "O aditivo, em pó."], ["resina", "Sua formulação", "5% na mistura do PEBDL."], ["filme", "Produto com barreira UV", "Cerca de 90% de bloqueio no PEBDL."]], "f": [["15%", "abaixo do preço do TiO₂, o aditivo anti-UV de referência", "Estimativa do Prof. Francislei Santos (01/11/2026)"], ["R$ 29,75 a 42,16", "por kg, preço estimado do grafeno vegetal", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "aditivo", "custo"], "ct": ["Quer comprar o aditivo de grafeno vegetal?", "Indústrias que querem um aditivo anti-UV de origem vegetal: fale com a equipe sobre volume e prazo."]}, "esg": {"h": ["Uma troca de aditivo que conta para a meta", "Trocar um aditivo UV sintético importado por um vegetal, numa embalagem mais biodegradável que a convencional, ajuda a cumprir metas de sustentabilidade e a nova regra de logística reversa."], "p": [["alerta", "Aditivo sintético importado", "O padrão de hoje."], ["eucalipto", "Troca por aditivo vegetal", "Grafeno vegetal, do eucalipto."], ["filme", "Embalagem mais biodegradável", "Que o plástico convencional."], ["reciclar", "Logística reversa", "Decreto 12.688/2025."], ["alvo", "Meta ESG", "Um passo mensurável."]], "f": [["R$ 5 mil a R$ 50 mi", "é a faixa de multa por poluição prevista em lei", "Decreto 6.514/2008, art. 61"]], "k": ["uv", "patente", "aditivo"], "ct": ["Quer incluir a CascaViva na sua meta ESG?", "Empresas com metas de sustentabilidade para embalagens: fale com a equipe."]}};
   const KPIS = {
     uv:['~90%','da radiação UV bloqueada pelo filme de PEBDL, com 5% de aditivo'],
     mec:['+40%','de eficiência mecânica em relação ao plástico convencional'],
@@ -435,32 +503,41 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   const FONTE_SOL = 'Dados técnicos: detalhamento do projeto e resumo CONNEPI 2026 · Custo: nota técnica de viabilidade da equipe (Módulo 9) e Prof. Francislei Santos (01/11/2026)';
   function passoSvg(k){ return k.startsWith('BIG:') ? BIG[k.slice(4)] : IC[k]; }
   const SIMS = {
-    produtor:{tipo:'perda', per:'semana', rot:'Valor da sua colheita por semana (R$)', v:10000, p:30, ph:'Começa em 30%, a perda de frutas no Brasil segundo a Embrapa (dados de 1993). Use a da sua produção, se souber.'},
-    embalador:{tipo:'perda', per:'semana', rot:'Valor do que você embala por semana (R$)', v:20000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
-    logistica:{tipo:'perda', per:'semana', rot:'Valor da carga de hortifrúti que você transporta por semana (R$)', v:50000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
-    mercado:{tipo:'perda', per:'semana', rot:'Quanto você compra de hortifrúti por semana (R$)', v:20000, p:4.73, ph:'Começa em 4,73%, a quebra média de FLV no varejo em 2024 (ABRAS, via Circuito FLV). Use a da sua loja, se souber.'},
-    oleos:{tipo:'perda', per:'mês', rot:'Faturamento mensal com óleos em embalagem transparente (R$)', v:100000, p:2, ph:'Valor de exemplo: produtos vencidos, devolvidos ou vendidos com desconto por perda de qualidade.'},
-    cosmeticos:{tipo:'perda', per:'mês', rot:'Faturamento mensal com produtos sensíveis à luz (R$)', v:50000, p:2, ph:'Valor de exemplo: produtos devolvidos ou descartados por ranço ou mudança de cor e cheiro.'},
+    produtor:{tipo:'perda', per:'semana', val:'Valor colhido por semana (R$)', ex:'Ex.: banana', v:10000, p:30, ph:'Começa em 30%, a perda de frutas no Brasil segundo a Embrapa (dados de 1993). Use a da sua produção, se souber.'},
+    embalador:{tipo:'perda', per:'semana', val:'Valor embalado por semana (R$)', ex:'Ex.: tomate', v:20000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
+    logistica:{tipo:'perda', per:'semana', val:'Valor transportado por semana (R$)', ex:'Ex.: alimentos, óleos, cosméticos', v:50000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
+    mercado:{tipo:'perda', per:'semana', val:'Valor comprado por semana (R$)', ex:'Ex.: hortifrúti', v:20000, p:4.73, ph:'Começa em 4,73%, a quebra média de FLV no varejo em 2024 (ABRAS, via Circuito FLV). Use a da sua loja, se souber.'},
+    oleos:{tipo:'perda', per:'mês', val:'Faturamento por mês (R$)', ex:'Ex.: óleo de soja', v:100000, p:2, ph:'Valor de exemplo: produtos vencidos, devolvidos ou vendidos com desconto por perda de qualidade.'},
+    cosmeticos:{tipo:'perda', per:'mês', val:'Faturamento por mês (R$)', ex:'Ex.: óleo corporal', v:50000, p:2, ph:'Valor de exemplo: produtos devolvidos ou descartados por ranço ou mudança de cor e cheiro.'},
     transformadora:{tipo:'aditivo', rot:'Toneladas de filme de PEBDL por mês', v:10, pct:5},
     resinas:{tipo:'aditivo', rot:'Toneladas de resina ou composto por mês', v:5, pct:5},
     'so-aditivo':{tipo:'aditivo', rot:'Toneladas da sua formulação por mês', v:1, pct:5},
     esg:{tipo:'esg', rot:'Toneladas de embalagem plástica por ano', v:50, pct:5}
   };
   const num = (v,d) => (v||0).toLocaleString('pt-BR',{maximumFractionDigits:d||0});
+  let prN = 0;
+  function prRow(ex, v, p){
+    prN++; const k = prN;
+    return `<div class="pr-row"><input class="pr-n" type="text" maxlength="60" aria-label="Produto ${k}" placeholder="${esc(ex||'Nome do produto')}"><input class="pr-v" type="number" min="0" step="100" aria-label="Valor do produto ${k}" value="${v!=null?v:''}" inputmode="decimal"><input class="pr-p" type="number" min="0" max="100" step="0.01" aria-label="Perda do produto ${k} em %" value="${p!=null?p:''}" inputmode="decimal"><button class="pr-del" type="button" aria-label="Remover produto ${k}">×</button></div>`;
+  }
   function simHtml(id){
     const s = SIMS[id]; if(!s) return '';
-    const head = `<h3 class="sec-h">Simule o seu caso</h3><p class="lead" style="margin-top:8px">A conta é feita aqui na página e nada do que você digita é enviado ou guardado.</p>`;
+    const head = `<h3 class="sec-h">Simule o seu caso</h3><p class="lead" style="margin-top:8px">Coloque os seus números. A conta é feita na hora, aqui na página.</p>`;
     if(s.tipo==='perda'){
       return head + `<div class="simbox" data-sim="perda" data-per="${s.per}">
-        <form class="panel stack" style="gap:18px" onsubmit="return false">
-          <div class="field"><label for="sV">${esc(s.rot)}</label><input type="number" id="sV" min="0" step="100" value="${s.v}" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo seu.</span></div>
-          <div class="field"><label for="sP">Quanto disso se perde (%)</label><input type="number" id="sP" min="0" max="100" step="0.01" value="${s.p}" inputmode="decimal"><span class="hint">${esc(s.ph)}</span></div>
+        <form class="panel stack" style="gap:16px" onsubmit="return false">
+          <p style="font-weight:800">Quais produtos você movimenta e quanto se perde de cada um?</p>
+          <div class="pr-head" aria-hidden="true"><span>Produto</span><span>${esc(s.val)}</span><span>Perda (%)</span><span></span></div>
+          <div class="pr-list" id="prList">${prRow(s.ex, s.v, s.p)}</div>
+          <button class="add-row" type="button" id="prAdd">+ Adicionar produto</button>
+          <span class="hint">${esc(s.ph)} Os valores da primeira linha são de exemplo: troque pelos seus.</span>
           <div class="field"><label for="sR">E se a perda caísse…</label><div class="range-row"><input type="range" id="sR" min="0" max="60" step="5" value="20"><output id="sRo" for="sR">20%</output></div><span class="hint">Simulação para testar cenários. Não é resultado de teste da CascaViva.</span></div>
         </form>
         <div class="panel result" aria-live="polite">
           <p class="eyebrow" style="color:var(--loss)">Sua perda hoje</p>
-          <p class="big" id="oAno">R$ 0</p><p style="margin-top:-8px;color:var(--muted)">por ano</p>
+          <p class="big" id="oAno">R$ 0</p><p style="margin-top:-8px;color:var(--muted)">por ano, somando todos os produtos</p>
           <dl class="rows"><dt>Por ${s.per}</dt><dd id="oPer">R$ 0</dd></dl>
+          <div class="breakdown" id="oLista"></div>
           <div class="bar" aria-hidden="true"><i id="oBar" style="width:100%"></i></div>
           <div class="save-box stack" style="gap:6px"><p style="font-weight:800">Se a perda caísse <span id="oRt">20%</span>, você deixaria de perder</p><p class="big" id="oGanho">R$ 0</p><p class="note">por ano</p></div>
           <p class="note">${s.per==='semana'?'Ano = 52 semanas.':'Ano = 12 meses.'}</p>
@@ -496,9 +573,17 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     const f = id => { const e = $(id); return e ? Math.max(0, parseFloat(e.value)||0) : 0; };
     const faixa = (a,b,d) => a===b ? 'R$ '+num(a,d) : 'R$ '+num(a,d)+' a '+num(b,d);
     if(box.dataset.sim==='perda'){
-      const v=f('sV'), p=Math.min(100,f('sP'))/100, r=parseInt($('sR').value,10)/100;
-      const per=v*p, ano=per*(box.dataset.per==='semana'?52:12);
+      const r=parseInt($('sR').value,10)/100, mult = box.dataset.per==='semana'?52:12;
+      let per = 0; const linhas = [];
+      box.querySelectorAll('.pr-row').forEach((row,k) => {
+        const v = Math.max(0, parseFloat(row.querySelector('.pr-v').value)||0), p = Math.min(100, Math.max(0, parseFloat(row.querySelector('.pr-p').value)||0))/100;
+        const nome = row.querySelector('.pr-n').value.trim() || row.querySelector('.pr-n').placeholder.replace(/^Ex\.:\s*/,'') || ('Produto '+(k+1));
+        per += v*p; linhas.push([nome, v*p*mult]);
+      });
+      const ano = per*mult;
       $('oPer').textContent=brl(per); $('oAno').textContent=brl(ano); $('oGanho').textContent=brl(ano*r);
+      const ol = $('oLista'); ol.replaceChildren();
+      if(linhas.length > 1) linhas.forEach(([n,a]) => { const d=document.createElement('div'); const s=document.createElement('span'); s.textContent=n; const b=document.createElement('b'); b.textContent=brl(a)+'/ano'; d.append(s,b); ol.append(d); });
       $('sRo').textContent=Math.round(r*100)+'%'; $('oRt').textContent=Math.round(r*100)+'%'; $('oBar').style.width=(100*(1-r))+'%';
     } else if(box.dataset.sim==='aditivo'){
       const t=f('sT'), pc=f('sPc')/100, kg=t*1000*pc;
@@ -510,7 +595,11 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
       $('oEc').textContent=faixa(kg*(35-29.75),kg*(50-42.16));
     }
   }
-  document.addEventListener('input', e => { if(e.target.closest && e.target.closest('#perfilBox .simbox')) simCalc(); });
+  document.addEventListener('input', e => { if(e.target.closest && e.target.closest('#perfilBox .simbox')){ simCalc(); simLog(); } });
+  document.addEventListener('click', e => {
+    if(e.target.id==='prAdd'){ const s = SIMS[atual]; $('prList').insertAdjacentHTML('beforeend', prRow('Nome do produto', '', '')); simCalc(); const ins=$('prList').querySelectorAll('.pr-n'); ins[ins.length-1].focus(); }
+    else if(e.target.classList && e.target.classList.contains('pr-del')){ const rows=$('prList').querySelectorAll('.pr-row'); if(rows.length>1){ e.target.closest('.pr-row').remove(); simCalc(); simLog(); } }
+  });
   function perfilHtml(p){
     const x = EXTRA[p.id];
     const ps = p.prods.map(id => PRODUTOS.find(y => y.id===id)).filter(Boolean);
@@ -534,8 +623,119 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
       ${simHtml(p.id)}
       <h3 class="sec-h">Produto para você</h3>
       <div class="prods">${ps.map(prodCard).join('')}</div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">${sim}<a class="btn ghost" href="#produtos">Ver todos os produtos</a><a class="btn ghost" href="#contato">Falar com a equipe</a></div>`;
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">${sim}<a class="btn ghost" href="#produtos">Ver todos os produtos</a><button class="btn ghost" type="button" data-form="contato">Falar com a equipe</button></div>`;
   }
+
+  // ---------- Relatório de visitas ----------
+  const sessao = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+  let visitante = {nome:'', area:''};
+  try { const v = JSON.parse(localStorage.getItem('cv_visitante')||'null'); if(v && typeof v==='object') visitante = {nome:String(v.nome||'').slice(0,80), area:String(v.area||'').slice(0,40)}; } catch(e){}
+  function enviar(evento, dados){
+    if(!RELATORIO_URL) return false;
+    try {
+      const corpo = JSON.stringify({evento, dados:dados||{}, sessao, nome:visitante.nome, area:visitante.area, quando:new Date().toISOString(), pagina:location.hash||'#inicio', origem:document.referrer||'', tela:innerWidth+'x'+innerHeight});
+      fetch(RELATORIO_URL, {method:'POST', mode:'no-cors', keepalive:true, headers:{'Content-Type':'text/plain;charset=utf-8'}, body:corpo}).catch(()=>{});
+      return true;
+    } catch(e){ return false; }
+  }
+  let simTimer = null;
+  function simLog(){
+    clearTimeout(simTimer);
+    simTimer = setTimeout(() => {
+      const box = document.querySelector('#perfilBox .simbox'); if(!box) return;
+      const d = {card:atual, tipo:box.dataset.sim};
+      if(box.dataset.sim==='perda') d.produtos = [...box.querySelectorAll('.pr-row')].map(r => ({produto:r.querySelector('.pr-n').value.trim(), valor:r.querySelector('.pr-v').value, perda:r.querySelector('.pr-p').value}));
+      else { d.toneladas = ($('sT')||{}).value; d.teor = ($('sPc')||{}).value; }
+      enviar('simulacao', d);
+    }, 2500);
+  }
+
+  // ---------- Boas-vindas ----------
+  const AREA_CARD = {produtor:1,embalador:1,logistica:1,mercado:1,oleos:1,cosmeticos:1,transformadora:1,resinas:1,'so-aditivo':1,esg:1};
+  function marcarRecomendado(){
+    document.querySelectorAll('.dor.rec').forEach(a => { a.classList.remove('rec'); const t=a.querySelector('.rec-tag'); if(t) t.remove(); });
+    if(visitante.area && AREA_CARD[visitante.area]){
+      const a = document.querySelector(`#doresGrid a[href="#${visitante.area}"]`);
+      if(a){ a.classList.add('rec'); const tag=document.createElement('span'); tag.className='rec-tag'; tag.textContent='Recomendado para você'; a.prepend(tag); }
+    }
+    const h = $('hello');
+    if(h) h.textContent = visitante.nome ? `Olá, ${visitante.nome}!` : '';
+  }
+  function fecharBoas(){ $('mBoas').hidden = true; }
+  $('fBoas').addEventListener('submit', e => {
+    e.preventDefault();
+    visitante = {nome:$('bNome').value.trim().slice(0,80), area:$('bArea').value};
+    try { localStorage.setItem('cv_visitante', JSON.stringify(visitante)); } catch(err){}
+    enviar('visita', {respondeu:true});
+    fecharBoas(); marcarRecomendado();
+    if(visitante.area && AREA_CARD[visitante.area]) document.getElementById('dores').scrollIntoView();
+  });
+  $('bPular').addEventListener('click', () => {
+    try { localStorage.setItem('cv_visitante', JSON.stringify({nome:'',area:''})); } catch(err){}
+    enviar('visita', {respondeu:false}); fecharBoas();
+  });
+  let jaVisto = false; try { jaVisto = localStorage.getItem('cv_visitante') !== null; } catch(e){}
+  if(!jaVisto) $('mBoas').hidden = false; else enviar('visita', {retorno:true});
+  marcarRecomendado();
+
+  // ---------- Formulários de contato e de compra ----------
+  $('cProd').innerHTML = PRODUTOS.map(p => `<option value="${p.id}">${esc(p.nome)}</option>`).join('');
+  let formTipo = 'contato';
+  function abrirForm(tipo, prod){
+    formTipo = tipo;
+    const compra = tipo==='compra';
+    $('mFormE').textContent = compra ? 'Comprar ou pedir orçamento' : 'Fale com a equipe';
+    $('mFormT').textContent = compra ? 'Conte o que você precisa' : 'Envie a sua mensagem';
+    $('cCompra').hidden = !compra;
+    $('cMsgL').textContent = compra ? 'Detalhes do pedido' : 'Mensagem *';
+    if(prod) $('cProd').value = prod;
+    if(visitante.nome && !$('cNome').value) $('cNome').value = visitante.nome;
+    $('fCampos').hidden = false; $('fOk').hidden = true; $('cErr').textContent = '';
+    $('mForm').hidden = false; $('cNome').focus();
+    enviar('abriu_formulario', {tipo, produto:prod||'', card:atual||''});
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('[data-form]');
+    if(b){ e.preventDefault(); abrirForm(b.dataset.form, b.dataset.prod); }
+    if(e.target.closest && e.target.closest('[data-fechar]')) $('mForm').hidden = true;
+  });
+  document.addEventListener('keydown', e => { if(e.key==='Escape'){ $('mForm').hidden = true; } });
+  const dig = s => String(s||'').replace(/\D/g,'');
+  function cpfOk(c){ if(c.length!==11 || /^(\d)\1+$/.test(c)) return false; for(let t=9;t<11;t++){ let s=0; for(let i=0;i<t;i++) s+= +c[i]*(t+1-i); if(((s*10)%11)%10 !== +c[t]) return false; } return true; }
+  function cnpjOk(c){ if(c.length!==14 || /^(\d)\1+$/.test(c)) return false; const calc=n=>{ let s=0,p=n-7; for(let i=0;i<n;i++){ s+= +c[i]*p--; if(p<2) p=9; } const r=s%11; return r<2?0:11-r; }; return calc(12)===+c[12] && calc(13)===+c[13]; }
+  $('fForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const err = m => { $('cErr').textContent = m; };
+    if($('cSite').value) return;
+    const d = {tipo:formTipo, nome:$('cNome').value.trim(), email:$('cEmail').value.trim(), telefone:$('cTel').value.trim(), empresa:$('cEmp').value.trim(), mensagem:$('cMsg').value.trim(), card:atual||''};
+    if(d.nome.length < 3) return err('Informe o seu nome completo.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) return err('Confira o e-mail: ele parece incompleto.');
+    if(dig(d.telefone).length < 10) return err('Informe o telefone com DDD.');
+    if(formTipo==='compra'){
+      d.documento = dig($('cDoc').value); d.cep = dig($('cCep').value); d.produto = $('cProd').value; d.quantidade = $('cQtd').value.trim();
+      if(!(cpfOk(d.documento) || cnpjOk(d.documento))) return err('Confira o CPF ou o CNPJ: os números não conferem.');
+      if(d.cep.length !== 8) return err('O CEP precisa ter 8 números.');
+    } else if(d.mensagem.length < 5) return err('Escreva a sua mensagem.');
+    if(!$('cOk').checked) return err('Para enviar, marque a autorização de uso dos dados.');
+    d.autorizou = true;
+    const foi = enviar(formTipo, d);
+    const ok = $('fOk'); ok.replaceChildren();
+    const p1 = document.createElement('p'); p1.className='ok-msg';
+    if(foi){
+      p1.textContent = `Recebemos, ${d.nome.split(' ')[0]}! A equipe vai responder pelo e-mail ou telefone que você informou.`;
+      ok.append(p1);
+    } else {
+      p1.textContent = 'Para concluir, envie a sua mensagem para cascaviva.projeto@gmail.com. Abaixo está o texto pronto para copiar.';
+      const pre = document.createElement('textarea'); pre.readOnly = true; pre.style.minHeight='140px';
+      const prodNome = d.produto ? (PRODUTOS.find(x=>x.id===d.produto)||{}).nome : '';
+      pre.value = [`Assunto: ${formTipo==='compra'?'Pedido de compra ou orçamento':'Contato pelo site'}`, `Nome: ${d.nome}`, `E-mail: ${d.email}`, `Telefone: ${d.telefone}`, d.empresa?`Empresa: ${d.empresa}`:'', d.documento?`CPF/CNPJ: ${d.documento}`:'', d.cep?`CEP: ${d.cep}`:'', prodNome?`Produto: ${prodNome}`:'', d.quantidade?`Quantidade: ${d.quantidade}`:'', d.mensagem?`Mensagem: ${d.mensagem}`:''].filter(Boolean).join('\n');
+      const a = document.createElement('a'); a.className='btn'; a.textContent='Abrir no e-mail'; a.href='mailto:cascaviva.projeto@gmail.com?subject='+encodeURIComponent(formTipo==='compra'?'Pedido de compra ou orçamento':'Contato pelo site')+'&body='+encodeURIComponent(pre.value);
+      ok.append(p1, pre, a);
+    }
+    const fechar = document.createElement('button'); fechar.className='btn ghost'; fechar.type='button'; fechar.textContent='Fechar'; fechar.setAttribute('data-fechar','');
+    ok.append(fechar);
+    $('fCampos').hidden = true; ok.hidden = false;
+  });
   const VIEWS = ['inicio','produtos','sobre','diario'];
   const CT0 = [$('ctTitulo').textContent, $('ctTexto').textContent];
   let atual = null;
@@ -543,11 +743,13 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     if(typeof h !== 'string') h = decodeURIComponent((location.hash||'').slice(1));
     const perfil = PERFIS.find(p => p.id===h);
     const view = perfil ? 'perfil' : (VIEWS.includes(h) ? h : 'inicio');
+    if(perfil || VIEWS.includes(h) || h==='privacidade') enviar('abriu', {pagina:h});
     if(perfil){ $('perfilBox').innerHTML = perfilHtml(perfil); simCalc(); $('ctTitulo').textContent = EXTRA[perfil.id].ct[0]; $('ctTexto').textContent = EXTRA[perfil.id].ct[1]; atual = perfil.id; }
     else if(h !== 'contato'){ $('ctTitulo').textContent = CT0[0]; $('ctTexto').textContent = CT0[1]; atual = null; }
     if(h === 'contato' && atual){ /* mantém a página do perfil e desce até o contato */ }
     else document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== view; });
-    const ancora = {trajetoria:'sobre', contatos:'sobre'}[h];
+    const ancora = {trajetoria:'sobre', contatos:'sobre', privacidade:'sobre'}[h];
+    if(h==='privacidade'){ $('mBoas').hidden = true; $('mForm').hidden = true; }
     if(ancora){ document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== 'sobre'; }); }
     const alvo = (h==='dores' || h==='contato' || ancora) ? document.getElementById(h) : null;
     if(alvo) alvo.scrollIntoView(); else window.scrollTo(0,0);
