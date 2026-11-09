@@ -10,8 +10,9 @@ Se o navegador tiver mais de uma conta Google aberta, faça tudo numa janela an�
 2. **Extensões → Apps Script**. Apague o que estiver no editor, cole o `Codigo.gs` inteiro e clique em **Salvar**.
 3. (Opcional) No início do código, em `OUTROS_AVISOS`, coloque entre aspas o e-mail de quem mais deve receber os avisos, por exemplo `['karolayne@gmail.com', 'silvano@gmail.com']`. Salve.
 4. No menu de funções lá em cima, escolha **arrumarPlanilha** e clique em **Executar**. Autorize quando o Google pedir (se aparecer "app não verificado": Avançado → Acessar).
-5. Escolha a função **ligarRotinas** e clique em **Executar**. Ela liga o resumo diário das 8 h e a limpeza mensal da navegação antiga.
-6. **Implantar → Nova implantação →** engrenagem **App da Web**. Executar como **Eu**; Quem pode acessar **Qualquer pessoa**. **Implantar** e copie o endereço que termina em `/exec` para o Claude colocar no site.
+5. (O painel com gráficos é criado junto. Para recriar só ele, rode **criarPainel**.)
+6. Escolha a função **ligarRotinas** e clique em **Executar**. Ela liga o resumo diário das 8 h e a limpeza mensal da navegação antiga.
+7. **Implantar → Nova implantação →** engrenagem **App da Web**. Executar como **Eu**; Quem pode acessar **Qualquer pessoa**. **Implantar** e copie o endereço que termina em `/exec` para o Claude colocar no site.
 
 ## Atualizar o código sem mudar o endereço
 
@@ -27,6 +28,7 @@ Não use "Nova implantação" para atualizar: o endereço muda e o site deixa de
 - **O cliente recebe na hora** uma confirmação da CascaViva, no visual da marca, com o resumo do pedido e o link do site.
 - **Todo dia às 8 h:** resumo das visitas das últimas 24 horas, por área e por canal.
 - **Na planilha:**
+  - **Painel:** escolha o período (7, 30 ou 90 dias, ou desde o início) e veja seis números principais e sete gráficos: visitas por dia, funil do clique ao pedido, visitas por canal e por área, páginas mais abertas, pedidos por produto e situação dos contatos.
   - **Resumo:** números principais e tabelas por área, canal, página, produto e ação. Atualiza sozinho.
   - **Contatos e pedidos:** um por linha, com a coluna **Situação** (Novo, Em contato, Proposta enviada, Fechado, Sem interesse) e **Observações da equipe**.
   - **Eventos:** cada passo das visitas, colorido pelo tipo de ação.

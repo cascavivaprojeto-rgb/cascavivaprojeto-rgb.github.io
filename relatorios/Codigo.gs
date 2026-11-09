@@ -264,13 +264,91 @@ function abaResumo_(ss) {
   return a;
 }
 
+
+// ---------- Painel com gráficos ----------
+const PAINEL = 'Painel', DADOS = 'Painel (dados)';
+const PERIODOS = ['Últimos 7 dias', 'Últimos 30 dias', 'Últimos 90 dias', 'Desde o início'];
+
+/** Cria (ou recria) a aba Painel: período escolhido numa lista, números principais e sete gráficos que se atualizam sozinhos. */
+function criarPainel() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  [PAINEL, DADOS].forEach(n => { const v = ss.getSheetByName(n); if (v) ss.deleteSheet(v); });
+  const d = ss.insertSheet(DADOS, ss.getSheets().length);
+  const p = ss.insertSheet(PAINEL, 0);
+  const F = (rng, f) => rng.setFormula(formula_(ss, f));
+  const ini = "'" + DADOS + "'!$B$1";
+  const CT = "'Contatos e pedidos'";
+
+  // ---- dados auxiliares (aba escondida) ----
+  d.getRange('A1').setValue('Início do período');
+  F(d.getRange('B1'), '=SWITCH(\'' + PAINEL + '\'!C4,"Últimos 7 dias",TODAY()-6,"Últimos 30 dias",TODAY()-29,"Últimos 90 dias",TODAY()-89,DATE(2000,1,1))');
+  F(d.getRange('A3'), '=ARRAYFORMULA(IFERROR(QUERY(UNIQUE(FILTER({INT(Eventos!A2:A),Eventos!B2:B},Eventos!B2:B<>"",Eventos!A2:A>=$B$1)),"select Col1, count(Col2) group by Col1 order by Col1 label Col1 \'Dia\', count(Col2) \'Visitas\'",0),{"Dia","Visitas"}))');
+  d.getRange('A4:A400').setNumberFormat('dd/MM');
+  F(d.getRange('D3'), '=ARRAYFORMULA(IFERROR(QUERY(UNIQUE(FILTER({Eventos!B2:B,Eventos!H2:H},Eventos!B2:B<>"",Eventos!A2:A>=$B$1)),"select Col2, count(Col1) group by Col2 order by count(Col1) desc label Col2 \'Canal\', count(Col1) \'Visitas\'",0),{"Canal","Visitas"}))');
+  F(d.getRange('G3'), '=ARRAYFORMULA(IFERROR(QUERY(UNIQUE(FILTER({Eventos!B2:B,Eventos!D2:D},Eventos!B2:B<>"",Eventos!A2:A>=$B$1)),"select Col2, count(Col1) group by Col2 order by count(Col1) desc label Col2 \'Área\', count(Col1) \'Visitas\'",0),{"Área","Visitas"}))');
+  d.getRange('J3:K3').setValues([['Etapa', 'Pessoas']]);
+  const etapa = (cond) => '=IFERROR(ROWS(UNIQUE(FILTER(Eventos!B2:B,Eventos!B2:B<>"",Eventos!A2:A>=$B$1' + cond + '))),0)';
+  [['Entraram no site', ''], ['Abriram um card', ',Eventos!E2:E="Abriu página",LEFT(Eventos!G2:G,5)="Card:"'], ['Usaram o simulador', ',Eventos!E2:E="Usou o simulador"'],
+   ['Abriram um formulário', ',Eventos!E2:E="Abriu formulário"'], ['Enviaram pedido ou mensagem', ',REGEXMATCH(Eventos!E2:E,"^Enviou")']]
+    .forEach((e, i) => { d.getRange(4 + i, 10).setValue(e[0]); F(d.getRange(4 + i, 11), etapa(e[1])); });
+  F(d.getRange('M3'), '=ARRAYFORMULA(IFERROR(QUERY(FILTER(Eventos!G2:G,Eventos!E2:E="Abriu página",Eventos!A2:A>=$B$1),"select Col1, count(Col1) group by Col1 order by count(Col1) desc limit 10 label Col1 \'Página\', count(Col1) \'Aberturas\'",0),{"Página","Aberturas"}))');
+  F(d.getRange('P3'), '=ARRAYFORMULA(IFERROR(QUERY(FILTER(' + CT + '!J2:J,' + CT + '!B2:B="Pedido de orçamento",' + CT + '!A2:A>=$B$1),"select Col1, count(Col1) group by Col1 order by count(Col1) desc label Col1 \'Produto\', count(Col1) \'Pedidos\'",0),{"Produto","Pedidos"}))');
+  d.getRange('S3:T3').setValues([['Situação', 'Contatos']]);
+  ['Novo', 'Em contato', 'Proposta enviada', 'Fechado', 'Sem interesse'].forEach((st, i) => { d.getRange(4 + i, 19).setValue(st); F(d.getRange(4 + i, 20), '=COUNTIF(' + CT + '!C2:C,"' + st + '")'); });
+  d.hideSheet();
+
+  // ---- painel ----
+  for (let c = 1; c <= 14; c++) p.setColumnWidth(c, 92);
+  p.setHiddenGridlines(true);
+  p.getRange('A1').setValue('CascaViva · painel do site').setFontSize(20).setFontWeight('bold').setFontColor(COR.verde);
+  p.getRange('A2').setValue('Escolha o período ao lado. Os números e os gráficos se atualizam sozinhos.').setFontColor('#56665B');
+  p.getRange('A4:B4').merge().setValue('Período:').setFontWeight('bold').setHorizontalAlignment('right');
+  p.getRange('C4:E4').merge().setValue('Últimos 30 dias').setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(PERIODOS, true).build())
+    .setBackground(COR.amarelo).setFontWeight('bold').setHorizontalAlignment('center');
+  const kpis = [
+    ['Visitas', "='" + DADOS + "'!K4", '0'],
+    ['Usaram o simulador', "='" + DADOS + "'!K6", '0'],
+    ['Pedidos de orçamento', '=IFERROR(ROWS(FILTER(' + CT + '!A2:A,' + CT + '!B2:B="Pedido de orçamento",' + CT + '!A2:A>=' + ini + ')),0)', '0'],
+    ['Mensagens', '=IFERROR(ROWS(FILTER(' + CT + '!A2:A,' + CT + '!B2:B="Contato",' + CT + '!A2:A>=' + ini + ')),0)', '0'],
+    ['Aguardando resposta', '=COUNTIF(' + CT + '!C2:C,"Novo")', '0'],
+    ['Conversão', '=IF(B8=0,0,(F8+H8)/B8)', '0.0%']
+  ];
+  kpis.forEach((k, i) => {
+    const col = 2 + i * 2;
+    p.getRange(7, col, 1, 2).merge().setValue(k[0]).setFontWeight('bold').setFontColor('#FFFFFF').setBackground(i === 4 ? '#B8432D' : COR.verde).setHorizontalAlignment('center').setWrap(true);
+    const v = p.getRange(8, col, 1, 2).merge();
+    F(v, k[1]); v.setNumberFormat(k[2]).setFontSize(22).setFontWeight('bold').setFontColor(i === 4 ? '#7A1F1C' : COR.verde).setBackground(i === 4 ? COR.vermelho : COR.verdeClaro).setHorizontalAlignment('center');
+  });
+  // as fórmulas de conversão usam B8, F8 e H8 (visitas, pedidos e mensagens)
+  p.setRowHeight(7, 34); p.setRowHeight(8, 46);
+  p.getRange('B10').setValue('Conversão = pedidos + mensagens ÷ visitas do período. "Aguardando resposta" conta todos os contatos com Situação Novo.').setFontColor('#56665B').setFontSize(9);
+
+  const graf = (b, rng, titulo, linha, col, opc) => {
+    let g = b.addRange(d.getRange(rng)).setNumHeaders(1).setPosition(linha, col, 0, 0)
+      .setOption('title', titulo).setOption('titleTextStyle', {color: COR.verde, fontSize: 14, bold: true})
+      .setOption('width', 590).setOption('height', 300).setOption('backgroundColor', '#FFFFFF');
+    Object.keys(opc || {}).forEach(k => { g = g.setOption(k, opc[k]); });
+    p.insertChart(g.build());
+  };
+  const verde = ['#2E7D50'], paleta = ['#1E4A33', '#E5A928', '#2E7D50', '#B8432D', '#7DD39B', '#5BA7D8', '#8A6A3A', '#9AA39D', '#E4DCF2', '#F6D2A8'];
+  graf(p.newChart().asLineChart(), 'A3:B400', 'Visitas por dia', 12, 2, {colors: verde, legend: {position: 'none'}, pointSize: 6, curveType: 'function', hAxis: {format: 'dd/MM'}, vAxis: {minValue: 0, format: '0'}});
+  graf(p.newChart().asColumnChart(), 'J3:K8', 'Funil: do clique ao pedido', 12, 9, {colors: ['#E5A928'], legend: {position: 'none'}, vAxis: {minValue: 0, format: '0'}});
+  graf(p.newChart().asPieChart(), 'D3:E60', 'Visitas por canal de divulgação', 28, 2, {colors: paleta, pieHole: 0.45, legend: {position: 'right'}});
+  graf(p.newChart().asBarChart(), 'G3:H60', 'Visitas por área', 28, 9, {colors: verde, legend: {position: 'none'}, hAxis: {minValue: 0, format: '0'}});
+  graf(p.newChart().asBarChart(), 'M3:N13', 'Páginas e cards mais abertos', 44, 2, {colors: ['#5BA7D8'], legend: {position: 'none'}, hAxis: {minValue: 0, format: '0'}});
+  graf(p.newChart().asBarChart(), 'P3:Q20', 'Pedidos por produto', 44, 9, {colors: ['#E5A928'], legend: {position: 'none'}, hAxis: {minValue: 0, format: '0'}});
+  graf(p.newChart().asPieChart(), 'S3:T8', 'Situação dos contatos (todos)', 60, 2, {colors: ['#B8432D', '#E5A928', '#9B7FD1', '#2E7D50', '#9AA39D'], pieHole: 0.45, legend: {position: 'right'}, sliceVisibilityThreshold: 0});
+  ss.setActiveSheet(p);
+}
+
 /** Rode uma vez para deixar a planilha organizada.
  *  Abas antigas com outro formato são renomeadas como "versão antiga", sem apagar nada. */
 function arrumarPlanilha() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   abaContatos_(ss); abaEventos_(ss); abaCrm_(ss); abaResumo_(ss);
+  criarPainel();
   ['Página1', 'Sheet1', 'Página 1'].forEach(n => { const v = ss.getSheetByName(n); if (v && v.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(v); });
-  ss.setActiveSheet(ss.getSheetByName('Resumo'));
+  ss.setActiveSheet(ss.getSheetByName(PAINEL));
 }
 
 /** Resumo das últimas 24 horas, enviado por e-mail. */
