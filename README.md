@@ -39,3 +39,26 @@ O que vai nesta pasta fica público. Não coloque aqui formulação, parâmetros
 Se preferir, mande as fotos e o texto para o Claude, que devolve o `atualizacoes.json` pronto e também a versão para anexar atualizada.
 
 Arquivos grandes: o GitHub recusa arquivo acima de 25 MB pelo site. Para vídeo, prefira clipes curtos ou suba no YouTube e use o link (`"url": "https://youtu.be/..."`).
+
+## Mídia e premiações
+
+A aba **Mídia e premiações** (em Sobre nós) e a faixa **Reconhecimentos** logo abaixo do topo da página inicial leem o arquivo `midia.json`. Vale para o site da CascaViva e para a página do GRAPHAGRO ao mesmo tempo. Enquanto o arquivo estiver vazio (`[]`), nada disso aparece.
+
+Cada item é um bloco como este, separados por vírgula:
+
+```json
+{
+  "tipo": "premio",
+  "data": "2026-11-14",
+  "titulo": "Título do prêmio ou da matéria",
+  "destaque": "Texto curto para a faixa da página inicial",
+  "texto": "Uma ou duas frases.",
+  "fonte": "Quem concedeu ou publicou",
+  "link": "https://...",
+  "imagem": "fotos/nome-da-foto.jpg"
+}
+```
+
+- `tipo`: `premio` ou `midia`.
+- `data`: ano-mês-dia, ou só ano-mês.
+- `destaque`, `texto`, `fonte`, `link` e `imagem` são opcionais.

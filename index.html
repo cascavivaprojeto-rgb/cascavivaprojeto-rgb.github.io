@@ -20,6 +20,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Public+Sans:wght@400..800&display=swap">
+<script>const RAIZ = '';</script>
 </head>
 <body>
 <style>
@@ -76,6 +77,21 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero h1 em{font-style:italic;color:var(--peel)}
 .hero .lead{color:color-mix(in srgb,var(--on-leaf) 80%,transparent)}
 .logo-chip{background:#FFF;border-radius:16px;padding:10px 16px;display:inline-block;align-self:flex-start}
+.rec-home{background:var(--surface);border-bottom:1px solid var(--line);padding-block:22px}
+.rec-home .wrap{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.rec-home .eyebrow{margin-right:6px}
+.rec-pill{display:inline-flex;align-items:center;gap:8px;background:var(--peel-soft);color:var(--ink);font-weight:700;border-radius:999px;padding:7px 14px;font-size:15px}
+.rec-pill::before{content:"★";color:var(--peel)}
+.rec-home a.mais{font-weight:800;color:var(--leaf-2)}
+.midia-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:start}
+.midia-card.sem-img{grid-template-columns:1fr}
+.midia-card img{width:100%;height:150px;object-fit:cover;border-radius:16px;display:block}
+.midia-card .body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.midia-card .badge{align-self:flex-start}
+.midia-card h3{font-size:22px;font-weight:700}
+.midia-card .meta{color:var(--muted);font-weight:700;font-size:15px}
+.badge.premio{background:var(--peel-soft);color:var(--ink)}
+@media (max-width:640px){ .midia-card{grid-template-columns:1fr} }
 .logo-chip img{height:56px;width:auto;display:block}
 .hero-figure{position:relative;min-height:420px}
 .hero-figure .a{position:absolute;right:0;top:0;width:78%;height:360px;object-fit:cover;border-radius:28px}
@@ -197,7 +213,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 .dado b{font-family:var(--display);font-size:34px;color:var(--loss);white-space:nowrap}
 .sec-h{font-size:clamp(26px,3.4vw,36px);margin-top:44px}
 .sol-figs.small img{aspect-ratio:4/3}
-.sobre-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.sobre-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
 .tl{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column}
 .tl li{display:grid;grid-template-columns:22px 1fr;column-gap:16px;position:relative;padding-bottom:22px}
 .tl li::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--leaf-2);margin-top:6px;grid-row:1/3}
@@ -290,6 +306,8 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 </div></section>
 
 
+<section class="rec-home" id="recHome" hidden><div class="wrap" id="recHomeBox"></div></section>
+
 <section id="dores" data-view="inicio"><div class="wrap">
   <p class="eyebrow">Para quem é</p>
   <h2>Qual é a sua dor? Encontre o seu caso</h2>
@@ -331,6 +349,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   <div class="sobre-nav">
     <a class="dor" href="#trajetoria"><span class="seg">Nossa trajetória</span><q>Da bancada do IFBA até a CascaViva</q><span class="go">VER</span></a>
     <a class="dor" href="#diario"><span class="seg">Diário de testes</span><q>Fotos, vídeos e documentos de cada teste</q><span class="go">ABRIR</span></a>
+    <a class="dor" href="#midia" id="cardMidia" hidden><span class="seg">Mídia e premiações</span><q>Prêmios e publicações sobre o projeto</q><span class="go">VER</span></a>
     <a class="dor" href="#contatos"><span class="seg">Contatos</span><q>Fale com a equipe</q><span class="go">VER</span></a>
   </div>
   <h3 class="sec-h" id="trajetoria">Nossa trajetória</h3>
@@ -354,6 +373,17 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     <p style="font-family:var(--display);font-size:24px;font-weight:800;user-select:all;word-break:break-all">cascaviva.projeto@gmail.com</p>
     <div class="team" style="margin-top:8px;gap:12px"><div class="pessoa"><img src="fotos/karolayne.jpg" alt="Foto de Karolayne Angel"><p><b style="color:var(--leaf-2)">Karolayne Angel</b> · líder, Engenharia Química (IFBA)</p></div><div class="pessoa"><img src="fotos/silvano.jpg" alt="Foto de Silvano Neto"><p><b style="color:var(--leaf-2)">Silvano Neto</b> · cofundador</p></div><p class="pessoa sem"><b style="color:var(--leaf-2)">Prof. Francislei Santos</b> · orientador e inventor (IFBA)</p></div>
   </div>
+</div></section>
+
+<section class="sim" id="midia" data-view="midia" hidden><div class="wrap">
+  <a class="back" href="#sobre" style="margin-bottom:14px">← Sobre nós</a>
+  <div class="stack" style="gap:10px"><p class="eyebrow">Mídia e premiações</p><h2>Reconhecimentos do projeto</h2><p class="lead">Prêmios que conquistamos e publicações em que o projeto apareceu.</p></div>
+  <div class="chips" role="group" aria-label="Filtrar">
+    <button class="chip mchip" type="button" data-f="todos" aria-pressed="true">Tudo</button>
+    <button class="chip mchip" type="button" data-f="premio" aria-pressed="false">Premiações</button>
+    <button class="chip mchip" type="button" data-f="midia" aria-pressed="false">Na mídia</button>
+  </div>
+  <div class="feed" id="midiaFeed"></div>
 </div></section>
 
 <section class="sim" id="diario" data-view="diario" hidden><div class="wrap">
@@ -789,7 +819,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   $('cEnviar').addEventListener('click', enviarForm);
   $('fForm').addEventListener('submit', e => { e.preventDefault(); enviarForm(); });
   $('cArea').addEventListener('change', () => { $('cArea').dataset.tocado = '1'; });
-  const VIEWS = ['inicio','produtos','sobre','diario'];
+  const VIEWS = ['inicio','produtos','sobre','diario','midia'];
   const CT0 = [$('ctTitulo').textContent, $('ctTexto').textContent];
   let atual = null;
   function route(h){
@@ -825,7 +855,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
   let entries = [], filtro = 'todos', canEdit = false, confirmId = null;
 
-  function safeUrl(u){ return (typeof u === 'string' && (/^fotos\/[\w.\- ]+$/.test(u) || /^https:\/\//.test(u) || /^data:(image|video|application\/pdf)[^;]*;base64,/.test(u))) ? u : null; }
+  function safeUrl(u){ return (typeof u === 'string' && (/^fotos\/[\w.\- ]+$/.test(u) || /^https:\/\//.test(u) || /^data:(image|video|application\/pdf)[^;]*;base64,/.test(u))) ? (/^fotos\//.test(u) ? RAIZ + u : u) : null; }
   function el(tag, attrs, kids){ const e=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==='text') e.textContent=attrs[k]; else e.setAttribute(k,attrs[k]); } (kids||[]).forEach(k=>k&&e.appendChild(k)); return e; }
 
   function render(){
@@ -885,5 +915,57 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 })();
 </script>
 
+<script>
+/* MIDIA E PREMIACOES: lidos de midia.json, na pasta principal do site (vale para as duas paginas).
+   Enquanto a lista estiver vazia, nada disso aparece. */
+(function(){
+  const MESES = ['jan.','fev.','mar.','abr.','mai.','jun.','jul.','ago.','set.','out.','nov.','dez.'];
+  let itens = [], filtro = 'todos';
+  const $ = id => document.getElementById(id);
+  function url(u){ if(typeof u !== 'string') return null; if(/^fotos\/[\w.\- ]+$/.test(u)) return RAIZ + u; if(/^https:\/\//.test(u)) return u; return null; }
+  function mk(tag, cls, text){ const e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; return e; }
+  function quando(d){ const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(d||''); if(!m) return ''; return (m[3] ? (+m[3]) + ' de ' : '') + MESES[+m[2]-1] + ' de ' + m[1]; }
+  function render(){
+    const feed = $('midiaFeed'); feed.replaceChildren();
+    const lista = itens.filter(x => filtro === 'todos' || x.tipo === filtro);
+    if(!lista.length){ const e = mk('div','empty'); e.append(mk('b',null,'Nada nesta categoria ainda'), document.createTextNode('Escolha outra categoria acima.')); feed.append(e); return; }
+    for(const x of lista){
+      const card = mk('article','midia-card');
+      const img = url(x.imagem);
+      if(img){ const i = mk('img'); i.src = img; i.alt = String(x.titulo||''); i.loading = 'lazy'; card.append(i); } else card.classList.add('sem-img');
+      const b = mk('div','body');
+      b.append(mk('span','badge ' + (x.tipo === 'premio' ? 'premio' : ''), x.tipo === 'premio' ? 'Premiação' : 'Na mídia'));
+      b.append(mk('h3', null, String(x.titulo||'')));
+      const meta = [quando(x.data), x.fonte ? String(x.fonte) : ''].filter(Boolean).join(' · ');
+      if(meta) b.append(mk('p','meta',meta));
+      if(x.texto) b.append(mk('p',null,String(x.texto)));
+      const l = url(x.link);
+      if(l){ const a = mk('a','btn ghost', x.textoLink ? String(x.textoLink) : 'Ver publicação'); a.href = l; a.target = '_blank'; a.rel = 'noopener'; a.style.alignSelf = 'flex-start'; b.append(a); }
+      card.append(b); feed.append(card);
+    }
+  }
+  function home(){
+    const box = $('recHomeBox'); box.replaceChildren();
+    const premios = itens.filter(x => x.tipo === 'premio');
+    const mostra = (premios.length ? premios : itens).slice(0, 4);
+    box.append(mk('span','eyebrow', premios.length ? 'Reconhecimentos' : 'Na mídia'));
+    mostra.forEach(x => box.append(mk('span','rec-pill', String(x.destaque || x.titulo || ''))));
+    const a = mk('a','mais','Ver mídia e premiações →'); a.href = '#midia'; box.append(a);
+  }
+  document.querySelectorAll('.mchip').forEach(c => c.addEventListener('click', () => {
+    filtro = c.dataset.f; document.querySelectorAll('.mchip').forEach(o => o.setAttribute('aria-pressed', String(o === c))); render();
+  }));
+  (async function(){
+    let lista = [];
+    try { const r = await fetch(RAIZ + 'midia.json', {cache:'no-cache'}); lista = r.ok ? await r.json() : []; } catch(e){ lista = []; }
+    itens = (Array.isArray(lista) ? lista : []).filter(x => x && x.titulo).sort((a,b) => String(b.data||'').localeCompare(String(a.data||'')));
+    if(!itens.length) return;
+    $('cardMidia').hidden = false;
+    home(); render();
+    const rh = $('recHome'); rh.dataset.view = 'inicio';
+    const v = document.getElementById('dores'); rh.hidden = v ? v.hidden : false;
+  })();
+})();
+</script>
 </body>
 </html>
