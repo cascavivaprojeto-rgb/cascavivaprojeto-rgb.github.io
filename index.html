@@ -81,17 +81,33 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .rec-home .wrap{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
 .rec-home .eyebrow{margin-right:6px}
 .rec-pill{display:inline-flex;align-items:center;gap:8px;background:var(--peel-soft);color:var(--ink);font-weight:700;border-radius:999px;padding:7px 14px;font-size:15px}
-.rec-pill::before{content:"★";color:var(--peel)}
 .rec-home a.mais{font-weight:800;color:var(--leaf-2)}
-.midia-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:start}
-.midia-card.sem-img{grid-template-columns:1fr}
-.midia-card img{width:100%;height:150px;object-fit:cover;border-radius:16px;display:block}
-.midia-card .body{display:flex;flex-direction:column;gap:8px;min-width:0}
-.midia-card .badge{align-self:flex-start}
-.midia-card h3{font-size:22px;font-weight:700}
-.midia-card .meta{color:var(--muted);font-weight:700;font-size:15px}
-.badge.premio{background:var(--peel-soft);color:var(--ink)}
-@media (max-width:640px){ .midia-card{grid-template-columns:1fr} }
+.b2b{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 24px;display:flex;gap:18px 28px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.b2b .stack{flex:1 1 420px}
+.b2b-grid{flex:1 1 100%;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.b2b-grid[hidden]{display:none}
+.dor.mini{padding:16px;gap:8px;border-width:1px}
+.dor.mini .ic{width:40px;height:40px;border-radius:12px}
+.dor.mini .ic svg{width:24px;height:24px}
+.dor.mini q{font-size:17px}
+.dor.mini .go{padding:6px 12px;font-size:13px}
+.b2b-acoes{display:flex;gap:10px;flex-wrap:wrap}
+.b2b-acoes .btn{margin-top:0;align-self:auto}
+.midia-premios{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:20px}
+.midia-destaques{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mcard.grande{border:2px solid var(--peel);padding:18px}
+.mcard .foto{display:block;width:100%;height:260px;object-fit:contain;background:var(--soft);border-radius:16px}
+.mcard.grande .foto{height:340px}
+.mcard .thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.mcard .thumbs button{padding:0;border:2px solid transparent;border-radius:10px;background:none;cursor:pointer;line-height:0}
+.mcard .thumbs button[aria-pressed="true"]{border-color:var(--peel)}
+.mcard .thumbs img{width:56px;height:56px;object-fit:cover;border-radius:8px}
+.mcard h3{font-size:22px;font-weight:700}
+.mcard p{margin:0}
+.mcard .links{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.mcard .links a{font-weight:800;color:var(--leaf-2)}
+@media (max-width:640px){ .mcard .foto{height:220px} .mcard.grande .foto{height:260px} }
 .logo-chip img{height:56px;width:auto;display:block}
 .hero-figure{position:relative;min-height:420px}
 .hero-figure .a{position:absolute;right:0;top:0;width:78%;height:360px;object-fit:cover;border-radius:28px}
@@ -287,7 +303,7 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 
 <header class="top"><div class="wrap">
   <a class="brand" href="#inicio"><img src="fotos/logo.jpg" alt="">CascaViva</a>
-  <nav aria-label="Seções"><a href="#inicio">Início</a><a href="#dores">Qual é a sua dor?</a><a href="#produtos">Produtos e preços</a><a href="#sobre">Sobre nós</a><a href="#contato">Contato</a></nav>
+  <nav aria-label="Seções"><a href="#inicio">Início</a><a href="#dores">Qual é a sua dor?</a><a href="#produtos">Produtos e preços</a><a href="#sobre">Sobre nós</a><a href="#midia">Na mídia e premiações</a><a href="#contato">Contato</a></nav>
 </div></header>
 
 <section class="hero" id="inicio" data-view="inicio"><div class="wrap">
@@ -313,6 +329,12 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
   <h2>Qual é a sua dor? Encontre o seu caso</h2>
   <p class="lead" style="margin-top:12px">Escolha o card que mais parece com você. Cada um abre uma página com a dor, a solução e o produto certo, com preço.</p>
   <div class="dores-grid" id="doresGrid"></div>
+  <div class="b2b">
+    <div class="stack" style="gap:8px"><p class="eyebrow">Outras aplicações e vendas B2B</p>
+    <p>Além do hortifrúti, nossa tecnologia patenteada é versátil e pode ser aplicada sob demanda em embalagens de óleos e cosméticos, resinas, revestimentos, na venda direta do aditivo de grafeno vegetal puro e no cumprimento de metas ESG para redução de desperdício e insumos sustentáveis.</p></div>
+    <div class="b2b-acoes"><button class="btn" type="button" data-form="contato">Consultar aplicações industriais →</button><a class="btn ghost" href="#produtos">Produtos e preços</a></div>
+    <div class="b2b-grid" id="b2bGrid" hidden></div>
+  </div>
 </div></section>
 
 <section id="perfil" data-view="perfil" hidden><div class="wrap" id="perfilBox"></div></section>
@@ -345,14 +367,14 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 <section id="sobre" data-view="sobre" hidden><div class="wrap">
   <a class="back" href="#inicio">← Início</a>
   <p class="eyebrow" style="margin-top:18px">Sobre nós</p>
-  <h2>Quem somos, o que já fizemos e onde acompanhar</h2>
+  <h2>Nossa Trajetória: Da Bancada ao Mercado</h2>
+  <p class="lead" style="margin-top:12px">A CascaViva nasceu da união entre rigor científico e visão empreendedora no Instituto Federal da Bahia (IFBA). Desenvolvemos uma tecnologia limpa e patenteada de biocompósitos à base de grafeno vegetal para proteger alimentos e materiais contra a degradação causada pela radiação UV.</p>
   <div class="sobre-nav">
     <a class="dor" href="#trajetoria"><span class="seg">Nossa trajetória</span><q>Da bancada do IFBA até a CascaViva</q><span class="go">VER</span></a>
     <a class="dor" href="#diario"><span class="seg">Diário de testes</span><q>Fotos, vídeos e documentos de cada teste</q><span class="go">ABRIR</span></a>
-    <a class="dor" href="#midia" id="cardMidia" hidden><span class="seg">Mídia e premiações</span><q>Prêmios e publicações sobre o projeto</q><span class="go">VER</span></a>
     <a class="dor" href="#contatos"><span class="seg">Contatos</span><q>Fale com a equipe</q><span class="go">VER</span></a>
   </div>
-  <h3 class="sec-h" id="trajetoria">Nossa trajetória</h3>
+  <h3 class="sec-h" id="trajetoria">Linha do tempo</h3>
   <ol class="tl">
     <li><b>Set. a nov. de 2025</b><span>Aprovação no Edital Hotel de Projetos do IFBA 2025/2026 e pedido de patente da tecnologia (BR 10 2025 026328 9, titular IFBA).</span></li>
     <li><b>Dez. de 2025 a mai. de 2026</b><span>Artigo científico publicado na revista ACS Omega e pivotagem do produto.</span></li>
@@ -376,14 +398,12 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 </div></section>
 
 <section class="sim" id="midia" data-view="midia" hidden><div class="wrap">
-  <a class="back" href="#sobre" style="margin-bottom:14px">← Sobre nós</a>
-  <div class="stack" style="gap:10px"><p class="eyebrow">Mídia e premiações</p><h2>Reconhecimentos do projeto</h2><p class="lead">Prêmios que conquistamos e publicações em que o projeto apareceu.</p></div>
-  <div class="chips" role="group" aria-label="Filtrar">
-    <button class="chip mchip" type="button" data-f="todos" aria-pressed="true">Tudo</button>
-    <button class="chip mchip" type="button" data-f="premio" aria-pressed="false">Premiações</button>
-    <button class="chip mchip" type="button" data-f="midia" aria-pressed="false">Na mídia</button>
-  </div>
-  <div class="feed" id="midiaFeed"></div>
+  <a class="back" href="#inicio" style="margin-bottom:14px">← Início</a>
+  <div class="stack" style="gap:10px"><p class="eyebrow">Na mídia e premiações</p><h2>Reconhecimento e Validação de Mercado</h2></div>
+  <h3 class="sec-h">Premiações e Pódios</h3>
+  <div class="midia-premios" id="midiaPremios"></div>
+  <h3 class="sec-h">Destaques Institucionais e Eventos</h3>
+  <div class="midia-destaques" id="midiaDestaques"></div>
 </div></section>
 
 <section class="sim" id="diario" data-view="diario" hidden><div class="wrap">
@@ -535,9 +555,13 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
     const pr = p.preco ? `<p class="price">${esc(p.preco)}<small>${esc(p.un)}</small></p>` : `<p class="price consulta">Sob consulta<small>calculado para cada cliente</small></p>`;
     return `<div class="prodc">${st}<h3>${esc(p.nome)}</h3><p style="color:var(--muted)">${esc(p.desc)}</p>${pr}<button class="btn" type="button" data-form="compra" data-prod="${p.id}">${p.preco ? 'Quero comprar' : 'Pedir orçamento'}</button></div>`;
   }
-  $('doresGrid').innerHTML = PERFIS.map(p => `<a class="dor" href="#${p.id}"><span class="ic">${IC[p.ic]}</span><span class="seg">${esc(p.seg)}</span><q>${esc(p.q)}</q><span class="go">CLIQUE AQUI!</span></a>`).join('')
-    + `<a class="dor prod" href="#sobre"><span class="ic">${IC.folha}</span><span class="seg">Sobre nós</span><q>Nossa trajetória, diário de testes e contatos</q><span class="go">CLIQUE AQUI!</span></a>`
-    + `<a class="dor prod" href="#produtos"><span class="ic">${IC.lista}</span><span class="seg">Nossos produtos</span><q>Quer ver todos os produtos e preços?</q><span class="go">CLIQUE AQUI!</span></a>`;
+  const HORTI = ['produtor','embalador','logistica','mercado'];
+  const SO_HORTI = false; // true na pagina do GRAPHAGRO: so os 4 cards de hortifruti
+  if(!SO_HORTI){
+    $('b2bGrid').innerHTML = PERFIS.filter(p => !HORTI.includes(p.id)).map(p => `<a class="dor mini" href="#${p.id}"><span class="ic">${IC[p.ic]}</span><span class="seg">${esc(p.seg)}</span><q>${esc(p.q)}</q><span class="go">VER</span></a>`).join('');
+    $('b2bGrid').hidden = false;
+  }
+  $('doresGrid').innerHTML = PERFIS.filter(p => HORTI.includes(p.id)).map(p => `<a class="dor" href="#${p.id}"><span class="ic">${IC[p.ic]}</span><span class="seg">${esc(p.seg)}</span><q>${esc(p.q)}</q><span class="go">CLIQUE AQUI!</span></a>`).join('');
   $('prodsGrid').innerHTML = PRODUTOS.map(prodCard).join('');
   const BIG = {"campo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><rect y=\"96\" width=\"180\" height=\"34\" rx=\"8\" fill=\"#C9A36A\"/><path d=\"M40 96V54M90 96V44M140 96V60\" stroke=\"#1E4A33\" stroke-width=\"8\"/><circle cx=\"40\" cy=\"48\" r=\"22\" fill=\"#2E7D50\"/><circle cx=\"90\" cy=\"38\" r=\"26\" fill=\"#2E7D50\"/><circle cx=\"140\" cy=\"54\" r=\"20\" fill=\"#2E7D50\"/><circle cx=\"34\" cy=\"50\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"96\" cy=\"36\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"84\" cy=\"46\" r=\"5\" fill=\"#E5A928\"/><circle cx=\"146\" cy=\"56\" r=\"5\" fill=\"#E5A928\"/></svg>", "estrada": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><circle cx=\"150\" cy=\"28\" r=\"16\" fill=\"#E5A928\"/><path d=\"M150 2v6M150 48v6M124 28h6M170 28h6\" stroke=\"#E5A928\" stroke-width=\"4\" stroke-linecap=\"round\"/><rect x=\"10\" y=\"58\" width=\"100\" height=\"48\" rx=\"6\" fill=\"#1E4A33\"/><path d=\"M110 70h34l20 20v16h-54z\" fill=\"#2E7D50\"/><rect x=\"120\" y=\"76\" width=\"22\" height=\"14\" rx=\"3\" fill=\"#F2F5EF\"/><circle cx=\"40\" cy=\"110\" r=\"12\" fill=\"#18291F\"/><circle cx=\"138\" cy=\"110\" r=\"12\" fill=\"#18291F\"/></svg>", "galpao": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M14 56L90 16l76 40v68H14z\" fill=\"#1E4A33\"/><rect x=\"40\" y=\"74\" width=\"100\" height=\"50\" fill=\"#F2F5EF\"/><rect x=\"50\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"78\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"106\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"64\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"92\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/></svg>", "gondola": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M40 6h100l-10 18H50z\" fill=\"#E5A928\"/><rect x=\"14\" y=\"66\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><rect x=\"14\" y=\"112\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><circle cx=\"40\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"68\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"124\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"40\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"68\" cy=\"100\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"124\" cy=\"100\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"150\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/></svg>", "lixo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M44 40h92l-10 86H54z\" fill=\"#9AA39D\"/><rect x=\"36\" y=\"28\" width=\"108\" height=\"14\" rx=\"6\" fill=\"#6B776F\"/><circle cx=\"76\" cy=\"26\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"102\" cy=\"22\" r=\"12\" fill=\"#6E4A22\"/><path d=\"M70 64v46M90 64v46M110 64v46\" stroke=\"#6B776F\" stroke-width=\"5\"/><circle cx=\"154\" cy=\"92\" r=\"20\" fill=\"#B8432D\"/><path d=\"M146 92h16\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>"};
   const EXTRA = {"produtor": {"h": ["A fruta sai boa da roça e perde valor no caminho", "O produtor colhe no ponto certo, lava e embala. Até chegar ao comprador, parte das caixas amadurece demais e perde o valor comercial."], "p": [["BIG:campo", "Colheita", "No ponto certo."], ["caixa", "Embalagem comum", "Plástico sem proteção contra a luz."], ["sol", "Espera ao sol", "No galpão ou na beira da estrada."], ["BIG:estrada", "Transporte", "Horas de estrada até o comprador."], ["BIG:lixo", "Desconto ou descarte", "A caixa perde o valor comercial.", "end"]], "f": [["~30%", "das frutas se perdem no Brasil", "Embrapa (dados de 1993)"], ["1/3", "da comida do planeta se perde ou é desperdiçada, cerca de 1,3 bilhão de toneladas por ano", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua produção?", "Produtores e cooperativas de frutas, legumes e verduras: fale com a equipe para um teste com a sua colheita."]}, "embalador": {"h": ["A embalagem é a última proteção antes de o produto sair", "Na packing house o hortifrúti é lavado, selecionado e embalado. Se a embalagem não protege da luz, o cuidado do processo se perde na estrada."], "p": [["BIG:campo", "Recebimento", "Produto chega do campo."], ["lavar", "Lavagem e seleção", "Só o melhor segue adiante."], ["caixa", "Embalagem comum", "Não protege da luz."], ["BIG:estrada", "Expedição", "Horas de transporte e manuseio."], ["alerta", "Chega madura demais", "O cliente recebe produto passando do ponto.", "end"]], "f": [["50%", "das perdas pós-colheita acontecem no manuseio e no transporte", "Embrapa (2016)"], ["1/3", "da comida do planeta se perde ou é desperdiçada", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua packing house?", "Empresas que lavam, selecionam e embalam hortifrúti: fale com a equipe para um lote-piloto."]}, "logistica": {"h": ["A carga sai boa e chega pior", "Na logística o tempo corre contra o produto: estrada, sol, calor e espera em armazéns e centrais aceleram a perda de qualidade de alimentos, óleos, cosméticos e outros produtos sensíveis à luz."], "p": [["caixa", "Carregamento", "Produto embalado em bom estado."], ["BIG:estrada", "Estrada", "Sol e calor por horas."], ["BIG:galpao", "Armazém ou central", "Mais espera, exposto à luz."], ["caminhao", "Entrega", "Chega com menos vida útil."], ["BIG:lixo", "Perda", "Desconto, devolução ou descarte.", "end"]], "f": [["50%", "das perdas pós-colheita de frutas e hortaliças acontecem no manuseio e no transporte", "Embrapa (2016)"], ["30%", "dessas perdas acontecem nas centrais de abastecimento", "Embrapa (2016)"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva na sua logística?", "Transportadoras, distribuidores, operadores logísticos e centrais de abastecimento: fale com a equipe."]}, "mercado": {"h": ["Toda semana, a fruta chega madura demais", "O dono de uma rede de mercados recebe caixas de frutas que saíram boas do campo. No caminho até a gôndola, elas amadurecem rápido demais, estragam em poucos dias e viram prejuízo."], "p": [["BIG:campo", "Campo", "Colhida no ponto certo."], ["BIG:estrada", "Transporte", "Horas de estrada, sol e calor."], ["BIG:galpao", "Distribuição", "Mais tempo à espera, exposta à luz."], ["BIG:gondola", "Gôndola", "Chega madura demais e fica sob luz o dia todo."], ["BIG:lixo", "Prejuízo", "Estraga em poucos dias e vai para o lixo.", "end"]], "f": [["4,73%", "de quebra nas vendas de frutas, legumes e verduras em 2024; o hortifrúti responde por 30% das perdas do varejo", "ABRAS, via Circuito FLV"], ["R$ 61,3 bi", "de prejuízo por ano no Brasil com o desperdício de alimentos", "Senado Federal, com base no Índice de Desperdício de Alimentos da ONU"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar a CascaViva no seu mercado?", "Supermercados, redes e hortifrútis: fale com a equipe para um teste na sua loja."]}, "oleos": {"h": ["O óleo sai bom da fábrica e perde qualidade na prateleira", "Em embalagem transparente, a luz da loja acelera a oxidação e o ranço. O óleo dura menos do que a validade impressa promete."], "p": [["oleo", "Envase", "Óleo fresco em embalagem transparente."], ["caminhao", "Distribuição", "Até chegar à loja."], ["sol", "Prateleira iluminada", "Luz o dia todo."], ["alerta", "Oxidação e ranço", "O óleo perde qualidade."], ["BIG:lixo", "Vida útil menor", "Antes da validade impressa.", "end"]], "f": [["9 meses", "de vida útil estimada para óleos de sementes em PET transparente sob LED, contra validade impressa de 20 meses ou mais", "Martín-Torres et al., Molecules (2022)"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar a CascaViva nas suas embalagens de óleo?", "Indústrias de óleos comestíveis e de embalagens flexíveis para óleo: fale com a equipe."]}, "cosmeticos": {"h": ["A fórmula sai boa do laboratório e ranço chega antes do fim do frasco", "Óleos corporais e produtos com óleos vegetais em embalagem transparente ficam expostos à luz na vitrine e no banheiro, e rancificam."], "p": [["cosmetico", "Formulação", "Óleos vegetais na fórmula."], ["filme", "Embalagem transparente", "Bonita, mas sem barreira UV."], ["sol", "Vitrine e uso", "Luz todos os dias."], ["alerta", "Ranço", "Cheiro e cor mudam.", "end"]], "f": [], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar a CascaViva nas suas embalagens de cosméticos?", "Indústrias de cosméticos com óleos corporais e produtos sensíveis à luz: fale com a equipe para um projeto-piloto."]}, "transformadora": {"h": ["O grafeno vegetal entra em uma etapa que você já faz", "Na produção do filme de PEBDL, os pellets são misturados com aditivos antes da extrusão. É nessa mistura que o grafeno vegetal entra, sem mudar as demais etapas."], "p": [["resina", "Pellets de PEBDL", "A resina que você já compra."], ["po", "Mistura com aditivos", "Aqui entra o grafeno vegetal, a 5%."], ["extrusora", "Extrusão", "Filme soprado, como hoje."], ["caixa", "Corte e solda", "Sacos, sachês ou bobinas."], ["filme", "Embalagem anti-UV", "Pronta para o seu cliente."]], "f": [["5%", "de aditivo na mistura do PEBDL para cerca de 90% de barreira UV", "Detalhamento do projeto e resumo CONNEPI 2026"], ["+ R$ 0,01 a 0,02", "é o que o aditivo soma ao custo de um saco de 30 × 40 cm", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "mec", "aditivo", "custo"], "ct": ["Quer oferecer embalagens anti-UV aos seus clientes?", "Transformadoras de PEBDL e fabricantes de embalagens: fale com a equipe sobre o aditivo, a resina ou a licença."]}, "resinas": {"h": ["Proteção UV de origem vegetal para outros polímeros", "O grafeno vegetal é uma plataforma aditiva: além do PEBDL, a equipe estuda aplicações em resinas e revestimentos."], "p": [["resina", "Resina base", "O polímero que você produz."], ["po", "Grafeno vegetal", "Aditivo de origem vegetal."], ["extrusora", "Composto", "Resina com o aditivo incorporado."], ["filme", "Aplicação", "Filmes e revestimentos com proteção UV."]], "f": [["~90%", "de barreira UV no filme de PEBDL com 5% de aditivo, o resultado já obtido", "Detalhamento do projeto e resumo CONNEPI 2026"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer desenvolver uma resina ou revestimento com a CascaViva?", "Fabricantes de resinas, compostos e revestimentos: fale com a equipe para um codesenvolvimento."]}, "so-aditivo": {"h": ["Do eucalipto para a sua formulação", "Se você já tem o seu processo, pode comprar só o aditivo: grafeno vegetal em pó, feito do eucalipto."], "p": [["eucalipto", "Eucalipto", "Matéria-prima vegetal."], ["po", "Grafeno vegetal", "O aditivo, em pó."], ["resina", "Sua formulação", "5% na mistura do PEBDL."], ["filme", "Produto com barreira UV", "Cerca de 90% de bloqueio no PEBDL."]], "f": [["15%", "abaixo do preço do TiO₂, o aditivo anti-UV de referência", "Estimativa do Prof. Francislei Santos (01/11/2026)"], ["R$ 29,75 a 42,16", "por kg, preço estimado do grafeno vegetal", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "aditivo", "custo"], "ct": ["Quer comprar o aditivo de grafeno vegetal?", "Indústrias que querem um aditivo anti-UV de origem vegetal: fale com a equipe sobre volume e prazo."]}, "esg": {"h": ["Uma troca de aditivo que conta para a meta", "Trocar um aditivo UV sintético importado por um vegetal, numa embalagem mais biodegradável que a convencional, ajuda a cumprir metas de sustentabilidade e a nova regra de logística reversa."], "p": [["alerta", "Aditivo sintético importado", "O padrão de hoje."], ["eucalipto", "Troca por aditivo vegetal", "Grafeno vegetal, do eucalipto."], ["filme", "Embalagem mais biodegradável", "Que o plástico convencional."], ["reciclar", "Logística reversa", "Decreto 12.688/2025."], ["alvo", "Meta ESG", "Um passo mensurável."]], "f": [["R$ 5 mil a R$ 50 mi", "é a faixa de multa por poluição prevista em lei", "Decreto 6.514/2008, art. 61"]], "k": ["uv", "patente", "aditivo"], "ct": ["Quer incluir a CascaViva na sua meta ESG?", "Empresas com metas de sustentabilidade para embalagens: fale com a equipe."]}};
@@ -916,52 +940,54 @@ footer{padding-block:24px;font-size:13px;color:var(--muted)}
 </script>
 
 <script>
-/* MIDIA E PREMIACOES: lidos de midia.json, na pasta principal do site (vale para as duas paginas).
-   Enquanto a lista estiver vazia, nada disso aparece. */
+/* NA MIDIA E PREMIACOES: lidos de midia.json, na pasta principal do site (vale para as duas paginas).
+   "bloco": "premio" = card grande em Premiacoes e Podios; "destaque" = card menor em Destaques Institucionais e Eventos. */
 (function(){
-  const MESES = ['jan.','fev.','mar.','abr.','mai.','jun.','jul.','ago.','set.','out.','nov.','dez.'];
-  let itens = [], filtro = 'todos';
   const $ = id => document.getElementById(id);
   function url(u){ if(typeof u !== 'string') return null; if(/^fotos\/[\w.\- ]+$/.test(u)) return RAIZ + u; if(/^https:\/\//.test(u)) return u; return null; }
   function mk(tag, cls, text){ const e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; return e; }
-  function quando(d){ const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(d||''); if(!m) return ''; return (m[3] ? (+m[3]) + ' de ' : '') + MESES[+m[2]-1] + ' de ' + m[1]; }
-  function render(){
-    const feed = $('midiaFeed'); feed.replaceChildren();
-    const lista = itens.filter(x => filtro === 'todos' || x.tipo === filtro);
-    if(!lista.length){ const e = mk('div','empty'); e.append(mk('b',null,'Nada nesta categoria ainda'), document.createTextNode('Escolha outra categoria acima.')); feed.append(e); return; }
-    for(const x of lista){
-      const card = mk('article','midia-card');
-      const img = url(x.imagem);
-      if(img){ const i = mk('img'); i.src = img; i.alt = String(x.titulo||''); i.loading = 'lazy'; card.append(i); } else card.classList.add('sem-img');
-      const b = mk('div','body');
-      b.append(mk('span','badge ' + (x.tipo === 'premio' ? 'premio' : ''), x.tipo === 'premio' ? 'Premiação' : 'Na mídia'));
-      b.append(mk('h3', null, String(x.titulo||'')));
-      const meta = [quando(x.data), x.fonte ? String(x.fonte) : ''].filter(Boolean).join(' · ');
-      if(meta) b.append(mk('p','meta',meta));
-      if(x.texto) b.append(mk('p',null,String(x.texto)));
-      const l = url(x.link);
-      if(l){ const a = mk('a','btn ghost', x.textoLink ? String(x.textoLink) : 'Ver publicação'); a.href = l; a.target = '_blank'; a.rel = 'noopener'; a.style.alignSelf = 'flex-start'; b.append(a); }
-      card.append(b); feed.append(card);
+  function card(x, grande){
+    const c = mk('article', 'mcard' + (grande ? ' grande' : ''));
+    const fotos = (Array.isArray(x.fotos) ? x.fotos : []).map(url).filter(Boolean);
+    const alt = String(x.titulo || x.texto || '');
+    if(fotos.length){
+      const a = mk('a'); a.href = fotos[0]; a.target = '_blank'; a.rel = 'noopener';
+      const img = mk('img','foto'); img.src = fotos[0]; img.alt = alt; img.loading = 'lazy'; a.append(img); c.append(a);
+      if(fotos.length > 1){
+        const t = mk('div','thumbs');
+        fotos.forEach((f,i) => {
+          const b = mk('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(i===0)); b.setAttribute('aria-label', 'Foto ' + (i+1));
+          const ti = mk('img'); ti.src = f; ti.alt = ''; ti.loading = 'lazy'; b.append(ti);
+          b.onclick = () => { img.src = f; a.href = f; t.querySelectorAll('button').forEach(o => o.setAttribute('aria-pressed', String(o===b))); };
+          t.append(b);
+        });
+        c.append(t);
+      }
     }
+    if(x.titulo) c.append(mk('h3', null, String(x.titulo)));
+    if(x.texto) c.append(mk('p', null, String(x.texto)));
+    const links = (Array.isArray(x.links) ? x.links : []).filter(l => l && url(l.url));
+    if(links.length){
+      const box = mk('div','links');
+      links.forEach(l => { const la = mk('a', null, String(l.texto || 'Ver publicação ↗')); la.href = url(l.url); la.target = '_blank'; la.rel = 'noopener'; box.append(la); });
+      c.append(box);
+    }
+    return c;
   }
-  function home(){
-    const box = $('recHomeBox'); box.replaceChildren();
-    const premios = itens.filter(x => x.tipo === 'premio');
-    const mostra = (premios.length ? premios : itens).slice(0, 4);
-    box.append(mk('span','eyebrow', premios.length ? 'Reconhecimentos' : 'Na mídia'));
-    mostra.forEach(x => box.append(mk('span','rec-pill', String(x.destaque || x.titulo || ''))));
-    const a = mk('a','mais','Ver mídia e premiações →'); a.href = '#midia'; box.append(a);
-  }
-  document.querySelectorAll('.mchip').forEach(c => c.addEventListener('click', () => {
-    filtro = c.dataset.f; document.querySelectorAll('.mchip').forEach(o => o.setAttribute('aria-pressed', String(o === c))); render();
-  }));
   (async function(){
     let lista = [];
     try { const r = await fetch(RAIZ + 'midia.json', {cache:'no-cache'}); lista = r.ok ? await r.json() : []; } catch(e){ lista = []; }
-    itens = (Array.isArray(lista) ? lista : []).filter(x => x && x.titulo).sort((a,b) => String(b.data||'').localeCompare(String(a.data||'')));
-    if(!itens.length) return;
-    $('cardMidia').hidden = false;
-    home(); render();
+    lista = Array.isArray(lista) ? lista.filter(x => x && (x.titulo || x.texto)) : [];
+    const premios = lista.filter(x => x.bloco === 'premio'), dest = lista.filter(x => x.bloco !== 'premio');
+    premios.forEach(x => $('midiaPremios').append(card(x, true)));
+    dest.forEach(x => $('midiaDestaques').append(card(x, false)));
+    if(!premios.length) $('midiaPremios').previousElementSibling.hidden = true;
+    if(!dest.length) $('midiaDestaques').previousElementSibling.hidden = true;
+    if(!premios.length) return;
+    const box = $('recHomeBox');
+    box.append(mk('span','eyebrow','Reconhecimentos'));
+    premios.slice(0,4).forEach(x => box.append(mk('span','rec-pill', String(x.destaque || x.titulo))));
+    const a = mk('a','mais','Ver mídia e premiações →'); a.href = '#midia'; box.append(a);
     const rh = $('recHome'); rh.dataset.view = 'inicio';
     const v = document.getElementById('dores'); rh.hidden = v ? v.hidden : false;
   })();

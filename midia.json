@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "bloco": "premio",
+    "titulo": "🏆 1º Lugar — Melhor Apresentação de Pitch (DemoDay IFBA)",
+    "texto": "Vencedor entre os 13 projetos selecionados em todo o estado (um por campus) durante o VII Congresso de Pesquisa, Pós-Graduação e Inovação do IFBA (\"Ciência Delas\"). Avaliado por lideranças do Polo de Inovação do IFBA, gerência do Parque Tecnológico da Bahia e CEOs de mercado.",
+    "fotos": ["fotos/midia-ifba-premio.jpg"]
+  },
+  {
+    "bloco": "premio",
+    "titulo": "🥈 2º Lugar — Competição de Pitch (DemoDay e-Agro)",
+    "texto": "Pódio conquistado entre as 9 startups finalistas em um dos maiores eventos de inovação do agronegócio baiano. Tecnologia e modelo de negócio validados por banca composta por representantes do Sebrae, SP Ventures e Shark Tank.",
+    "fotos": ["fotos/midia-eagro-premio.jpg"]
+  },
+  {
+    "bloco": "destaque",
+    "texto": "Destaque oficial do Departamento de Inovação do IFBA na seleção do Hotel de Projetos.",
+    "fotos": ["fotos/midia-ifba-premio.jpg", "fotos/midia-ifba-grupo.jpg", "fotos/midia-ifba-pitch.jpg", "fotos/midia-ifba-post.jpg"],
+    "links": [{ "texto": "Ver publicação oficial no Instagram do IFBA ↗", "url": "https://www.instagram.com/p/Df0hbGVDJhc/" }]
+  },
+  {
+    "bloco": "destaque",
+    "texto": "Representando o Polo de Inovação do IFBA com estande oficial durante o e-Agro.",
+    "fotos": ["fotos/midia-eagro-estande1.jpg", "fotos/midia-eagro-estande2.jpg"]
+  },
+  {
+    "bloco": "destaque",
+    "texto": "Premiação no E-Agro na modalidade apresentação de PITCH, na trilha de aceleração de Startups do Agro.",
+    "fotos": ["fotos/midia-eagro-premio.jpg", "fotos/midia-eagro-grupo.jpg", "fotos/midia-eagro-pitch.jpg"]
+  },
+  {
+    "bloco": "destaque",
+    "texto": "Participação como painelista convidada no Congresso do IFBA: \"Da Invenção à Proteção: O Percurso das Inventoras\".",
+    "fotos": ["fotos/midia-inventoras1.jpg", "fotos/midia-inventoras2.jpg"],
+    "links": [
+      { "texto": "Ver publicação oficial no Instagram do IFBA ↗", "url": "https://www.instagram.com/p/DfWZ5ZixRY-/" },
+      { "texto": "Ver outra publicação no Instagram ↗", "url": "https://www.instagram.com/p/Df0exoADNAa/" }
+    ]
+  }
+]

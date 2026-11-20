@@ -40,25 +40,21 @@ Se preferir, mande as fotos e o texto para o Claude, que devolve o `atualizacoes
 
 Arquivos grandes: o GitHub recusa arquivo acima de 25 MB pelo site. Para vídeo, prefira clipes curtos ou suba no YouTube e use o link (`"url": "https://youtu.be/..."`).
 
-## Mídia e premiações
+## Na mídia e premiações
 
-A aba **Mídia e premiações** (em Sobre nós) e a faixa **Reconhecimentos** logo abaixo do topo da página inicial leem o arquivo `midia.json`. Vale para o site da CascaViva e para a página do GRAPHAGRO ao mesmo tempo. Enquanto o arquivo estiver vazio (`[]`), nada disso aparece.
+A aba **Na mídia e premiações** e a faixa **Reconhecimentos** da página inicial leem o arquivo `midia.json`. Vale para o site da CascaViva e para a página do GRAPHAGRO ao mesmo tempo.
 
-Cada item é um bloco como este, separados por vírgula:
+Cada item é um bloco, separados por vírgula:
 
 ```json
 {
-  "tipo": "premio",
-  "data": "2026-11-14",
-  "titulo": "Título do prêmio ou da matéria",
-  "destaque": "Texto curto para a faixa da página inicial",
-  "texto": "Uma ou duas frases.",
-  "fonte": "Quem concedeu ou publicou",
-  "link": "https://...",
-  "imagem": "fotos/nome-da-foto.jpg"
+  "bloco": "premio",
+  "titulo": "Título do prêmio",
+  "texto": "Descrição.",
+  "fotos": ["fotos/nome-da-foto.jpg"],
+  "links": [{ "texto": "Ver publicação ↗", "url": "https://..." }]
 }
 ```
 
-- `tipo`: `premio` ou `midia`.
-- `data`: ano-mês-dia, ou só ano-mês.
-- `destaque`, `texto`, `fonte`, `link` e `imagem` são opcionais.
+- `bloco`: `premio` vira card grande em "Premiações e Pódios" e aparece na faixa da página inicial; `destaque` vira card menor em "Destaques Institucionais e Eventos".
+- `titulo`, `fotos` e `links` são opcionais. Com mais de uma foto, aparecem miniaturas para trocar a foto principal.
