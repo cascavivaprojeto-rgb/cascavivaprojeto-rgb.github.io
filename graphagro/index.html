@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="GRAPHAGRO: proteção anti-UV de origem vegetal para alimentos, óleos, cosméticos e plásticos. Simule a sua perda e veja produtos e preços.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GRAPHAGRO">
+<meta property="og:title" content="GRAPHAGRO · Proteção anti-UV de origem vegetal">
+<meta property="og:description" content="Grafeno vegetal do eucalipto que protege alimentos, óleos e cosméticos da luz. Descubra quanto você perde e veja produtos e preços.">
+<meta property="og:url" content="https://cascavivaprojeto-rgb.github.io/graphagro/">
+<meta property="og:image" content="https://cascavivaprojeto-rgb.github.io/graphagro/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../fotos/icone.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
+<title>GRAPHAGRO · Embalagem Anti-UV</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Public+Sans:wght@400..800&display=swap">
+</head>
+<body>
+<style>
+/* Layout: uma página de rolagem em faixas; o simulador e o diário de testes são as duas áreas de uso */
+:root{
+  --bg:#F2F5EF; --surface:#FFFFFF; --soft:#E3ECDD; --ink:#18291F; --muted:#56665B;
+  --leaf:#1E4A33; --leaf-2:#2E7D50; --peel:#E5A928; --peel-soft:#FBEBC7; --loss:#B8432D; --loss-soft:#F7DED7;
+  --line:#CFDACB; --on-leaf:#F2F5EF;
+  --display:'Fraunces', Georgia, 'Times New Roman', serif; --body:'Public Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1A14; --surface:#16241C; --soft:#1D3024; --ink:#E7EEE6; --muted:#A3B3A7;
+  --leaf:#0B2418; --leaf-2:#5CC08A; --peel:#F0BC4A; --peel-soft:#3A2E12; --loss:#E8775E; --loss-soft:#3A1C16;
+  --line:#2B4134; --on-leaf:#E7EEE6; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F1A14; --surface:#16241C; --soft:#1D3024; --ink:#E7EEE6; --muted:#A3B3A7;
+  --leaf:#0B2418; --leaf-2:#5CC08A; --peel:#F0BC4A; --peel-soft:#3A2E12; --loss:#E8775E; --loss-soft:#3A1C16;
+  --line:#2B4134; --on-leaf:#E7EEE6; color-scheme:dark }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.field,form.add>*{min-width:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+section{padding-block:72px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,4.2vw,48px);font-weight:700;color:var(--ink)}
+p{margin:0}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf-2)}
+.lead{font-size:19px;color:var(--muted);max-width:64ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+.src{font-size:13px;color:var(--muted)}
+a{color:var(--leaf-2)}
+:focus-visible{outline:3px solid var(--peel);outline-offset:2px}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:800;cursor:pointer;background:var(--peel);color:#1B1405}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.danger{background:var(--loss);color:#FFF}
+.btn:disabled{opacity:.55;cursor:default}
+
+/* nav */
+.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--bg)}
+.top .wrap{display:flex;align-items:center;gap:20px;padding-block:10px;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:22px;color:var(--leaf-2);text-decoration:none}
+.brand img{height:34px;width:auto;border-radius:6px;background:#FFF;padding:2px 6px}
+.top nav{display:flex;gap:18px;flex-wrap:wrap}
+.top nav a{color:var(--muted);font-weight:700;font-size:15px;text-decoration:none}
+.top nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{background:var(--leaf);color:var(--on-leaf);padding-block:64px 72px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:800;color:var(--on-leaf)}
+.hero h1 em{font-style:italic;color:var(--peel)}
+.hero .lead{color:color-mix(in srgb,var(--on-leaf) 80%,transparent)}
+.logo-chip{background:#FFF;border-radius:16px;padding:10px 16px;display:inline-block;align-self:flex-start}
+.logo-chip.wordmark{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;letter-spacing:.02em;color:var(--leaf-2)}
+.redes{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}.redes-t{width:100%;margin:0;font-weight:700}
+.logo-chip img{height:56px;width:auto;display:block}
+.hero-figure{position:relative;min-height:420px}
+.hero-figure .a{position:absolute;right:0;top:0;width:78%;height:360px;object-fit:cover;border-radius:28px}
+.hero-figure .b{position:absolute;left:0;bottom:0;width:46%;height:190px;object-fit:cover;border-radius:22px;border:8px solid var(--leaf)}
+.hero-figure .tag{position:absolute;left:6%;top:24px;background:var(--peel);color:#1B1405;font-weight:800;border-radius:999px;padding:8px 16px;font-size:15px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero .btn.ghost{color:var(--on-leaf);border-color:color-mix(in srgb,var(--on-leaf) 40%,transparent)}
+
+/* story */
+.path{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:28px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;min-width:0}
+.step svg{width:100%;max-width:150px;height:auto}
+.step b{font-size:18px}
+.step span{font-size:15px;color:var(--muted)}
+.step.end{background:var(--loss-soft);border:2px solid var(--loss)}
+.step.end b{color:var(--loss)}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+.fact{background:var(--surface);border-radius:20px;padding:22px 24px;display:flex;gap:18px;align-items:center;border:1px solid var(--line)}
+.fact .n{font-family:var(--display);font-size:46px;font-weight:800;color:var(--loss);white-space:nowrap}
+
+/* simulator */
+.sim{background:var(--soft)}
+.sim-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;margin-top:28px}
+.panel{background:var(--surface);border-radius:24px;padding:26px;border:1px solid var(--line);min-width:0}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:800;font-size:15px}
+.field .hint{font-size:13px;color:var(--muted)}
+.field input[type=number]{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;font-size:20px;font-weight:700;width:100%;font-variant-numeric:tabular-nums}
+.range-row{display:flex;align-items:center;gap:12px}
+.range-row input{flex:1;accent-color:var(--leaf-2)}
+.range-row output{font-weight:800;min-width:62px;text-align:right;font-variant-numeric:tabular-nums}
+.result{display:flex;flex-direction:column;gap:16px}
+.big{font-family:var(--display);font-weight:800;font-size:clamp(38px,5vw,56px);color:var(--loss);line-height:1;font-variant-numeric:tabular-nums}
+.rows{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-variant-numeric:tabular-nums}
+.rows dt{color:var(--muted)} .rows dd{margin:0;font-weight:800;text-align:right}
+.bar{height:22px;border-radius:11px;background:var(--loss-soft);overflow:hidden;display:flex}
+.bar i{display:block;height:100%;background:var(--loss)}
+.bar i.save{background:var(--leaf-2)}
+.save-box{background:var(--peel-soft);border-radius:18px;padding:18px 20px}
+.save-box .big{color:var(--leaf-2);font-size:clamp(30px,4vw,44px)}
+.note{font-size:13px;color:var(--muted)}
+
+/* solution */
+.sol{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;margin-top:24px}
+.sol-figs{display:flex;gap:14px;align-items:center}
+.sol-figs figure{margin:0;flex:1;display:flex;flex-direction:column;gap:6px}
+.sol-figs img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:20px;background:#FFF}
+.sol-figs figcaption{font-size:14px;font-weight:800;text-align:center}
+.arrow{color:var(--peel);font-size:30px;font-weight:800}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.kpi .n{font-family:var(--display);font-size:40px;font-weight:800;color:var(--leaf-2);line-height:1.05}
+.kpi p{font-size:15px;color:var(--muted)}
+.kpi.wide{grid-column:1/-1;background:var(--peel-soft);border-color:transparent}
+.kpi.wide .n{color:var(--ink)}
+
+/* diário */
+.diary-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{border:2px solid var(--line);background:transparent;border-radius:999px;padding:6px 16px;font-weight:700;cursor:pointer;font-size:15px}
+.chip[aria-pressed="true"]{background:var(--leaf-2);border-color:var(--leaf-2);color:var(--bg)}
+.feed{display:flex;flex-direction:column;gap:18px;margin-top:22px}
+.entry{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:grid;grid-template-columns:110px 1fr;gap:22px}
+.entry .when{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700;font-size:15px}
+.entry .when b{display:block;font-family:var(--display);font-size:30px;color:var(--ink);line-height:1}
+.entry h3{font-size:24px;font-weight:700}
+.badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--leaf-2)}
+.badge.teste{background:var(--peel-soft);color:var(--ink)}
+.badge.doc{background:var(--loss-soft);color:var(--loss)}
+.entry .body{display:flex;flex-direction:column;gap:10px;min-width:0}
+.entry .txt{white-space:pre-wrap;color:var(--ink)}
+.media{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.media img,.media video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:var(--soft);display:block}
+.media a.docl{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;background:var(--soft);font-weight:700;font-size:14px;text-decoration:none;color:var(--ink);word-break:break-word}
+.entry .tools{display:flex;gap:8px;flex-wrap:wrap}
+.empty{background:var(--surface);border:2px dashed var(--line);border-radius:22px;padding:34px;text-align:center;color:var(--muted)}
+.empty b{display:block;font-family:var(--display);font-size:24px;color:var(--ink);margin-bottom:6px}
+form.add{background:var(--surface);border:2px solid var(--leaf-2);border-radius:22px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+form.add .full{grid-column:1/-1}
+form.add input[type=text],form.add input[type=date],form.add select,form.add textarea{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;width:100%}
+form.add textarea{min-height:110px;resize:vertical}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:16px;text-align:center;color:var(--muted)}
+.status{font-size:14px;color:var(--muted)}
+.status.err{color:var(--loss);font-weight:700}
+
+/* contato */
+.contact{background:var(--leaf);color:var(--on-leaf)}
+.contact .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.contact h2{color:var(--on-leaf)}
+.mail{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:color-mix(in srgb,var(--on-leaf) 10%,transparent);border-radius:16px;padding:14px 18px}
+.mail code{font-family:var(--body);font-size:20px;font-weight:800;user-select:all;word-break:break-all}
+.team{display:flex;flex-direction:column;gap:8px;font-size:16px}
+.team b{color:var(--peel)}
+footer{padding-block:24px;font-size:13px;color:var(--muted)}
+
+/* cards de dor */
+.dores-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:26px}
+.dor{display:flex;flex-direction:column;gap:12px;background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:22px;text-decoration:none;color:var(--ink);transition:transform .15s ease,border-color .15s ease;min-width:0}
+.dor:hover{border-color:var(--leaf-2);transform:translateY(-2px)}
+.dor .ic{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:var(--soft)}
+.dor .ic svg{width:34px;height:34px}
+.dor .seg{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dor q{quotes:none;font-family:var(--display);font-size:21px;font-weight:700;line-height:1.2}
+.dor .go{margin-top:auto;align-self:flex-start;background:var(--peel);color:#1B1405;font-weight:800;border-radius:999px;padding:8px 16px;font-size:14px;letter-spacing:.04em}
+.dor.prod{background:var(--leaf);border-color:var(--leaf);color:var(--on-leaf)}
+.dor.prod .seg{color:var(--peel)} .dor.prod .ic{background:color-mix(in srgb,var(--on-leaf) 14%,transparent)}
+/* página do perfil */
+.back{display:inline-flex;gap:6px;align-items:center;font-weight:800;text-decoration:none;color:var(--leaf-2)}
+.perfil-head{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;margin-top:18px}
+.perfil-head .ic{width:88px;height:88px;border-radius:24px;background:var(--soft);display:flex;align-items:center;justify-content:center}
+.perfil-head .ic svg{width:54px;height:54px}
+.perfil-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.box h3{font-size:22px}
+.box.dorbox{background:var(--loss-soft);border-color:transparent}
+.box.dorbox h3{color:var(--loss)}
+.box ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.dado{display:flex;gap:14px;align-items:baseline}
+.dado b{font-family:var(--display);font-size:34px;color:var(--loss);white-space:nowrap}
+.sec-h{font-size:clamp(26px,3.4vw,36px);margin-top:44px}
+.sol-figs.small img{aspect-ratio:4/3}
+.sobre-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.tl{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:22px 1fr;column-gap:16px;position:relative;padding-bottom:22px}
+.tl li::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--leaf-2);margin-top:6px;grid-row:1/3}
+.tl li::after{content:"";position:absolute;left:7px;top:26px;bottom:0;width:2px;background:var(--line)}
+.tl li:last-child::after{display:none}
+.tl li.now::before{background:var(--peel)}
+.tl b{font-size:18px} .tl span{grid-column:2;color:var(--muted)}
+.simbox{background:var(--soft);border-radius:24px;padding:24px;margin-top:16px;display:grid;grid-template-columns:.95fr 1.05fr;gap:22px}
+.simbox .panel{border-radius:20px}
+@media (max-width:860px){ .simbox,.sobre-nav{grid-template-columns:1fr} }
+/* simulador com vários produtos */
+.pr-head,.pr-row{display:grid;grid-template-columns:1.4fr 1fr .7fr 36px;gap:8px;align-items:center}
+.pr-head{font-size:13px;font-weight:800;color:var(--muted)}
+.pr-row input{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;width:100%;min-width:0;font-variant-numeric:tabular-nums}
+.pr-del{border:0;background:transparent;color:var(--loss);font-size:22px;font-weight:800;cursor:pointer;border-radius:8px}
+.pr-list{display:flex;flex-direction:column;gap:8px}
+.add-row{align-self:flex-start;border:2px dashed var(--line);background:transparent;border-radius:999px;padding:8px 16px;font-weight:800;cursor:pointer;color:var(--leaf-2)}
+.breakdown{display:flex;flex-direction:column;gap:6px;font-variant-numeric:tabular-nums}
+.breakdown div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:4px}
+.breakdown span{color:var(--muted);overflow-wrap:anywhere}
+/* janelas */
+.modal{position:fixed;inset:0;z-index:20;background:color-mix(in srgb,#000 55%,transparent);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.modal .card{background:var(--surface);color:var(--ink);border-radius:26px;max-width:560px;width:100%;max-height:100%;overflow:auto;padding:28px;display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h2{font-size:clamp(26px,4vw,34px)}
+.modal .field input,.modal .field select,.modal .field textarea{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;width:100%}
+.modal textarea{min-height:90px;resize:vertical}
+.modal .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.linkbtn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-weight:700}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.chk input{margin-top:3px;accent-color:var(--leaf-2)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.err-msg{color:var(--loss);font-weight:700;font-size:14px}
+.ok-msg{background:var(--soft);border-radius:14px;padding:14px 16px;font-weight:700}
+.dor.rec{border-color:var(--peel);box-shadow:0 0 0 3px var(--peel-soft)}
+.rec-tag{align-self:flex-start;background:var(--peel);color:#1B1405;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.hello{font-weight:800;color:var(--peel)}
+.prodc .btn{align-self:flex-start;margin-top:auto;padding:10px 18px;font-size:15px}
+@media (max-width:560px){ .modal .row2{grid-template-columns:1fr} .pr-head{display:none} .pr-row{grid-template-columns:1fr 1fr 36px} .pr-row .pr-n{grid-column:1/-1} }
+/* equipe com foto */
+.pessoa{display:flex;align-items:center;gap:14px}
+.pessoa img{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none;border:3px solid var(--peel)}
+.pessoa.sem{display:block;padding-left:78px}
+/* produtos */
+.prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:22px}
+.prodc{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.prodc h3{font-size:22px}
+.price{font-family:var(--display);font-size:28px;font-weight:800;color:var(--leaf-2);line-height:1.1}
+.price.consulta{color:var(--muted);font-size:22px}
+.price small{display:block;font-family:var(--body);font-size:14px;font-weight:600;color:var(--muted)}
+.st{align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--leaf-2)}
+.st.estudo{background:var(--peel-soft);color:var(--ink)}
+.faixas{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:520px}
+.faixas th,.faixas td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+.faixas th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.faixas td b{color:var(--leaf-2)}
+.scroll-x{overflow-x:auto}
+@media (max-width:860px){ .perfil-grid{grid-template-columns:1fr} .perfil-head{grid-template-columns:1fr} }
+@media (max-width:860px){
+  .hero .wrap,.sim-grid,.sol,.contact .wrap{grid-template-columns:1fr}
+  .hero-figure{min-height:340px}
+  .path{grid-template-columns:repeat(2,1fr)}
+  .path .step.end{grid-column:1/-1}
+  .facts{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:10px}
+  form.add{grid-template-columns:1fr}
+  .top nav{display:none}
+}
+@media (prefers-reduced-motion:no-preference){ .bar i{transition:width .35s ease} }
+</style>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#inicio">GRAPHAGRO</a>
+  <nav aria-label="Seções"><a href="#inicio">Início</a><a href="#dores">Qual é a sua dor?</a><a href="#produtos">Produtos e preços</a><a href="#sobre">Sobre nós</a><a href="#contato">Contato</a></nav>
+</div></header>
+
+<section class="hero" id="inicio" data-view="inicio"><div class="wrap">
+  <div class="stack" style="gap:22px">
+    <div class="logo-chip wordmark" aria-label="GRAPHAGRO">GRAPHAGRO</div>
+    <h1>Proteção anti-UV <em>de origem vegetal</em> para o que a luz estraga.</h1>
+    <p class="hello" id="hello"></p>
+    <p class="lead">Um aditivo de grafeno vegetal, feito do eucalipto, que dá ao plástico uma barreira contra a radiação UV. Pensado para embalagens de hortifrúti, óleos e cosméticos, para resinas e revestimentos, e também vendido puro. Pesquisa nascida no IFBA, com pedido de patente.</p>
+    <div class="cta"><a class="btn" href="#dores">Qual é a sua dor? Clique aqui</a><a class="btn ghost" href="#produtos">Produtos e preços</a></div>
+  </div>
+  <div class="hero-figure">
+    <img class="a" src="../fotos/prototipo.jpg" alt="Protótipo do filme com bananas, laranja e maçã">
+    <img class="b" src="../fotos/grafeno.jpg" alt="Grafeno vegetal em pó">
+    <span class="tag">Protótipo real</span>
+  </div>
+</div></section>
+
+
+<section id="dores" data-view="inicio"><div class="wrap">
+  <p class="eyebrow">Para quem é</p>
+  <h2>Qual é a sua dor? Encontre o seu caso</h2>
+  <p class="lead" style="margin-top:12px">Escolha o card que mais parece com você. Cada um abre uma página com a dor, a solução e o produto certo, com preço.</p>
+  <div class="dores-grid" id="doresGrid"></div>
+</div></section>
+
+<section id="perfil" data-view="perfil" hidden><div class="wrap" id="perfilBox"></div></section>
+
+<section id="produtos" data-view="produtos" hidden><div class="wrap">
+  <a class="back" href="#inicio">← Início</a>
+  <p class="eyebrow" style="margin-top:18px">Nossos produtos</p>
+  <h2>Produtos e preços</h2>
+  <p class="lead" style="margin-top:12px">Tudo o que o GRAPHAGRO oferece, com o preço onde ele já está definido. Os demais são calculados para cada cliente.</p>
+  <div class="prods" id="prodsGrid"></div>
+  <div class="box" style="margin-top:22px">
+    <h3>Embalagem anti-UV para hortifrúti: preço por volume</h3>
+    <p style="color:var(--muted)">Quanto mais volume, menor o preço por embalagem. O preço cobre a embalagem, o aditivo, os custos de operação e o lucro.</p>
+    <div class="scroll-x"><table class="faixas"><thead><tr><th>Faixa</th><th>Volume de compra</th><th>Preço por embalagem</th></tr></thead><tbody>
+      <tr><td>1</td><td>Menor volume</td><td><b>R$ 0,35 a R$ 0,75</b></td></tr>
+      <tr><td>2</td><td>↓</td><td><b>R$ 0,30 a R$ 0,67</b></td></tr>
+      <tr><td>3</td><td>↓</td><td><b>R$ 0,28 a R$ 0,63</b></td></tr>
+      <tr><td>4</td><td>Maior volume</td><td><b>R$ 0,25 a R$ 0,59</b></td></tr>
+    </tbody></table></div>
+    <p class="note">Valores de referência para um saco de PEBDL de 30 × 40 cm. O preço final depende de cada cliente, inclusive da logística.</p>
+  </div>
+</div></section>
+
+
+
+
+
+
+
+<section id="sobre" data-view="sobre" hidden><div class="wrap">
+  <a class="back" href="#inicio">← Início</a>
+  <p class="eyebrow" style="margin-top:18px">Sobre nós</p>
+  <h2>Quem somos, o que já fizemos e onde acompanhar</h2>
+  <div class="sobre-nav">
+    <a class="dor" href="#trajetoria"><span class="seg">Nossa trajetória</span><q>Da bancada do IFBA até o GRAPHAGRO</q><span class="go">VER</span></a>
+    <a class="dor" href="#diario"><span class="seg">Diário de testes</span><q>Fotos, vídeos e documentos de cada teste</q><span class="go">ABRIR</span></a>
+    <a class="dor" href="#contatos"><span class="seg">Contatos</span><q>Fale com a equipe</q><span class="go">VER</span></a>
+  </div>
+  <h3 class="sec-h" id="trajetoria">Nossa trajetória</h3>
+  <ol class="tl">
+    <li><b>Set. a nov. de 2025</b><span>Aprovação no Edital Hotel de Projetos do IFBA 2025/2026 e pedido de patente da tecnologia (BR 10 2025 026328 9, titular IFBA).</span></li>
+    <li><b>Dez. de 2025 a mai. de 2026</b><span>Artigo científico publicado na revista ACS Omega e pivotagem do produto.</span></li>
+    <li><b>Jun. e jul. de 2026</b><span>Trâmite de transferência de tecnologia junto ao IFBA.</span></li>
+    <li><b>2026</b><span>Aprovação na Trilha de Aceleração para Startups do Agro (Sebrae/BA, Hub Semear/FAEB-SENAR e Grupo Rede+) e no Start Aê (UFBA e Sebrae/BA). Karolayne selecionada para o Efeito Furacão (IFBA, Sebrae e Be.Labs).</span></li>
+    <li class="now"><b>Out. de 2026</b><span>Trabalho submetido ao CONNEPI 2026, no Painel Meninas na Ciência.</span></li>
+  </ol>
+  <h3 class="sec-h" id="privacidade">Como usamos seus dados</h3>
+  <div class="box" style="margin-top:14px">
+    <p>Quando você responde às perguntas de boas-vindas, navega pelos cards e usa os simuladores, registramos o seu nome e a sua área, se você os informar, as páginas que abriu, os valores simulados e por qual link você chegou. Isso serve só para entender o que interessa a cada visitante e melhorar o nosso atendimento.</p>
+    <p>Documentos como CPF ou CNPJ, CEP, telefone e e-mail só são pedidos quando você quer comprar ou falar com a equipe, e servem para responder ao seu pedido.</p>
+    <p>Os registros de navegação são apagados depois de 12 meses. Não vendemos nem repassamos seus dados. Para consultar, corrigir ou apagar o que você nos informou, escreva para <b>cascaviva.projeto@gmail.com</b>.</p>
+  </div>
+  <h3 class="sec-h" id="contatos">Contatos</h3>
+  <div class="box" style="margin-top:14px">
+    <p style="font-weight:800">E-mail da equipe</p>
+    <p style="font-family:var(--display);font-size:24px;font-weight:800;user-select:all;word-break:break-all">cascaviva.projeto@gmail.com</p>
+    <div id="redes" class="redes" hidden></div>
+    <div class="team" style="margin-top:8px;gap:12px"><div class="pessoa"><img src="../fotos/karolayne.jpg" alt="Foto de Karolayne Angel"><p><b style="color:var(--leaf-2)">Karolayne Angel</b> · líder, Engenharia Química (IFBA)</p></div><div class="pessoa"><img src="../fotos/silvano.jpg" alt="Foto de Silvano Neto"><p><b style="color:var(--leaf-2)">Silvano Neto</b> · cofundador</p></div><p class="pessoa sem"><b style="color:var(--leaf-2)">Prof. Francislei Santos</b> · orientador e inventor (IFBA)</p></div>
+  </div>
+</div></section>
+
+<section class="sim" id="diario" data-view="diario" hidden><div class="wrap">
+  <a class="back" href="#sobre" style="margin-bottom:14px">← Sobre nós</a>
+  <div class="diary-head">
+    <div class="stack" style="gap:10px"><p class="eyebrow">Diário de testes</p><h2>Atualizações, fotos e documentos</h2><p class="lead">O que a equipe está testando e produzindo, com data. Primeiro da fila: frutas na embalagem comum e na embalagem GRAPHAGRO, lado a lado, fotografadas dia após dia.</p></div>
+  </div>
+  <div class="chips" role="group" aria-label="Filtrar">
+    <button class="chip" type="button" data-f="todos" aria-pressed="true">Tudo</button>
+    <button class="chip" type="button" data-f="teste" aria-pressed="false">Testes</button>
+    <button class="chip" type="button" data-f="atualizacao" aria-pressed="false">Atualizações</button>
+    <button class="chip" type="button" data-f="documento" aria-pressed="false">Documentos</button>
+  </div>
+  <div class="feed" id="feed">
+    <div class="empty" id="emptyMsg"><b>O teste com as frutas vem aí</b>As fotos, os vídeos e os documentos de cada etapa vão aparecer aqui, do mais recente para o mais antigo.</div>
+  </div>
+</div></section>
+
+<section class="contact" id="contato"><div class="wrap">
+  <div class="stack" style="gap:18px">
+    <p class="eyebrow" style="color:var(--peel)">Contato</p>
+    <h2 id="ctTitulo">Quer testar o GRAPHAGRO na sua operação?</h2>
+    <p id="ctTexto" style="color:color-mix(in srgb,var(--on-leaf) 80%,transparent);max-width:58ch">Produtores, distribuidores, mercados e indústrias de alimentos, óleos, cosméticos e plásticos: fale com a equipe.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" data-form="contato">Enviar mensagem</button><button class="btn ghost" type="button" data-form="compra" style="color:var(--on-leaf)">Quero comprar ou pedir orçamento</button></div>
+    <div class="mail"><a href="mailto:cascaviva.projeto@gmail.com" style="color:inherit;text-decoration:none"><code id="mailTxt">cascaviva.projeto@gmail.com</code></a><button class="btn ghost" type="button" id="copyMail" style="color:var(--on-leaf)">Copiar e-mail</button><span id="copyOk" class="note" style="color:var(--peel)" role="status"></span></div>
+  </div>
+  <div class="team" style="gap:14px">
+    <div class="pessoa"><img src="../fotos/karolayne.jpg" alt="Foto de Karolayne Angel"><p><b>Karolayne Angel</b> · líder, Engenharia Química (IFBA)</p></div>
+    <div class="pessoa"><img src="../fotos/silvano.jpg" alt="Foto de Silvano Neto"><p><b>Silvano Neto</b> · cofundador</p></div>
+    <p class="pessoa sem"><b>Prof. Francislei Santos</b> · orientador e inventor (IFBA)</p>
+  </div>
+</div></section>
+
+<div class="modal" id="mBoas" hidden role="dialog" aria-modal="true" aria-labelledby="mBoasT"><form class="card" id="fBoas" novalidate>
+  <p class="eyebrow">Bem-vindo ao GRAPHAGRO</p>
+  <h2 id="mBoasT">Antes de mais nada, queremos conhecer você!</h2>
+  <p style="color:var(--muted)">Duas perguntas rápidas para mostrar primeiro o que tem mais a ver com o seu negócio.</p>
+  <div class="field"><label for="bNome">Como podemos te chamar?</label><input type="text" id="bNome" maxlength="80" autocomplete="given-name" placeholder="Seu nome"></div>
+  <div class="field"><label for="bArea">Qual é a sua área?</label><select id="bArea" data-outra="bOutra"><option value="">Escolha uma opção</option><option value="produtor">Produção rural</option><option value="embalador">Packing house (lavo, seleciono e embalo)</option><option value="logistica">Logística, transporte ou distribuição</option><option value="mercado">Supermercado ou varejo</option><option value="oleos">Indústria de óleos</option><option value="cosmeticos">Indústria de cosméticos</option><option value="transformadora">Fabricação de embalagens plásticas</option><option value="resinas">Resinas ou revestimentos</option><option value="so-aditivo">Quero comprar o aditivo</option><option value="esg">Sustentabilidade e metas ESG</option><option value="pesquisa">Pesquisa ou universidade</option><option value="investimento">Investimento ou fomento</option><option value="outro">Outra área</option><option value="nao-informado">Prefiro não informar</option></select></div>
+  <div class="field" id="bOutraF" hidden><label for="bOutra">Qual é a sua área?</label><input type="text" id="bOutra" maxlength="60" placeholder="Ex.: restaurante, farmácia, exportação"></div>
+  <p class="note">Usamos o que você informar e as páginas que visitar aqui para entender o que interessa a cada pessoa e melhorar o atendimento. Não pedimos documentos nesta etapa. <a href="#privacidade">Como usamos seus dados</a></p>
+  <div class="actions"><button class="btn" type="button" id="bComecar">Começar</button><button class="linkbtn" type="button" id="bPular">Agora não</button></div>
+</form></div>
+
+<div class="modal" id="mForm" hidden role="dialog" aria-modal="true" aria-labelledby="mFormT"><form class="card" id="fForm" novalidate>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div class="stack" style="gap:6px"><p class="eyebrow" id="mFormE">Fale com a equipe</p><h2 id="mFormT">Envie a sua mensagem</h2></div><button class="linkbtn" type="button" data-fechar>Fechar</button></div>
+  <div id="fCampos" class="stack" style="gap:12px">
+    <div class="field"><label for="cNome">Nome completo *</label><input type="text" id="cNome" maxlength="120" autocomplete="name" required></div>
+    <div class="row2"><div class="field"><label for="cEmail">E-mail *</label><input type="email" id="cEmail" maxlength="120" autocomplete="email" required></div><div class="field"><label for="cTel">Telefone ou WhatsApp *</label><input type="tel" id="cTel" maxlength="20" autocomplete="tel" placeholder="(71) 9 0000-0000" required></div></div>
+    <div class="field"><label for="cEmp">Empresa</label><input type="text" id="cEmp" maxlength="120" autocomplete="organization"></div>
+    <div id="cCompra" class="stack" style="gap:12px" hidden>
+      <div class="row2"><div class="field"><label for="cDoc">CPF ou CNPJ *</label><input type="text" id="cDoc" maxlength="18" inputmode="numeric"></div><div class="field"><label for="cCep">CEP *</label><input type="text" id="cCep" maxlength="9" inputmode="numeric" autocomplete="postal-code"></div></div>
+      <div class="field"><label for="cArea">Qual é a sua área? (opcional)</label><select id="cArea" data-outra="cOutra"><option value="">Não informar</option><option value="produtor">Produção rural</option><option value="embalador">Packing house (lavo, seleciono e embalo)</option><option value="logistica">Logística, transporte ou distribuição</option><option value="mercado">Supermercado ou varejo</option><option value="oleos">Indústria de óleos</option><option value="cosmeticos">Indústria de cosméticos</option><option value="transformadora">Fabricação de embalagens plásticas</option><option value="resinas">Resinas ou revestimentos</option><option value="so-aditivo">Quero comprar o aditivo</option><option value="esg">Sustentabilidade e metas ESG</option><option value="pesquisa">Pesquisa ou universidade</option><option value="investimento">Investimento ou fomento</option><option value="outro">Outra área</option><option value="nao-informado">Prefiro não informar</option></select></div>
+      <div class="field" id="cOutraF" hidden><label for="cOutra">Qual é a sua área?</label><input type="text" id="cOutra" maxlength="60"></div>
+      <div class="row2"><div class="field"><label for="cProd">Produto *</label><select id="cProd"></select></div><div class="field"><label for="cQtd">Quantidade estimada</label><input type="text" id="cQtd" maxlength="60" placeholder="Ex.: 10 mil embalagens/mês"></div></div>
+    </div>
+    <div class="field"><label for="cMsg" id="cMsgL">Mensagem *</label><textarea id="cMsg" maxlength="2000"></textarea></div>
+    <div class="hp" aria-hidden="true"><label for="cSite">Não preencha</label><input type="text" id="cSite" tabindex="-1" autocomplete="off"></div>
+    <label class="chk"><input type="checkbox" id="cOk"><span>Autorizo a equipe GRAPHAGRO a usar estes dados para responder ao meu contato, conforme a <a href="#privacidade">política de dados</a>.</span></label>
+    <p class="err-msg" id="cErr" role="alert"></p>
+    <div class="actions"><button class="btn" type="button" id="cEnviar">Enviar</button></div>
+  </div>
+  <div id="fOk" class="stack" style="gap:12px" hidden></div>
+</form></div>
+<footer><div class="wrap">GRAPHAGRO · tecnologia desenvolvida no IFBA · pedido de patente BR 10 2025 026328 9 · <a href="#privacidade">Como usamos seus dados</a></div></footer>
+
+<script>
+/* REDES SOCIAIS: quando os perfis existirem, preencha abaixo e a seção "Redes sociais" aparece sozinha em Contatos.
+   Exemplo: { nome: 'Instagram', url: 'https://www.instagram.com/graphagro' }, */
+const REDES = [
+];
+(function(){
+  const box = document.getElementById('redes');
+  if(!box || !REDES.length) return;
+  const t = document.createElement('p'); t.className = 'redes-t'; t.textContent = 'Redes sociais'; box.appendChild(t);
+  REDES.forEach(r => { const a = document.createElement('a'); a.className = 'btn ghost'; a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.nome; box.appendChild(a); });
+  box.hidden = false;
+})();
+</script>
+<script>
+(function(){
+  // Endereço do Google Apps Script que recebe o relatório (ver relatorios/COMO_ATIVAR.md). Vazio = nada é enviado.
+  const RELATORIO_URL = 'https://script.google.com/macros/s/AKfycbyY_cIZ-LQYaGAc9ydCMMp4QlQkdAPZz-4YkxK7nm8JtdACdbk0Lj0kt0fPq72YJv9F/exec';
+  const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+  const $ = id => document.getElementById(id);
+
+  $('copyMail').addEventListener('click', () => {
+    const t = $('mailTxt').textContent;
+    const ok = () => { $('copyOk').textContent = 'Copiado'; setTimeout(()=>$('copyOk').textContent='',2000); };
+    try { navigator.clipboard.writeText(t).then(ok, sel); } catch(e){ sel(); }
+    function sel(){ const r=document.createRange(); r.selectNodeContents($('mailTxt')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); $('copyOk').textContent='Selecionado: use Ctrl+C'; }
+  });
+
+
+  // ---------- Perfis, produtos e navegação ----------
+  const IC = {
+    campo:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40h36" stroke="#8A6A3A" stroke-width="4" stroke-linecap="round"/><path d="M14 40V24M24 40V18M34 40V26" stroke="#1E4A33" stroke-width="3"/><circle cx="14" cy="20" r="7" fill="#2E7D50"/><circle cx="24" cy="14" r="8" fill="#2E7D50"/><circle cx="34" cy="22" r="6" fill="#2E7D50"/><circle cx="22" cy="13" r="2" fill="#B8432D"/></svg>',
+    caixa:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 18l16-8 16 8v20l-16 8-16-8z" fill="#E5A928"/><path d="M8 18l16 8 16-8M24 26v20" stroke="#1E4A33" stroke-width="2.5" fill="none"/></svg>',
+    caminhao:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="16" width="24" height="16" rx="2" fill="#1E4A33"/><path d="M28 20h9l6 7v5H28z" fill="#2E7D50"/><circle cx="12" cy="35" r="4" fill="#18291F"/><circle cx="36" cy="35" r="4" fill="#18291F"/><circle cx="40" cy="9" r="4" fill="#E5A928"/></svg>',
+    mercado:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 8h6l5 22h22l4-15H14" fill="none" stroke="#1E4A33" stroke-width="3" stroke-linejoin="round"/><circle cx="20" cy="38" r="3.5" fill="#1E4A33"/><circle cx="36" cy="38" r="3.5" fill="#1E4A33"/><circle cx="24" cy="21" r="3.5" fill="#B8432D"/><circle cx="32" cy="21" r="3.5" fill="#E5A928"/></svg>',
+    oleo:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 6h10v6l5 6v22a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2V18l5-6z" fill="#E5A928"/><rect x="17" y="24" width="14" height="10" rx="2" fill="#F2F5EF"/><path d="M24 26c-3 4-3 6 0 6s3-2 0-6z" fill="#E5A928"/></svg>',
+    cosmetico:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="13" y="16" width="22" height="26" rx="5" fill="#2E7D50"/><rect x="19" y="6" width="10" height="10" rx="2" fill="#1E4A33"/><circle cx="24" cy="29" r="5" fill="#F2F5EF"/></svg>',
+    fabrica:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 42V22l10 6v-6l10 6v-6l10 6V8h8v34z" fill="#1E4A33"/><rect x="10" y="32" width="5" height="5" fill="#E5A928"/><rect x="20" y="32" width="5" height="5" fill="#E5A928"/><rect x="30" y="32" width="5" height="5" fill="#E5A928"/></svg>',
+    resina:'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="15" cy="30" r="6" fill="#2E7D50"/><circle cx="27" cy="34" r="6" fill="#1E4A33"/><circle cx="33" cy="22" r="6" fill="#2E7D50"/><circle cx="20" cy="18" r="6" fill="#E5A928"/><path d="M6 42h36" stroke="#8A6A3A" stroke-width="3" stroke-linecap="round"/></svg>',
+    po:'<svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="36" rx="18" ry="5" fill="#CFDACB"/><path d="M10 35c4-12 9-18 14-18s10 6 14 18z" fill="#18291F"/></svg>',
+    folha:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 38C10 20 22 10 40 8c0 20-12 30-30 30z" fill="#2E7D50"/><path d="M10 38l18-18" stroke="#F2F5EF" stroke-width="3" stroke-linecap="round"/></svg>',
+    sol:'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="9" fill="#E5A928"/><path d="M24 5v6M24 37v6M5 24h6M37 24h6M10 10l4 4M34 34l4 4M10 38l4-4M34 14l4-4" stroke="#E5A928" stroke-width="3" stroke-linecap="round"/></svg>',
+    alerta:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l20 36H4z" fill="#B8432D"/><path d="M24 19v11M24 35v1" stroke="#FFF" stroke-width="4" stroke-linecap="round"/></svg>',
+    extrusora:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="22" width="26" height="10" rx="2" fill="#1E4A33"/><path d="M10 22V10h10v12" fill="#E5A928"/><path d="M30 27h6c4 0 6-6 6-14" stroke="#2E7D50" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="6" y="34" width="22" height="6" fill="#56665B"/></svg>',
+    filme:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h28l-3 34H13z" fill="#E3ECDD" stroke="#1E4A33" stroke-width="2.5"/><circle cx="20" cy="30" r="5" fill="#B8432D"/><circle cx="29" cy="31" r="5" fill="#E5A928"/><path d="M14 16h20" stroke="#2E7D50" stroke-width="3"/></svg>',
+    eucalipto:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44V10" stroke="#8A6A3A" stroke-width="4"/><path d="M24 16c-8 0-12-4-12-9 7 0 12 3 12 9zM24 24c8 0 13-4 13-9-8 0-13 3-13 9zM24 32c-8 0-13-4-13-9 8 0 13 3 13 9z" fill="#2E7D50"/></svg>',
+    reciclar:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l7 12H17zM9 36l7-12 6 10zM39 36H25l6-11z" fill="#2E7D50"/></svg>',
+    alvo:'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="#E3ECDD"/><circle cx="24" cy="24" r="11" fill="#2E7D50"/><circle cx="24" cy="24" r="4" fill="#E5A928"/></svg>',
+    lavar:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 26h32l-4 16H12z" fill="#2E7D50"/><path d="M16 8c0 4-3 5-3 8a3 3 0 0 0 6 0c0-3-3-4-3-8zM30 6c0 4-3 5-3 8a3 3 0 0 0 6 0c0-3-3-4-3-8z" fill="#5BA7D8"/><circle cx="20" cy="24" r="4" fill="#B8432D"/><circle cx="29" cy="24" r="4" fill="#E5A928"/></svg>',
+
+    lista:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="6" width="32" height="36" rx="5" fill="#F2F5EF"/><path d="M15 16h18M15 24h18M15 32h12" stroke="#1E4A33" stroke-width="3" stroke-linecap="round"/></svg>'
+  };
+  const PRODUTOS = [
+    {id:'hortifruti', nome:'Embalagem anti-UV para hortifrúti', desc:'Saco de PEBDL com grafeno vegetal para frutas, legumes e verduras.', preco:'R$ 0,25 a R$ 0,75', un:'por embalagem, conforme o volume', st:'Protótipo'},
+    {id:'oleos', nome:'Embalagem anti-UV para óleos', desc:'Filme flexível com barreira UV para óleo comestível.', preco:null, st:'Em teste'},
+    {id:'cosmeticos', nome:'Embalagem anti-UV para cosméticos', desc:'Barreira UV para óleos corporais e produtos que rançam com a luz.', preco:null, st:'Em estudo'},
+    {id:'resina', nome:'Resina de PEBDL com grafeno vegetal', desc:'O composto pronto para a transformadora fazer o filme anti-UV.', preco:null, st:'Protótipo'},
+    {id:'revestimentos', nome:'Revestimentos com grafeno vegetal', desc:'Aplicação do aditivo em revestimentos com proteção UV.', preco:null, st:'Em estudo'},
+    {id:'aditivo', nome:'Aditivo de grafeno vegetal puro', desc:'O pó de grafeno vegetal, do eucalipto, sem polímero, para a sua própria formulação.', preco:'R$ 29,75 a R$ 42,16', un:'por kg · estimativa, cerca de 15% abaixo do TiO₂', st:null},
+    {id:'licenca', nome:'Licença e transferência de tecnologia', desc:'Dossiê de transferência, lote piloto e treinamento para produzir na sua fábrica.', preco:null, st:null}
+  ];
+  const PERFIS = [
+    {id:'produtor', seg:'Hortifrúti · produção', ic:'campo', q:'Você é produtor e vê a fruta perder valor antes de vender?',
+     dor:['Parte da colheita se perde antes de chegar ao comprador: no campo, no manuseio e no transporte.'], dado:['~30%','das frutas se perdem no Brasil, segundo a Embrapa (dados de 1993).'],
+     sol:['Embalagem com barreira anti-UV, que protege a fruta da luz no caminho até o comprador.','O aditivo entra na mistura do plástico: a embalagem tem o mesmo formato da comum.'], prods:['hortifruti'], sim:true},
+    {id:'embalador', seg:'Hortifrúti · packing house', ic:'caixa', q:'Você lava, seleciona e embala hortifrúti e quer que ele chegue melhor?',
+     dor:['As embalagens convencionais duram pouco, não protegem da luz e viram lixo.'], dado:['50%','das perdas pós-colheita acontecem no manuseio e no transporte (Embrapa, 2016).'],
+     sol:['Troca da embalagem comum por uma com cerca de 90% de barreira UV.','Mais resistente: eficiência mecânica 40% superior à do plástico convencional.'], prods:['hortifruti','resina'], sim:true},
+    {id:'logistica', seg:'Logística e distribuição', ic:'caminhao', q:'Sua dor é perder produtos durante a logística?',
+     dor:['Horas de estrada, sol, calor e espera em armazéns e centrais: produtos sensíveis à luz chegam com menos vida útil, com desconto ou para o descarte.'], dado:['30%','das perdas pós-colheita acontecem nas centrais de abastecimento (Embrapa, 2016).'],
+     sol:['Embalagem que bloqueia a radiação UV durante o transporte e a espera.','Mais resistência mecânica para aguentar o manuseio.'], prods:['hortifruti','oleos','cosmeticos'], sim:true},
+    {id:'mercado', seg:'Supermercados e redes', ic:'mercado', q:'Você é dono de mercado e vê fruta estragar na gôndola?',
+     dor:['A fruta chega madura demais, fica sob luz o dia todo e estraga antes de vender.'], dado:['4,73%','de quebra nas vendas de frutas, legumes e verduras em 2024; o hortifrúti responde por 30% das perdas do varejo (ABRAS).'],
+     sol:['Embalagem anti-UV para o hortifrúti que vocês mesmos embalam.','Um custo extra de centavos por embalagem para reduzir a quebra.'], prods:['hortifruti'], sim:true},
+    {id:'oleos', seg:'Indústria de óleos', ic:'oleo', q:'Seu óleo perde qualidade com a luz na prateleira?',
+     dor:['A luz acelera a oxidação e o ranço dos óleos em embalagem transparente.'], dado:['9 meses','de vida útil estimada para óleos de sementes em PET transparente sob LED, contra validade impressa de 20 meses ou mais (Martín-Torres et al., 2022).'],
+     sol:['Filme flexível com barreira UV para embalagens de óleo comestível.','Segmento em teste pela equipe.'], prods:['oleos','aditivo']},
+    {id:'cosmeticos', seg:'Indústria de cosméticos', ic:'cosmetico', q:'Seus óleos corporais e cremes rançam com a luz?',
+     dor:['Óleos corporais e produtos com óleos vegetais rancificam com a luz e perdem qualidade.'], dado:null,
+     sol:['Embalagem com barreira UV de origem vegetal para proteger a fórmula.','Aplicação em estudo: fale com a equipe para um projeto-piloto.'], prods:['cosmeticos','aditivo']},
+    {id:'transformadora', seg:'Indústria de embalagens', ic:'fabrica', q:'Você fabrica embalagens plásticas e quer oferecer proteção UV?',
+     dor:['O aditivo anti-UV de referência, o TiO₂, é mineral e importado, e a demanda por embalagens mais sustentáveis cresce.'], dado:['5%','de aditivo na mistura do PEBDL, sem mudar as demais etapas da produção do filme.'],
+     sol:['O grafeno vegetal entra na etapa de mistura dos pellets, antes da extrusão.','Cerca de 90% de barreira UV e 40% mais eficiência mecânica.'], prods:['aditivo','resina','licenca']},
+    {id:'resinas', seg:'Resinas e revestimentos', ic:'resina', q:'Você produz resina ou revestimento e quer proteção UV de origem vegetal?',
+     dor:['Proteger polímeros e superfícies da radiação UV costuma depender de aditivos sintéticos.'], dado:null,
+     sol:['O grafeno vegetal é uma plataforma aditiva adaptável a vários polímeros e finalidades.','Resina de PEBDL com grafeno já em protótipo; revestimentos em estudo.'], prods:['resina','revestimentos','aditivo']},
+    {id:'so-aditivo', seg:'Venda do aditivo', ic:'po', q:'Você só precisa do aditivo de grafeno vegetal?',
+     dor:['Você já tem a sua formulação e quer um aditivo anti-UV de origem vegetal.'], dado:['15%','mais barato que o TiO₂, o aditivo anti-UV de referência, segundo a estimativa da equipe.'],
+     sol:['Grafeno vegetal puro, sem polímero, feito do eucalipto.','Com 5% na mistura do PEBDL, cerca de 90% de barreira UV.'], prods:['aditivo','licenca']},
+    {id:'esg', seg:'Metas ESG', ic:'folha', q:'Sua empresa tem metas ESG para embalagens?',
+     dor:['Embalagens plásticas e aditivos sintéticos importados pesam nas metas de sustentabilidade.'], dado:null,
+     sol:['Troca do aditivo UV sintético importado por um aditivo vegetal.','Material mais biodegradável que o plástico convencional, alinhado ao Decreto 12.688/2025 de logística reversa de embalagens.'], prods:['hortifruti','oleos','cosmeticos','aditivo']}
+  ];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function prodCard(p){
+    const st = p.st ? `<span class="st ${p.st==='Protótipo'?'':'estudo'}">${esc(p.st)}</span>` : '';
+    const pr = p.preco ? `<p class="price">${esc(p.preco)}<small>${esc(p.un)}</small></p>` : `<p class="price consulta">Sob consulta<small>calculado para cada cliente</small></p>`;
+    return `<div class="prodc">${st}<h3>${esc(p.nome)}</h3><p style="color:var(--muted)">${esc(p.desc)}</p>${pr}<button class="btn" type="button" data-form="compra" data-prod="${p.id}">${p.preco ? 'Quero comprar' : 'Pedir orçamento'}</button></div>`;
+  }
+  $('doresGrid').innerHTML = PERFIS.map(p => `<a class="dor" href="#${p.id}"><span class="ic">${IC[p.ic]}</span><span class="seg">${esc(p.seg)}</span><q>${esc(p.q)}</q><span class="go">CLIQUE AQUI!</span></a>`).join('')
+    + `<a class="dor prod" href="#sobre"><span class="ic">${IC.folha}</span><span class="seg">Sobre nós</span><q>Nossa trajetória, diário de testes e contatos</q><span class="go">CLIQUE AQUI!</span></a>`
+    + `<a class="dor prod" href="#produtos"><span class="ic">${IC.lista}</span><span class="seg">Nossos produtos</span><q>Quer ver todos os produtos e preços?</q><span class="go">CLIQUE AQUI!</span></a>`;
+  $('prodsGrid').innerHTML = PRODUTOS.map(prodCard).join('');
+  const BIG = {"campo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><rect y=\"96\" width=\"180\" height=\"34\" rx=\"8\" fill=\"#C9A36A\"/><path d=\"M40 96V54M90 96V44M140 96V60\" stroke=\"#1E4A33\" stroke-width=\"8\"/><circle cx=\"40\" cy=\"48\" r=\"22\" fill=\"#2E7D50\"/><circle cx=\"90\" cy=\"38\" r=\"26\" fill=\"#2E7D50\"/><circle cx=\"140\" cy=\"54\" r=\"20\" fill=\"#2E7D50\"/><circle cx=\"34\" cy=\"50\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"96\" cy=\"36\" r=\"5\" fill=\"#B8432D\"/><circle cx=\"84\" cy=\"46\" r=\"5\" fill=\"#E5A928\"/><circle cx=\"146\" cy=\"56\" r=\"5\" fill=\"#E5A928\"/></svg>", "estrada": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><circle cx=\"150\" cy=\"28\" r=\"16\" fill=\"#E5A928\"/><path d=\"M150 2v6M150 48v6M124 28h6M170 28h6\" stroke=\"#E5A928\" stroke-width=\"4\" stroke-linecap=\"round\"/><rect x=\"10\" y=\"58\" width=\"100\" height=\"48\" rx=\"6\" fill=\"#1E4A33\"/><path d=\"M110 70h34l20 20v16h-54z\" fill=\"#2E7D50\"/><rect x=\"120\" y=\"76\" width=\"22\" height=\"14\" rx=\"3\" fill=\"#F2F5EF\"/><circle cx=\"40\" cy=\"110\" r=\"12\" fill=\"#18291F\"/><circle cx=\"138\" cy=\"110\" r=\"12\" fill=\"#18291F\"/></svg>", "galpao": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M14 56L90 16l76 40v68H14z\" fill=\"#1E4A33\"/><rect x=\"40\" y=\"74\" width=\"100\" height=\"50\" fill=\"#F2F5EF\"/><rect x=\"50\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"78\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"106\" y=\"98\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"64\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/><rect x=\"92\" y=\"74\" width=\"24\" height=\"24\" fill=\"#E5A928\"/></svg>", "gondola": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M40 6h100l-10 18H50z\" fill=\"#E5A928\"/><rect x=\"14\" y=\"66\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><rect x=\"14\" y=\"112\" width=\"152\" height=\"10\" fill=\"#1E4A33\"/><circle cx=\"40\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"68\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"54\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"124\" cy=\"54\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"40\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"68\" cy=\"100\" r=\"12\" fill=\"#E5A928\"/><circle cx=\"96\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"124\" cy=\"100\" r=\"12\" fill=\"#B8432D\"/><circle cx=\"150\" cy=\"100\" r=\"12\" fill=\"#8A5A2B\"/></svg>", "lixo": "<svg viewBox=\"0 0 180 130\" aria-hidden=\"true\"><path d=\"M44 40h92l-10 86H54z\" fill=\"#9AA39D\"/><rect x=\"36\" y=\"28\" width=\"108\" height=\"14\" rx=\"6\" fill=\"#6B776F\"/><circle cx=\"76\" cy=\"26\" r=\"12\" fill=\"#8A5A2B\"/><circle cx=\"102\" cy=\"22\" r=\"12\" fill=\"#6E4A22\"/><path d=\"M70 64v46M90 64v46M110 64v46\" stroke=\"#6B776F\" stroke-width=\"5\"/><circle cx=\"154\" cy=\"92\" r=\"20\" fill=\"#B8432D\"/><path d=\"M146 92h16\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>"};
+  const EXTRA = {"produtor": {"h": ["A fruta sai boa da roça e perde valor no caminho", "O produtor colhe no ponto certo, lava e embala. Até chegar ao comprador, parte das caixas amadurece demais e perde o valor comercial."], "p": [["BIG:campo", "Colheita", "No ponto certo."], ["caixa", "Embalagem comum", "Plástico sem proteção contra a luz."], ["sol", "Espera ao sol", "No galpão ou na beira da estrada."], ["BIG:estrada", "Transporte", "Horas de estrada até o comprador."], ["BIG:lixo", "Desconto ou descarte", "A caixa perde o valor comercial.", "end"]], "f": [["~30%", "das frutas se perdem no Brasil", "Embrapa (dados de 1993)"], ["1/3", "da comida do planeta se perde ou é desperdiçada, cerca de 1,3 bilhão de toneladas por ano", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar o GRAPHAGRO na sua produção?", "Produtores e cooperativas de frutas, legumes e verduras: fale com a equipe para um teste com a sua colheita."]}, "embalador": {"h": ["A embalagem é a última proteção antes de o produto sair", "Na packing house o hortifrúti é lavado, selecionado e embalado. Se a embalagem não protege da luz, o cuidado do processo se perde na estrada."], "p": [["BIG:campo", "Recebimento", "Produto chega do campo."], ["lavar", "Lavagem e seleção", "Só o melhor segue adiante."], ["caixa", "Embalagem comum", "Não protege da luz."], ["BIG:estrada", "Expedição", "Horas de transporte e manuseio."], ["alerta", "Chega madura demais", "O cliente recebe produto passando do ponto.", "end"]], "f": [["50%", "das perdas pós-colheita acontecem no manuseio e no transporte", "Embrapa (2016)"], ["1/3", "da comida do planeta se perde ou é desperdiçada", "FAO e PNUMA"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar o GRAPHAGRO na sua packing house?", "Empresas que lavam, selecionam e embalam hortifrúti: fale com a equipe para um lote-piloto."]}, "logistica": {"h": ["A carga sai boa e chega pior", "Na logística o tempo corre contra o produto: estrada, sol, calor e espera em armazéns e centrais aceleram a perda de qualidade de alimentos, óleos, cosméticos e outros produtos sensíveis à luz."], "p": [["caixa", "Carregamento", "Produto embalado em bom estado."], ["BIG:estrada", "Estrada", "Sol e calor por horas."], ["BIG:galpao", "Armazém ou central", "Mais espera, exposto à luz."], ["caminhao", "Entrega", "Chega com menos vida útil."], ["BIG:lixo", "Perda", "Desconto, devolução ou descarte.", "end"]], "f": [["50%", "das perdas pós-colheita de frutas e hortaliças acontecem no manuseio e no transporte", "Embrapa (2016)"], ["30%", "dessas perdas acontecem nas centrais de abastecimento", "Embrapa (2016)"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar o GRAPHAGRO na sua logística?", "Transportadoras, distribuidores, operadores logísticos e centrais de abastecimento: fale com a equipe."]}, "mercado": {"h": ["Toda semana, a fruta chega madura demais", "O dono de uma rede de mercados recebe caixas de frutas que saíram boas do campo. No caminho até a gôndola, elas amadurecem rápido demais, estragam em poucos dias e viram prejuízo."], "p": [["BIG:campo", "Campo", "Colhida no ponto certo."], ["BIG:estrada", "Transporte", "Horas de estrada, sol e calor."], ["BIG:galpao", "Distribuição", "Mais tempo à espera, exposta à luz."], ["BIG:gondola", "Gôndola", "Chega madura demais e fica sob luz o dia todo."], ["BIG:lixo", "Prejuízo", "Estraga em poucos dias e vai para o lixo.", "end"]], "f": [["4,73%", "de quebra nas vendas de frutas, legumes e verduras em 2024; o hortifrúti responde por 30% das perdas do varejo", "ABRAS, via Circuito FLV"], ["R$ 61,3 bi", "de prejuízo por ano no Brasil com o desperdício de alimentos", "Senado Federal, com base no Índice de Desperdício de Alimentos da ONU"]], "k": ["uv", "mec", "custo"], "ct": ["Quer testar o GRAPHAGRO no seu mercado?", "Supermercados, redes e hortifrútis: fale com a equipe para um teste na sua loja."]}, "oleos": {"h": ["O óleo sai bom da fábrica e perde qualidade na prateleira", "Em embalagem transparente, a luz da loja acelera a oxidação e o ranço. O óleo dura menos do que a validade impressa promete."], "p": [["oleo", "Envase", "Óleo fresco em embalagem transparente."], ["caminhao", "Distribuição", "Até chegar à loja."], ["sol", "Prateleira iluminada", "Luz o dia todo."], ["alerta", "Oxidação e ranço", "O óleo perde qualidade."], ["BIG:lixo", "Vida útil menor", "Antes da validade impressa.", "end"]], "f": [["9 meses", "de vida útil estimada para óleos de sementes em PET transparente sob LED, contra validade impressa de 20 meses ou mais", "Martín-Torres et al., Molecules (2022)"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar o GRAPHAGRO nas suas embalagens de óleo?", "Indústrias de óleos comestíveis e de embalagens flexíveis para óleo: fale com a equipe."]}, "cosmeticos": {"h": ["A fórmula sai boa do laboratório e ranço chega antes do fim do frasco", "Óleos corporais e produtos com óleos vegetais em embalagem transparente ficam expostos à luz na vitrine e no banheiro, e rancificam."], "p": [["cosmetico", "Formulação", "Óleos vegetais na fórmula."], ["filme", "Embalagem transparente", "Bonita, mas sem barreira UV."], ["sol", "Vitrine e uso", "Luz todos os dias."], ["alerta", "Ranço", "Cheiro e cor mudam.", "end"]], "f": [], "k": ["uv", "aditivo", "patente"], "ct": ["Quer testar o GRAPHAGRO nas suas embalagens de cosméticos?", "Indústrias de cosméticos com óleos corporais e produtos sensíveis à luz: fale com a equipe para um projeto-piloto."]}, "transformadora": {"h": ["O grafeno vegetal entra em uma etapa que você já faz", "Na produção do filme de PEBDL, os pellets são misturados com aditivos antes da extrusão. É nessa mistura que o grafeno vegetal entra, sem mudar as demais etapas."], "p": [["resina", "Pellets de PEBDL", "A resina que você já compra."], ["po", "Mistura com aditivos", "Aqui entra o grafeno vegetal, a 5%."], ["extrusora", "Extrusão", "Filme soprado, como hoje."], ["caixa", "Corte e solda", "Sacos, sachês ou bobinas."], ["filme", "Embalagem anti-UV", "Pronta para o seu cliente."]], "f": [["5%", "de aditivo na mistura do PEBDL para cerca de 90% de barreira UV", "Detalhamento do projeto e resumo CONNEPI 2026"], ["+ R$ 0,01 a 0,02", "é o que o aditivo soma ao custo de um saco de 30 × 40 cm", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "mec", "aditivo", "custo"], "ct": ["Quer oferecer embalagens anti-UV aos seus clientes?", "Transformadoras de PEBDL e fabricantes de embalagens: fale com a equipe sobre o aditivo, a resina ou a licença."]}, "resinas": {"h": ["Proteção UV de origem vegetal para outros polímeros", "O grafeno vegetal é uma plataforma aditiva: além do PEBDL, a equipe estuda aplicações em resinas e revestimentos."], "p": [["resina", "Resina base", "O polímero que você produz."], ["po", "Grafeno vegetal", "Aditivo de origem vegetal."], ["extrusora", "Composto", "Resina com o aditivo incorporado."], ["filme", "Aplicação", "Filmes e revestimentos com proteção UV."]], "f": [["~90%", "de barreira UV no filme de PEBDL com 5% de aditivo, o resultado já obtido", "Detalhamento do projeto e resumo CONNEPI 2026"]], "k": ["uv", "aditivo", "patente"], "ct": ["Quer desenvolver uma resina ou revestimento com o GRAPHAGRO?", "Fabricantes de resinas, compostos e revestimentos: fale com a equipe para um codesenvolvimento."]}, "so-aditivo": {"h": ["Do eucalipto para a sua formulação", "Se você já tem o seu processo, pode comprar só o aditivo: grafeno vegetal em pó, feito do eucalipto."], "p": [["eucalipto", "Eucalipto", "Matéria-prima vegetal."], ["po", "Grafeno vegetal", "O aditivo, em pó."], ["resina", "Sua formulação", "5% na mistura do PEBDL."], ["filme", "Produto com barreira UV", "Cerca de 90% de bloqueio no PEBDL."]], "f": [["15%", "abaixo do preço do TiO₂, o aditivo anti-UV de referência", "Estimativa do Prof. Francislei Santos (01/11/2026)"], ["R$ 29,75 a 42,16", "por kg, preço estimado do grafeno vegetal", "Nota técnica de viabilidade da equipe (Módulo 9)"]], "k": ["uv", "aditivo", "custo"], "ct": ["Quer comprar o aditivo de grafeno vegetal?", "Indústrias que querem um aditivo anti-UV de origem vegetal: fale com a equipe sobre volume e prazo."]}, "esg": {"h": ["Uma troca de aditivo que conta para a meta", "Trocar um aditivo UV sintético importado por um vegetal, numa embalagem mais biodegradável que a convencional, ajuda a cumprir metas de sustentabilidade e a nova regra de logística reversa."], "p": [["alerta", "Aditivo sintético importado", "O padrão de hoje."], ["eucalipto", "Troca por aditivo vegetal", "Grafeno vegetal, do eucalipto."], ["filme", "Embalagem mais biodegradável", "Que o plástico convencional."], ["reciclar", "Logística reversa", "Decreto 12.688/2025."], ["alvo", "Meta ESG", "Um passo mensurável."]], "f": [["R$ 5 mil a R$ 50 mi", "é a faixa de multa por poluição prevista em lei", "Decreto 6.514/2008, art. 61"]], "k": ["uv", "patente", "aditivo"], "ct": ["Quer incluir o GRAPHAGRO na sua meta ESG?", "Empresas com metas de sustentabilidade para embalagens: fale com a equipe."]}};
+  const KPIS = {
+    uv:['~90%','da radiação UV bloqueada pelo filme de PEBDL, com 5% de aditivo'],
+    mec:['+40%','de eficiência mecânica em relação ao plástico convencional'],
+    aditivo:['5%','de aditivo na mistura, sem mudar as máquinas da indústria'],
+    custo:['+ 1 a 2 centavos','é o que o aditivo soma ao custo de um saco de PEBDL de 30 × 40 cm'],
+    patente:['BR 10 2025 026328 9','pedido de patente, titular IFBA']
+  };
+  const FONTE_SOL = 'Dados técnicos: detalhamento do projeto e resumo CONNEPI 2026 · Custo: nota técnica de viabilidade da equipe (Módulo 9) e Prof. Francislei Santos (01/11/2026)';
+  function passoSvg(k){ return k.startsWith('BIG:') ? BIG[k.slice(4)] : IC[k]; }
+  const SIMS = {
+    produtor:{tipo:'perda', per:'semana', val:'Valor colhido por semana (R$)', ex:'Ex.: banana', v:10000, p:30, ph:'Começa em 30%, a perda de frutas no Brasil segundo a Embrapa (dados de 1993). Use a da sua produção, se souber.'},
+    embalador:{tipo:'perda', per:'semana', val:'Valor embalado por semana (R$)', ex:'Ex.: tomate', v:20000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
+    logistica:{tipo:'perda', per:'semana', val:'Valor transportado por semana (R$)', ex:'Ex.: alimentos, óleos, cosméticos', v:50000, p:5, ph:'Valor de exemplo. Use a perda da sua operação.'},
+    mercado:{tipo:'perda', per:'semana', val:'Valor comprado por semana (R$)', ex:'Ex.: hortifrúti', v:20000, p:4.73, ph:'Começa em 4,73%, a quebra média de FLV no varejo em 2024 (ABRAS, via Circuito FLV). Use a da sua loja, se souber.'},
+    oleos:{tipo:'perda', per:'mês', val:'Faturamento por mês (R$)', ex:'Ex.: óleo de soja', v:100000, p:2, ph:'Valor de exemplo: produtos vencidos, devolvidos ou vendidos com desconto por perda de qualidade.'},
+    cosmeticos:{tipo:'perda', per:'mês', val:'Faturamento por mês (R$)', ex:'Ex.: óleo corporal', v:50000, p:2, ph:'Valor de exemplo: produtos devolvidos ou descartados por ranço ou mudança de cor e cheiro.'},
+    transformadora:{tipo:'aditivo', rot:'Toneladas de filme de PEBDL por mês', v:10, pct:5},
+    resinas:{tipo:'aditivo', rot:'Toneladas de resina ou composto por mês', v:5, pct:5},
+    'so-aditivo':{tipo:'aditivo', rot:'Toneladas da sua formulação por mês', v:1, pct:5},
+    esg:{tipo:'esg', rot:'Toneladas de embalagem plástica por ano', v:50, pct:5}
+  };
+  const num = (v,d) => (v||0).toLocaleString('pt-BR',{maximumFractionDigits:d||0});
+  let prN = 0;
+  function prRow(ex, v, p){
+    prN++; const k = prN;
+    return `<div class="pr-row"><input class="pr-n" type="text" maxlength="60" aria-label="Produto ${k}" placeholder="${esc(ex||'Nome do produto')}"><input class="pr-v" type="number" min="0" step="100" aria-label="Valor do produto ${k}" value="${v!=null?v:''}" inputmode="decimal"><input class="pr-p" type="number" min="0" max="100" step="0.01" aria-label="Perda do produto ${k} em %" value="${p!=null?p:''}" inputmode="decimal"><button class="pr-del" type="button" aria-label="Remover produto ${k}">×</button></div>`;
+  }
+  function simHtml(id){
+    const s = SIMS[id]; if(!s) return '';
+    const head = `<h3 class="sec-h">Simule o seu caso</h3><p class="lead" style="margin-top:8px">Coloque os seus números. A conta é feita na hora, aqui na página.</p>`;
+    if(s.tipo==='perda'){
+      return head + `<div class="simbox" data-sim="perda" data-per="${s.per}">
+        <form class="panel stack" style="gap:16px" onsubmit="return false">
+          <p style="font-weight:800">Quais produtos você movimenta e quanto se perde de cada um?</p>
+          <div class="pr-head" aria-hidden="true"><span>Produto</span><span>${esc(s.val)}</span><span>Perda (%)</span><span></span></div>
+          <div class="pr-list" id="prList">${prRow(s.ex, s.v, s.p)}</div>
+          <button class="add-row" type="button" id="prAdd">+ Adicionar produto</button>
+          <span class="hint">${esc(s.ph)} Os valores da primeira linha são de exemplo: troque pelos seus.</span>
+          <div class="field"><label for="sR">E se a perda caísse…</label><div class="range-row"><input type="range" id="sR" min="0" max="60" step="5" value="20"><output id="sRo" for="sR">20%</output></div><span class="hint">Simulação para testar cenários. Não é resultado de teste do GRAPHAGRO.</span></div>
+        </form>
+        <div class="panel result" aria-live="polite">
+          <p class="eyebrow" style="color:var(--loss)">Sua perda hoje</p>
+          <p class="big" id="oAno">R$ 0</p><p style="margin-top:-8px;color:var(--muted)">por ano, somando todos os produtos</p>
+          <dl class="rows"><dt>Por ${s.per}</dt><dd id="oPer">R$ 0</dd></dl>
+          <div class="breakdown" id="oLista"></div>
+          <div class="bar" aria-hidden="true"><i id="oBar" style="width:100%"></i></div>
+          <div class="save-box stack" style="gap:6px"><p style="font-weight:800">Se a perda caísse <span id="oRt">20%</span>, você deixaria de perder</p><p class="big" id="oGanho">R$ 0</p><p class="note">por ano</p></div>
+          <p class="note">${s.per==='semana'?'Ano = 52 semanas.':'Ano = 12 meses.'}</p>
+        </div></div>`;
+    }
+    if(s.tipo==='aditivo'){
+      return head + `<div class="simbox" data-sim="aditivo">
+        <form class="panel stack" style="gap:18px" onsubmit="return false">
+          <div class="field"><label for="sT">${esc(s.rot)}</label><input type="number" id="sT" min="0" step="0.5" value="${s.v}" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo seu.</span></div>
+          <div class="field"><label for="sPc">Teor de aditivo (%)</label><input type="number" id="sPc" min="0.5" max="20" step="0.5" value="${s.pct}" inputmode="decimal"><span class="hint">5% é o teor que deu cerca de 90% de barreira UV no filme de PEBDL.</span></div>
+        </form>
+        <div class="panel result" aria-live="polite">
+          <p class="eyebrow">Aditivo de grafeno vegetal</p>
+          <p class="big" style="color:var(--leaf-2)" id="oKg">0 kg</p><p style="margin-top:-8px;color:var(--muted)">por mês</p>
+          <dl class="rows"><dt>Custo do aditivo por mês</dt><dd id="oCm">R$ 0</dd><dt>Por tonelada de material</dt><dd id="oCt">R$ 0</dd><dt>Por saco de PEBDL de 30 × 40 cm</dt><dd id="oCs">R$ 0</dd></dl>
+          <p class="note">Com o preço estimado do grafeno vegetal, de R$ 29,75 a R$ 42,16 por kg (nota técnica da equipe, Módulo 9). Saco de referência de cerca de 8,8 g.</p>
+        </div></div>`;
+    }
+    return head + `<div class="simbox" data-sim="esg">
+      <form class="panel stack" style="gap:18px" onsubmit="return false">
+        <div class="field"><label for="sT">${esc(s.rot)}</label><input type="number" id="sT" min="0" step="1" value="${s.v}" inputmode="decimal"><span class="hint">Valor de exemplo. Troque pelo seu.</span></div>
+        <div class="field"><label for="sPc">Teor de aditivo (%)</label><input type="number" id="sPc" min="0.5" max="20" step="0.5" value="${s.pct}" inputmode="decimal"><span class="hint">5% é o teor que deu cerca de 90% de barreira UV no filme de PEBDL.</span></div>
+      </form>
+      <div class="panel result" aria-live="polite">
+        <p class="eyebrow">Aditivo sintético trocado por vegetal</p>
+        <p class="big" style="color:var(--leaf-2)" id="oKg">0 kg</p><p style="margin-top:-8px;color:var(--muted)">por ano</p>
+        <dl class="rows"><dt>Com TiO₂ (R$ 35 a R$ 50/kg)</dt><dd id="oTi">R$ 0</dd><dt>Com grafeno vegetal (R$ 29,75 a R$ 42,16/kg)</dt><dd id="oGr">R$ 0</dd><dt>Diferença por ano</dt><dd id="oEc">R$ 0</dd></dl>
+        <p class="note">Considera a mesma dosagem para os dois aditivos. Preços: estimativa da equipe e Casa dos Químicos (01/11/2026), na nota técnica do Módulo 9.</p>
+      </div></div>`;
+  }
+  function simCalc(){
+    const box = document.querySelector('#perfilBox .simbox'); if(!box) return;
+    const f = id => { const e = $(id); return e ? Math.max(0, parseFloat(e.value)||0) : 0; };
+    const faixa = (a,b,d) => a===b ? 'R$ '+num(a,d) : 'R$ '+num(a,d)+' a '+num(b,d);
+    if(box.dataset.sim==='perda'){
+      const r=parseInt($('sR').value,10)/100, mult = box.dataset.per==='semana'?52:12;
+      let per = 0; const linhas = [];
+      box.querySelectorAll('.pr-row').forEach((row,k) => {
+        const v = Math.max(0, parseFloat(row.querySelector('.pr-v').value)||0), p = Math.min(100, Math.max(0, parseFloat(row.querySelector('.pr-p').value)||0))/100;
+        const nome = row.querySelector('.pr-n').value.trim() || row.querySelector('.pr-n').placeholder.replace(/^Ex\.:\s*/,'') || ('Produto '+(k+1));
+        per += v*p; linhas.push([nome, v*p*mult]);
+      });
+      const ano = per*mult;
+      $('oPer').textContent=brl(per); $('oAno').textContent=brl(ano); $('oGanho').textContent=brl(ano*r);
+      const ol = $('oLista'); ol.replaceChildren();
+      if(linhas.length > 1) linhas.forEach(([n,a]) => { const d=document.createElement('div'); const s=document.createElement('span'); s.textContent=n; const b=document.createElement('b'); b.textContent=brl(a)+'/ano'; d.append(s,b); ol.append(d); });
+      $('sRo').textContent=Math.round(r*100)+'%'; $('oRt').textContent=Math.round(r*100)+'%'; $('oBar').style.width=(100*(1-r))+'%';
+    } else if(box.dataset.sim==='aditivo'){
+      const t=f('sT'), pc=f('sPc')/100, kg=t*1000*pc;
+      $('oKg').textContent=num(kg)+' kg'; $('oCm').textContent=faixa(kg*29.75,kg*42.16);
+      $('oCt').textContent=faixa(1000*pc*29.75,1000*pc*42.16); $('oCs').textContent=faixa(8.8*pc/1000*29.75,8.8*pc/1000*42.16,3);
+    } else {
+      const t=f('sT'), pc=f('sPc')/100, kg=t*1000*pc;
+      $('oKg').textContent=num(kg)+' kg'; $('oTi').textContent=faixa(kg*35,kg*50); $('oGr').textContent=faixa(kg*29.75,kg*42.16);
+      $('oEc').textContent=faixa(kg*(35-29.75),kg*(50-42.16));
+    }
+  }
+  document.addEventListener('input', e => { if(e.target.closest && e.target.closest('#perfilBox .simbox')){ simCalc(); simLog(); } });
+  document.addEventListener('click', e => {
+    if(e.target.id==='prAdd'){ const s = SIMS[atual]; $('prList').insertAdjacentHTML('beforeend', prRow('Nome do produto', '', '')); simCalc(); const ins=$('prList').querySelectorAll('.pr-n'); ins[ins.length-1].focus(); }
+    else if(e.target.classList && e.target.classList.contains('pr-del')){ const rows=$('prList').querySelectorAll('.pr-row'); if(rows.length>1){ e.target.closest('.pr-row').remove(); simCalc(); simLog(); } }
+  });
+  function perfilHtml(p){
+    const x = EXTRA[p.id];
+    const ps = p.prods.map(id => PRODUTOS.find(y => y.id===id)).filter(Boolean);
+    const sim = '';
+    const passos = x.p.map(s => `<div class="step${s[3]?' end':''}" role="listitem">${passoSvg(s[0])}<b>${esc(s[1])}</b><span>${esc(s[2])}</span></div>`).join('');
+    const fatos = x.f.length ? `<div class="facts">${x.f.map(f=>`<div class="fact"><p class="n">${esc(f[0])}</p><div><p><b>${esc(f[1])}</b></p><p class="src">${esc(f[2])}</p></div></div>`).join('')}</div>` : '';
+    const kpis = x.k.map(k => `<div class="kpi"><p class="n"${k==='patente'?' style="font-size:22px"':''}>${esc(KPIS[k][0])}</p><p>${esc(KPIS[k][1])}</p></div>`).join('');
+    return `<a class="back" href="#dores">← Todas as dores</a>
+      <div class="perfil-head"><span class="ic">${IC[p.ic]}</span><div class="stack" style="gap:8px"><p class="eyebrow">${esc(p.seg)}</p><h2>${esc(p.q)}</h2></div></div>
+      <h3 class="sec-h">${esc(x.h[0])}</h3>
+      <p class="lead" style="margin-top:10px">${esc(x.h[1])}</p>
+      <div class="path" role="list" style="grid-template-columns:repeat(${x.p.length},1fr)">${passos}</div>
+      ${fatos}
+      <div class="box dorbox" style="margin-top:18px"><h3>A dor</h3>${p.dor.map(d=>`<p>${esc(d)}</p>`).join('')}</div>
+      <h3 class="sec-h">Como o GRAPHAGRO ajuda</h3>
+      <div class="sol">
+        <div class="sol-figs small"><figure><img src="../fotos/grafeno.jpg" alt="Grafeno vegetal em pó"><figcaption>Grafeno vegetal, do eucalipto</figcaption></figure><span class="arrow" aria-hidden="true">→</span><figure><img src="../fotos/prototipo.jpg" alt="Filme de PEBDL com o aditivo"><figcaption>Filme de PEBDL anti-UV</figcaption></figure></div>
+        <div class="stack"><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">${p.sol.map(s=>`<li>${esc(s)}</li>`).join('')}</ul><div class="kpis">${kpis}</div></div>
+      </div>
+      <p class="src" style="margin-top:12px">${esc(FONTE_SOL)}</p>
+      ${simHtml(p.id)}
+      <h3 class="sec-h">Produto para você</h3>
+      <div class="prods">${ps.map(prodCard).join('')}</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">${sim}<a class="btn ghost" href="#produtos">Ver todos os produtos</a><button class="btn ghost" type="button" data-form="contato">Falar com a equipe</button></div>`;
+  }
+
+  // ---------- Relatório de visitas ----------
+  const sessao = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+  let visitante = {nome:'', area:''};
+  try { const v = JSON.parse(localStorage.getItem('cv_visitante')||'null'); if(v && typeof v==='object') visitante = {nome:String(v.nome||'').slice(0,80), area:String(v.area||'').slice(0,80)}; } catch(e){}
+  let canal = 'site direto';
+  try {
+    const q = new URLSearchParams(location.search);
+    const o = (q.get('origem') || q.get('utm_source') || '').toLowerCase().replace(/[^a-z0-9_-]/g,'').slice(0,30);
+    if(o){ canal = o; try { sessionStorage.setItem('cv_canal', o); } catch(e){} }
+    else { let s = null; try { s = sessionStorage.getItem('cv_canal'); } catch(e){} if(s) canal = s; else if(location.protocol === 'file:') canal = 'arquivo anexado'; else if(document.referrer && !document.referrer.includes(location.host)) canal = 'link de ' + (new URL(document.referrer).hostname.replace(/^www\./,'')); }
+  } catch(e){}
+  canal = ('GRAPHAGRO · ' + canal).slice(0,60);
+  const ultimaSim = {};
+  function enviar(evento, dados){
+    if(!RELATORIO_URL) return false;
+    try {
+      const corpo = JSON.stringify({evento, dados:dados||{}, sessao, canal, nome:visitante.nome, area:visitante.area, quando:new Date().toISOString(), pagina:location.hash||'#inicio', origem:document.referrer||'', tela:innerWidth+'x'+innerHeight});
+      fetch(RELATORIO_URL, {method:'POST', mode:'no-cors', keepalive:true, headers:{'Content-Type':'text/plain;charset=utf-8'}, body:corpo}).catch(()=>{});
+      return true;
+    } catch(e){ return false; }
+  }
+  let simTimer = null;
+  function simLog(){
+    clearTimeout(simTimer);
+    simTimer = setTimeout(() => {
+      const box = document.querySelector('#perfilBox .simbox'); if(!box) return;
+      const d = {card:atual, tipo:box.dataset.sim};
+      if(box.dataset.sim==='perda') d.produtos = [...box.querySelectorAll('.pr-row')].map(r => ({produto:r.querySelector('.pr-n').value.trim(), valor:r.querySelector('.pr-v').value, perda:r.querySelector('.pr-p').value}));
+      else { d.toneladas = ($('sT')||{}).value; d.teor = ($('sPc')||{}).value; }
+      const tit = (PERFIS.find(p=>p.id===atual)||{}).seg || atual;
+      const txt = s => (document.getElementById(s)||{}).textContent || '';
+      let resumo = '';
+      if(box.dataset.sim==='perda'){
+        const per = box.dataset.per;
+        const itens = d.produtos.filter(x => x.valor || x.perda).map(x => `${x.produto||'produto'}: R$ ${Number(x.valor||0).toLocaleString('pt-BR')} por ${per}, ${String(x.perda||0).replace('.',',')}% de perda`);
+        resumo = `${tit} · ${itens.join('; ')} · perda total ${txt('oAno')} por ano · se a perda caísse ${txt('oRt')}: ${txt('oGanho')} por ano`;
+      } else if(box.dataset.sim==='aditivo'){
+        resumo = `${tit} · ${d.toneladas} t por mês a ${String(d.teor).replace('.',',')}% · ${txt('oKg')} de aditivo por mês · custo ${txt('oCm')} por mês`;
+      } else {
+        resumo = `${tit} · ${d.toneladas} t de embalagem por ano a ${String(d.teor).replace('.',',')}% · ${txt('oKg')} de aditivo · diferença para o TiO₂ ${txt('oEc')} por ano`;
+      }
+      ultimaSim[atual] = resumo; d.resumo = resumo;
+      enviar('simulacao', d);
+    }, 2500);
+  }
+
+  // ---------- Boas-vindas ----------
+  const AREA_CARD = {produtor:1,embalador:1,logistica:1,mercado:1,oleos:1,cosmeticos:1,transformadora:1,resinas:1,'so-aditivo':1,esg:1};
+  function marcarRecomendado(){
+    document.querySelectorAll('.dor.rec').forEach(a => { a.classList.remove('rec'); const t=a.querySelector('.rec-tag'); if(t) t.remove(); });
+    if(visitante.area && AREA_CARD[visitante.area]){
+      const a = document.querySelector(`#doresGrid a[href="#${visitante.area}"]`);
+      if(a){ a.classList.add('rec'); const tag=document.createElement('span'); tag.className='rec-tag'; tag.textContent='Recomendado para você'; a.prepend(tag); }
+    }
+    const h = $('hello');
+    if(h) h.textContent = visitante.nome ? `Olá, ${visitante.nome}!` : '';
+  }
+  function fecharBoas(){ $('mBoas').hidden = true; }
+  // "Outra área" abre um campo para escrever
+  document.addEventListener('change', e => {
+    const s = e.target; if(!s.dataset || !s.dataset.outra) return;
+    const f = $(s.dataset.outra + 'F'); if(f){ f.hidden = s.value !== 'outro'; if(!f.hidden) $(s.dataset.outra).focus(); }
+  });
+  const areaDe = (sel, outra) => { const v = $(sel).value; return v === 'outro' ? ('outra: ' + ($(outra).value.trim() || 'não especificada')).slice(0,80) : v; };
+  function comecar(){
+    visitante = {nome:$('bNome').value.trim().slice(0,80), area:areaDe('bArea','bOutra')};
+    try { localStorage.setItem('cv_visitante', JSON.stringify(visitante)); } catch(err){}
+    enviar('visita', {respondeu:true});
+    fecharBoas(); marcarRecomendado();
+    const alvo = document.getElementById('dores');
+    if(visitante.area && AREA_CARD[visitante.area] && alvo) alvo.scrollIntoView();
+  }
+  $('bComecar').addEventListener('click', comecar);
+  $('fBoas').addEventListener('submit', e => { e.preventDefault(); comecar(); });
+  $('fBoas').addEventListener('keydown', e => { if(e.key === 'Enter' && e.target.tagName === 'INPUT'){ e.preventDefault(); comecar(); } });
+  $('bPular').addEventListener('click', () => {
+    try { localStorage.setItem('cv_visitante', JSON.stringify({nome:'',area:''})); } catch(err){}
+    enviar('visita', {respondeu:false}); fecharBoas();
+  });
+  let jaVisto = false; try { jaVisto = localStorage.getItem('cv_visitante') !== null; } catch(e){}
+  if(!jaVisto) $('mBoas').hidden = false; else enviar('visita', {retorno:true});
+  marcarRecomendado();
+
+  // ---------- Formulários de contato e de compra ----------
+  $('cProd').innerHTML = PRODUTOS.map(p => `<option value="${p.id}">${esc(p.nome)}</option>`).join('');
+  let formTipo = 'contato';
+  function abrirForm(tipo, prod){
+    formTipo = tipo;
+    const compra = tipo==='compra';
+    $('mFormE').textContent = compra ? 'Comprar ou pedir orçamento' : 'Fale com a equipe';
+    $('mFormT').textContent = compra ? 'Conte o que você precisa' : 'Envie a sua mensagem';
+    $('cCompra').hidden = !compra;
+    $('cMsgL').textContent = compra ? 'Detalhes do pedido' : 'Mensagem *';
+    if(prod) $('cProd').value = prod;
+    if(compra && !$('cArea').dataset.tocado){ const a = visitante.area || ''; if(a.startsWith('outra: ')){ $('cArea').value = 'outro'; $('cOutra').value = a.slice(7); $('cOutraF').hidden = false; } else { $('cArea').value = [...$('cArea').options].some(o => o.value === a) ? a : ''; $('cOutraF').hidden = true; } }
+    if(visitante.nome && !$('cNome').value) $('cNome').value = visitante.nome;
+    $('fCampos').hidden = false; $('fOk').hidden = true; $('cErr').textContent = '';
+    $('mForm').hidden = false; $('cNome').focus();
+    enviar('abriu_formulario', {tipo, produto:prod||'', card:atual||''});
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('[data-form]');
+    if(b){ e.preventDefault(); abrirForm(b.dataset.form, b.dataset.prod); }
+    if(e.target.closest && e.target.closest('[data-fechar]')) $('mForm').hidden = true;
+  });
+  document.addEventListener('keydown', e => { if(e.key==='Escape'){ $('mForm').hidden = true; } });
+  const dig = s => String(s||'').replace(/\D/g,'');
+  function cpfOk(c){ if(c.length!==11 || /^(\d)\1+$/.test(c)) return false; for(let t=9;t<11;t++){ let s=0; for(let i=0;i<t;i++) s+= +c[i]*(t+1-i); if(((s*10)%11)%10 !== +c[t]) return false; } return true; }
+  function cnpjOk(c){ if(c.length!==14 || /^(\d)\1+$/.test(c)) return false; const calc=n=>{ let s=0,p=n-7; for(let i=0;i<n;i++){ s+= +c[i]*p--; if(p<2) p=9; } const r=s%11; return r<2?0:11-r; }; return calc(12)===+c[12] && calc(13)===+c[13]; }
+  function enviarForm(){
+    const err = m => { $('cErr').textContent = m; };
+    if($('cSite').value) return;
+    const d = {tipo:formTipo, nome:$('cNome').value.trim(), email:$('cEmail').value.trim(), telefone:$('cTel').value.trim(), empresa:$('cEmp').value.trim(), mensagem:$('cMsg').value.trim(), card:atual||''};
+    if(d.nome.length < 3) return err('Informe o seu nome completo.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) return err('Confira o e-mail: ele parece incompleto.');
+    if(dig(d.telefone).length < 10) return err('Informe o telefone com DDD.');
+    if(formTipo==='compra'){
+      d.documento = dig($('cDoc').value); d.cep = dig($('cCep').value); d.produto = $('cProd').value; d.quantidade = $('cQtd').value.trim(); d.area = areaDe('cArea','cOutra');
+      if(!(cpfOk(d.documento) || cnpjOk(d.documento))) return err('Confira o CPF ou o CNPJ: os números não conferem.');
+      if(d.cep.length !== 8) return err('O CEP precisa ter 8 números.');
+    } else if(d.mensagem.length < 5) return err('Escreva a sua mensagem.');
+    if(!$('cOk').checked) return err('Para enviar, marque a autorização de uso dos dados.');
+    d.autorizou = true;
+    d.simulacao = Object.values(ultimaSim).join(' || ').slice(0, 1500);
+    d.canal = canal;
+    const foi = enviar(formTipo, d);
+    const ok = $('fOk'); ok.replaceChildren();
+    const p1 = document.createElement('p'); p1.className='ok-msg';
+    if(foi){
+      p1.textContent = `Recebemos, ${d.nome.split(' ')[0]}! A equipe vai responder pelo e-mail ou telefone que você informou.`;
+      ok.append(p1);
+    } else {
+      p1.textContent = 'Para concluir, envie a sua mensagem para cascaviva.projeto@gmail.com. Abaixo está o texto pronto para copiar.';
+      const pre = document.createElement('textarea'); pre.readOnly = true; pre.style.minHeight='140px';
+      const prodNome = d.produto ? (PRODUTOS.find(x=>x.id===d.produto)||{}).nome : '';
+      pre.value = [`Assunto: ${formTipo==='compra'?'Pedido de compra ou orçamento':'Contato pelo site'}`, `Nome: ${d.nome}`, `E-mail: ${d.email}`, `Telefone: ${d.telefone}`, d.empresa?`Empresa: ${d.empresa}`:'', d.documento?`CPF/CNPJ: ${d.documento}`:'', d.cep?`CEP: ${d.cep}`:'', prodNome?`Produto: ${prodNome}`:'', d.quantidade?`Quantidade: ${d.quantidade}`:'', d.area?`Área: ${d.area}`:'', d.mensagem?`Mensagem: ${d.mensagem}`:''].filter(Boolean).join('\n');
+      const a = document.createElement('a'); a.className='btn'; a.textContent='Abrir no e-mail'; a.href='mailto:cascaviva.projeto@gmail.com?subject='+encodeURIComponent(formTipo==='compra'?'Pedido de compra ou orçamento':'Contato pelo site')+'&body='+encodeURIComponent(pre.value);
+      ok.append(p1, pre, a);
+    }
+    const fechar = document.createElement('button'); fechar.className='btn ghost'; fechar.type='button'; fechar.textContent='Fechar'; fechar.setAttribute('data-fechar','');
+    ok.append(fechar);
+    $('fCampos').hidden = true; ok.hidden = false;
+  }
+  $('cEnviar').addEventListener('click', enviarForm);
+  $('fForm').addEventListener('submit', e => { e.preventDefault(); enviarForm(); });
+  $('cArea').addEventListener('change', () => { $('cArea').dataset.tocado = '1'; });
+  const VIEWS = ['inicio','produtos','sobre','diario'];
+  const CT0 = [$('ctTitulo').textContent, $('ctTexto').textContent];
+  let atual = null;
+  function route(h){
+    if(typeof h !== 'string') h = decodeURIComponent((location.hash||'').slice(1));
+    const perfil = PERFIS.find(p => p.id===h);
+    const view = perfil ? 'perfil' : (VIEWS.includes(h) ? h : 'inicio');
+    if(perfil || VIEWS.includes(h) || h==='privacidade') enviar('abriu', {pagina:h});
+    if(perfil){ $('perfilBox').innerHTML = perfilHtml(perfil); simCalc(); $('ctTitulo').textContent = EXTRA[perfil.id].ct[0]; $('ctTexto').textContent = EXTRA[perfil.id].ct[1]; atual = perfil.id; }
+    else if(h !== 'contato'){ $('ctTitulo').textContent = CT0[0]; $('ctTexto').textContent = CT0[1]; atual = null; }
+    if(h === 'contato' && atual){ /* mantém a página do perfil e desce até o contato */ }
+    else document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== view; });
+    const ancora = {trajetoria:'sobre', contatos:'sobre', privacidade:'sobre'}[h];
+    if(h==='privacidade'){ $('mBoas').hidden = true; $('mForm').hidden = true; }
+    if(ancora){ document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== 'sobre'; }); }
+    const alvo = (h==='dores' || h==='contato' || ancora) ? document.getElementById(h) : null;
+    if(alvo) alvo.scrollIntoView(); else window.scrollTo(0,0);
+  }
+  // navegação pelos links internos: funciona mesmo onde a troca de # não chega à página
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const h = a.getAttribute('href').slice(1);
+    e.preventDefault();
+    try { if(location.hash !== '#'+h) history.pushState(null, '', '#'+h); } catch(err){}
+    route(h);
+  });
+  window.addEventListener('hashchange', () => route());
+  window.addEventListener('popstate', () => route());
+  route();
+
+  // ---------- Diário de testes (lista estática) ----------
+  const TIPOS = {teste:['Teste','teste'], atualizacao:['Atualização',''], documento:['Documento','doc']};
+  const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  let entries = [], filtro = 'todos', canEdit = false, confirmId = null;
+
+  function safeUrl(u){ return (typeof u === 'string' && (/^fotos\/[\w.\- ]+$/.test(u) || /^https:\/\//.test(u) || /^data:(image|video|application\/pdf)[^;]*;base64,/.test(u))) ? u : null; }
+  function el(tag, attrs, kids){ const e=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==='text') e.textContent=attrs[k]; else e.setAttribute(k,attrs[k]); } (kids||[]).forEach(k=>k&&e.appendChild(k)); return e; }
+
+  function render(){
+    const feed = $('feed'); feed.replaceChildren();
+    const list = entries.filter(x => filtro==='todos' || x.tipo===filtro);
+    if(!list.length){
+      const em = el('div',{class:'empty'}); const b = el('b',{text: entries.length ? 'Nada nesta categoria ainda' : 'O teste com as frutas vem aí'});
+      em.append(b, document.createTextNode(entries.length ? 'Escolha outra categoria acima.' : 'As fotos, os vídeos e os documentos de cada etapa vão aparecer aqui, do mais recente para o mais antigo.'));
+      feed.appendChild(em); return;
+    }
+    for(const x of list){
+      const [lbl, cls] = TIPOS[x.tipo] || ['Atualização',''];
+      const d = /^\d{4}-\d{2}-\d{2}$/.test(x.data||'') ? x.data.split('-') : null;
+      const when = el('div',{class:'when'});
+      if(d){ when.append(el('b',{text:String(+d[2])}), document.createTextNode(MESES[+d[1]-1]+' '+d[0])); }
+      const body = el('div',{class:'body'});
+      body.append(el('span',{class:'badge '+cls, text:lbl}), el('h3',{text:String(x.titulo||'Sem título')}));
+      if(x.texto) body.append(el('p',{class:'txt', text:String(x.texto)}));
+      const files = Array.isArray(x.anexos) ? x.anexos : [];
+      if(files.length){
+        const m = el('div',{class:'media'});
+        for(const f of files){
+          const u = safeUrl(f && f.url); if(!u) continue;
+          const ct = String(f.contentType||''); const nome = String(f.nome||'arquivo');
+          if(ct.startsWith('image/')){ const a=el('a',{href:u,target:'_blank',rel:'noopener'}); a.append(el('img',{src:u,alt:nome,loading:'lazy'})); m.append(a); }
+          else if(ct.startsWith('video/')){ const v=el('video',{src:u,controls:'',preload:'metadata'}); v.setAttribute('aria-label',nome); m.append(v); }
+          else { const a=el('a',{class:'docl',href:u,target:'_blank',rel:'noopener'}); a.textContent='📄 '+nome; m.append(a); }
+        }
+        body.append(m);
+      }
+      if(canEdit){
+        const t = el('div',{class:'tools'});
+        if(confirmId===x.id){
+          const yes=el('button',{class:'btn danger',type:'button',text:'Apagar de vez'}); yes.onclick=()=>remove(x);
+          const no=el('button',{class:'btn ghost',type:'button',text:'Manter'}); no.onclick=()=>{confirmId=null;render();};
+          t.append(el('span',{class:'status',text:'Apagar esta atualização e os arquivos dela?'}), yes, no);
+        } else { const b=el('button',{class:'btn ghost',type:'button',text:'Apagar'}); b.onclick=()=>{confirmId=x.id;render();}; t.append(b); }
+        body.append(t);
+      }
+      feed.append(el('article',{class:'entry'},[when, body]));
+    }
+  }
+
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    filtro = c.dataset.f; document.querySelectorAll('.chip').forEach(o => o.setAttribute('aria-pressed', String(o===c))); render();
+  }));
+
+  (async function boot(){
+    let lista = window.ATUALIZACOES;
+    if(!Array.isArray(lista)){
+      try{ const r = await fetch('../atualizacoes.json', {cache:'no-cache'}); lista = r.ok ? await r.json() : []; }catch(e){ lista = []; }
+    }
+    entries = (Array.isArray(lista) ? lista : []).map((x,k)=>Object.assign({id:'a'+k}, x))
+      .sort((a,b)=> String(b.data).localeCompare(String(a.data)));
+    render();
+  })();
+})();
+</script>
+
+</body>
+</html>
